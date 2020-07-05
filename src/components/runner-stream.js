@@ -1,6 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import TimelineMax from "gsap/TimelineMax";
+import { TimelineMax } from "gsap";
 
 import Stream from "./stream";
 import FeaturedIndicator from "../uikit/featured-indicator";

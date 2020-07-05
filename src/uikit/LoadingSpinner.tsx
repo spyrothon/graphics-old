@@ -8,8 +8,10 @@ type LoadingSpinnerProps = {
 
 const LoadingSpinner = (props: LoadingSpinnerProps) => {
   return (
-    <div class={style.container}>
-      <div class={style.spinner} style={{ "--color": props.color || "white" }}>
+    <div className={style.container}>
+      <div
+        className={style.spinner}
+        style={{ "--color": props.color || "white" } as React.CSSProperties}>
         Loading
       </div>
     </div>

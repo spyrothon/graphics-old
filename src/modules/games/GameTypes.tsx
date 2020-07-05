@@ -1,5 +1,6 @@
 export type Game = {
   id: string;
+  name: string;
   series: string;
   progress_unit: string;
   progress_max: string;

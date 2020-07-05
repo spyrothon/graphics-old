@@ -13,6 +13,7 @@ import { socketReducer } from "./modules/socket/SocketReducer";
 import { streamsReducer } from "./modules/streams/StreamReducer";
 import { teamsReducer } from "./modules/teams/TeamReducer";
 import { timerReducer } from "./modules/timers/TimerReducer";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
 
 export const combinedReducer = combineReducers({
   accounts: accountsReducer,
@@ -39,3 +40,5 @@ export const getProp = <T extends any>(key: string) => (
 ): T => {
   return props[key];
 };
+
+export const useSafeSelector: TypedUseSelectorHook<StoreState> = useSelector;

@@ -1,4 +1,4 @@
-@value radius-2 from '../../style/theme.css';
+@value radius-2 from '../style/theme.css';
 
 .avatar {
   object-fit: cover;
