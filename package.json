@@ -46,6 +46,8 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.10.4",
     "@babel/runtime-corejs3": "^7.5.5",
+    "@types/classnames": "^2.2.10",
+    "@types/gsap": "^1.20.2",
     "@types/lodash": "^4.14.157",
     "@types/luxon": "^1.24.1",
     "@types/query-string": "^6.3.0",

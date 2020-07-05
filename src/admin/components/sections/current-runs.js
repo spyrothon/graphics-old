@@ -1,19 +1,19 @@
-import {h, Component} from 'preact';
-import {connect} from 'react-redux';
-import classNames from 'classnames';
-import _ from 'lodash';
+import * as React from "react";
+import { connect } from "react-redux";
+import classNames from "classnames";
+import _ from "lodash";
 
-import * as ActiveRunStore from '../../../selectors/active-runs';
-import * as FeaturedRunStore from '../../../selectors/featured-run';
-import * as FeaturedRunActions from '../../../actions/featured-runs';
-import * as RemoteControlActions from '../../actions/remote-control';
-import Section from '../section';
-import Run from '../../../components/run';
-import Button from '../button';
+import * as ActiveRunStore from "../../../selectors/active-runs";
+import * as FeaturedRunStore from "../../../selectors/featured-run";
+import * as FeaturedRunActions from "../../../actions/featured-runs";
+import * as RemoteControlActions from "../../actions/remote-control";
+import Section from "../section";
+import Run from "../../../components/run";
+import Button from "../button";
 
-import {CollectionTypes} from '../../../constants';
-import {runTime} from '../../../util';
-import style from './current-runs.mod.css';
+import { CollectionTypes } from "../../../constants";
+import { runTime } from "../../../util";
+import style from "./current-runs.mod.css";
 
 class CurrentRunsSection extends Component {
   constructor(props) {
@@ -28,47 +28,30 @@ class CurrentRunsSection extends Component {
   }
 
   render() {
-    const {
-      featuredRunId,
-      activeRunIds,
-      className,
-      dispatch
-    } = this.props;
+    const { featuredRunId, activeRunIds, className, dispatch } = this.props;
 
     return (
-      <Section
-          className={className}
-          title="Current Runs"
-        >
+      <Section className={className} title="Current Runs">
         <ul class={style.availableRuns}>
-          { _.map(activeRunIds, (runId) => (
-              <li
-                  class={classNames(style.availableRunContainer, {
-                    [style.isActive]: runId === featuredRunId
-                  })}
-                >
-                <Run
-                  className={style.availableRun}
-                  runId={runId}
-                  midRow="team"
-                  showProgressBar
-                />
-                <Button
-                    className={style.featureButton}
-                    onClick={() => this.handleMakeFeatured(runId)}
-                    disabled={runId === featuredRunId}
-                  >
-                  Make Featured
-                </Button>
-              </li>
-            ))
-          }
+          {_.map(activeRunIds, (runId) => (
+            <li
+              class={classNames(style.availableRunContainer, {
+                [style.isActive]: runId === featuredRunId,
+              })}>
+              <Run className={style.availableRun} runId={runId} midRow="team" showProgressBar />
+              <Button
+                className={style.featureButton}
+                onClick={() => this.handleMakeFeatured(runId)}
+                disabled={runId === featuredRunId}>
+                Make Featured
+              </Button>
+            </li>
+          ))}
         </ul>
       </Section>
     );
   }
-};
-
+}
 
 const mapStateToProps = (state, props) => {
   return {
@@ -78,6 +61,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(CurrentRunsSection)
+export default connect(mapStateToProps)(CurrentRunsSection);

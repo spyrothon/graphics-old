@@ -1,11 +1,11 @@
-import {h, Component} from 'preact';
-import {connect} from 'react-redux';
-import classNames from 'classnames';
-import _ from 'lodash';
+import * as React from "react";
+import { connect } from "react-redux";
+import classNames from "classnames";
+import _ from "lodash";
 
-import TeamCard from './sidebar/team-card';
+import TeamCard from "./sidebar/team-card";
 
-import style from './sidebar.mod.css';
+import style from "./sidebar.mod.css";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -13,34 +13,26 @@ class Sidebar extends Component {
   }
 
   render() {
-    const {
-      teamIds,
-      className
-    } = this.props;
+    const { teamIds, className } = this.props;
 
     return (
       <div class={classNames(style.container, className)}>
         <div class={style.teamCards}>
-          { _.map(teamIds, (teamId) => {
-              return <TeamCard className={style.teamCard} teamId={teamId} />
-            })
-          }
+          {_.map(teamIds, (teamId) => {
+            return <TeamCard className={style.teamCard} teamId={teamId} />;
+          })}
         </div>
       </div>
     );
   }
-};
-
+}
 
 const mapStateToProps = (state, props) => {
   return {
-    teamIds: Object.keys(state.teams)
+    teamIds: Object.keys(state.teams),
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({dispatch});
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

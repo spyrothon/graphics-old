@@ -1,13 +1,13 @@
-import {h, Component, Fragment, createRef} from 'preact';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import * as React from "react";
+import { connect } from "react-redux";
+import _ from "lodash";
 
-import * as AccountActions from '../actions/accounts';
-import Avatar from './accounts/avatar';
-import LoadingSpinner from '../uikit/loading-spinner';
+import * as AccountActions from "../actions/accounts";
+import Avatar from "./accounts/avatar";
+import LoadingSpinner from "../uikit/loading-spinner";
 
-import { ASSETS_URL } from '../constants';
-import style from './stream.mod.css';
+import { ASSETS_URL } from "../constants";
+import style from "./stream.mod.css";
 
 // Set this to use thumbnails instead of interactive twitch players.
 // Reduces load times and helps React Dev Tools not break.
@@ -16,7 +16,7 @@ const USE_STREAM_PLACEHOLDERS = true;
 const GLOBAL_PLAYER_OPTIONS = {
   width: "100%",
   height: "100%",
-  controls: false
+  controls: false,
 };
 
 class Stream extends Component {
@@ -24,15 +24,14 @@ class Stream extends Component {
     super(props);
 
     this.playerContainer = createRef();
-    this.playerContainerID = _.uniqueId('stream_player_');
+    this.playerContainerID = _.uniqueId("stream_player_");
     this.player = null;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {twitchName, show} = this.props;
+    const { twitchName, show } = this.props;
 
-    return twitchName !== nextProps.twitchName
-        || show !== nextProps.show;
+    return twitchName !== nextProps.twitchName || show !== nextProps.show;
   }
 
   componentDidMount() {
@@ -46,28 +45,20 @@ class Stream extends Component {
   }
 
   updateTwitchPlayer() {
-    if(USE_STREAM_PLACEHOLDERS) return null;
+    if (USE_STREAM_PLACEHOLDERS) return null;
 
+    const { twitchName, quality, volume, onStreamReady, onStreamUnready } = this.props;
 
-    const {
-      twitchName,
-      quality,
-      volume,
-      onStreamReady,
-      onStreamUnready
-    } = this.props;
+    if (twitchName == null) return null;
 
-    if(twitchName == null) return null;
-
-    if(!this.player && !this.playerContainer.current) {
+    if (!this.player && !this.playerContainer.current) {
       return null;
-    } else if(!this.player) {
-      this.player = new Twitch.Player(this.playerContainerID, {...GLOBAL_PLAYER_OPTIONS});
+    } else if (!this.player) {
+      this.player = new Twitch.Player(this.playerContainerID, { ...GLOBAL_PLAYER_OPTIONS });
       this.player.setVolume(0);
       this.player.addEventListener(Twitch.Player.PLAYING, onStreamReady);
       this.player.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
     }
-
 
     this.player.setChannel(twitchName);
     this.player.setQuality(quality);
@@ -79,9 +70,7 @@ class Stream extends Component {
       <div
         class={style.playerContainer}
         id={this.playerContainerID}
-        ref={this.playerContainer}
-      >
-      </div>
+        ref={this.playerContainer}></div>
     );
   }
 
@@ -98,30 +87,25 @@ class Stream extends Component {
   }
 
   render() {
-    const {twitchName} = this.props;
+    const { twitchName } = this.props;
     return (
       <div class={style.stream}>
-        { USE_STREAM_PLACEHOLDERS
-          ? this.renderPlaceholder()
-          : this.renderStream()
-        }
+        {USE_STREAM_PLACEHOLDERS ? this.renderPlaceholder() : this.renderStream()}
       </div>
     );
   }
 }
 
-
 Stream.Qualities = {
-  VERY_LOW: '160p30',
-  LOW: '360p30',
-  NORMAL: '480p30',
-  HIGH: '720p30',
-  SOURCE: 'chunked'
+  VERY_LOW: "160p30",
+  LOW: "360p30",
+  NORMAL: "480p30",
+  HIGH: "720p30",
+  SOURCE: "chunked",
 };
 
-
 const mapStateToProps = (state, props) => {
-  const {runId} = props;
+  const { runId } = props;
 
   const run = state.runs[runId];
   const account = run && state.accounts[run.account_id];
@@ -129,13 +113,10 @@ const mapStateToProps = (state, props) => {
   const twitchName = account && account.twitch && account.twitch.toLowerCase();
 
   return {
-    twitchName
+    twitchName,
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({dispatch});
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Stream);
+export default connect(mapStateToProps, mapDispatchToProps)(Stream);

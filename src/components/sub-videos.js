@@ -1,17 +1,17 @@
-import {h, Component} from 'preact';
-import classNames from 'classnames';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import * as React from "react";
+import classNames from "classnames";
+import { connect } from "react-redux";
+import _ from "lodash";
 
-import * as TeamsStore from '../selectors/teams';
-import * as FeaturedRunActions from '../actions/featured-runs';
-import * as FeaturedRunStore from '../selectors/featured-run';
-import * as ActiveRunsStore from '../selectors/active-runs';
-import RunnerStream from './runner-stream';
-import Stream from './stream';
-import LoadingSpinner from '../uikit/loading-spinner';
+import * as TeamsStore from "../selectors/teams";
+import * as FeaturedRunActions from "../actions/featured-runs";
+import * as FeaturedRunStore from "../selectors/featured-run";
+import * as ActiveRunsStore from "../selectors/active-runs";
+import RunnerStream from "./runner-stream";
+import Stream from "./stream";
+import LoadingSpinner from "../uikit/loading-spinner";
 
-import style from './sub-videos.mod.css';
+import style from "./sub-videos.mod.css";
 
 class SubVideos extends Component {
   constructor(props) {
@@ -25,30 +25,21 @@ class SubVideos extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      shouldRotate
-    } = this.props;
+    const { shouldRotate } = this.props;
 
-    if(shouldRotate) {
+    if (shouldRotate) {
       this.rotateFeatured();
     }
   }
 
   _rotateFeatured() {
-    const {
-      nextFeaturedRunId,
-      nextRotatesAt,
-      dispatch
-    } = this.props;
+    const { nextFeaturedRunId, nextRotatesAt, dispatch } = this.props;
 
-    dispatch(FeaturedRunActions.setFeaturedRun(
-      nextFeaturedRunId,
-      nextRotatesAt
-    ));
+    dispatch(FeaturedRunActions.setFeaturedRun(nextFeaturedRunId, nextRotatesAt));
   }
 
   renderElement(runId) {
-    const {featuredRunId} = this.props;
+    const { featuredRunId } = this.props;
 
     return (
       <RunnerStream
@@ -62,25 +53,21 @@ class SubVideos extends Component {
   }
 
   render() {
-    const {
-      activeRunIds,
-      className
-    } = this.props;
+    const { activeRunIds, className } = this.props;
 
     return (
       <div class={classNames(style.container, className)}>
-        { _.map(activeRunIds, (runId) => {
-            return (
-              <div key={runId} class={style.element}>
-                {this.renderElement(runId)}
-              </div>
-            );
-          })
-        }
+        {_.map(activeRunIds, (runId) => {
+          return (
+            <div key={runId} class={style.element}>
+              {this.renderElement(runId)}
+            </div>
+          );
+        })}
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -94,9 +81,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({dispatch});
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SubVideos);
+export default connect(mapStateToProps, mapDispatchToProps)(SubVideos);

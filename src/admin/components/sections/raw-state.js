@@ -1,38 +1,26 @@
-import {h} from 'preact';
-import classNames from 'classnames';
-import {connect} from 'react-redux';
-import ReactJson from 'react-json-view';
+import * as React from "react";
+import classNames from "classnames";
+import { connect } from "react-redux";
+import ReactJson from "react-json-view";
 
-import Section from '../section';
+import Section from "../section";
 
-import style from './socket-status.mod.css';
+import style from "./socket-status.mod.css";
 
 const RawStateSection = (props) => {
-  const {
-    streamState,
-    className
-  } = props;
+  const { streamState, className } = props;
 
   return (
-    <Section
-        className={className}
-        title="Raw State"
-      >
-      <ReactJson
-        src={streamState}
-        name={null}
-        collapsed
-      />
+    <Section className={className} title="Raw State">
+      <ReactJson src={streamState} name={null} collapsed />
     </Section>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    streamState: state
+    streamState: state,
   };
 };
 
-export default connect(
-  mapStateToProps
-)(RawStateSection);
+export default connect(mapStateToProps)(RawStateSection);

@@ -1,8 +1,8 @@
-import {h, Component} from 'preact';
+import * as React from "react";
 
-import * as AuthActions from '../actions/auth';
+import * as AuthActions from "../actions/auth";
 
-import style from './login-form.mod.css';
+import style from "./login-form.mod.css";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -18,10 +18,10 @@ class LoginForm extends Component {
   }
 
   _handleSubmit() {
-    const {dispatch} = this.props;
-    const {username, password} = this.state;
+    const { dispatch } = this.props;
+    const { username, password } = this.state;
 
-    if(username != "" && password != "") {
+    if (username != "" && password != "") {
       dispatch(AuthActions.loginUser(username, password));
     }
   }
@@ -31,7 +31,7 @@ class LoginForm extends Component {
     const newValue = ev.target.value;
 
     this.setState({
-      username: newValue
+      username: newValue,
     });
   }
 
@@ -40,15 +40,12 @@ class LoginForm extends Component {
     const newValue = ev.target.value;
 
     this.setState({
-      password: newValue
+      password: newValue,
     });
   }
 
   render() {
-    const {
-      username,
-      password
-    } = this.state;
+    const { username, password } = this.state;
 
     return (
       <div class={style.container}>
@@ -67,15 +64,12 @@ class LoginForm extends Component {
           onChange={this.handlePasswordChange}
         />
 
-        <button
-            class={style.button}
-            onClick={this.handleSubmit}
-          >
+        <button class={style.button} onClick={this.handleSubmit}>
           Login
         </button>
       </div>
     );
   }
-};
+}
 
 export default LoginForm;
