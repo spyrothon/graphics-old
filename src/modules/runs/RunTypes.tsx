@@ -1,5 +1,3 @@
-import { DateTime } from "luxon";
-
 export enum RunEventType {
   STARTED = "run_started",
   FINISHED = "run_finished",
@@ -18,7 +16,7 @@ export type RunEvent = {
   id: string;
   run_id: string;
   type: RunEventType;
-  occurred_at: DateTime;
+  occurred_at: string;
 };
 
 export type Run = {
@@ -31,8 +29,8 @@ export type Run = {
   pb_seconds: number;
   est_seconds: number;
   actual_seconds?: number;
-  started_at?: DateTime;
-  finishsed_at?: DateTime;
+  started_at?: string;
+  finishsed_at?: string;
   index: number;
   finished: boolean;
   accepted: boolean;

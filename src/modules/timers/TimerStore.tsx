@@ -1,30 +1,24 @@
-import { DateTime } from "luxon";
+import { DateTime, DurationUnit } from "luxon";
+import { createSelector } from "reselect";
+import createCachedSelector from "re-reselect";
 
-import { TimerAction, TimerActionTypes } from "./TimerTypes";
+import { getProp, StoreState } from "../../Store";
 
-import { ActionFor } from "../../Actions";
+const getCurrentTimeRaw = (state: StoreState) => state.timer.currentTime;
 
-type TimerState = {
-  tick: number;
-  currentTime: string;
-};
+export const getCurrentTime = createSelector([getCurrentTimeRaw], (rawTime) =>
+  DateTime.fromISO(rawTime),
+);
 
-const defaultState: TimerState = { tick: 0, currentTime: DateTime.utc().toISO() };
+export const getCurrentTimeWithAccuracy = createCachedSelector(
+  [getCurrentTime, getProp<DurationUnit>("unit")],
+  (time, unit) => time.startOf(unit),
+)(getProp<DurationUnit>("unit"));
 
-function handleTimerTick(state: TimerState, { data }: ActionFor<"TIMER_TICK">) {
-  const { currentTime } = data;
-  return {
-    ...state,
-    tick: state.tick + 1,
-    currentTime,
-  };
-}
+export const getCurrentTimeToMinute = createSelector([getCurrentTime], (time) =>
+  time.startOf("minute"),
+);
 
-export function timerReducer(state = defaultState, action: TimerAction): TimerState {
-  switch (action.type) {
-    case TimerActionTypes.TIMER_TICK:
-      return handleTimerTick(state, action);
-  }
-
-  return state;
-}
+export const getCurrentTimeISOToMinute = createSelector([getCurrentTime], (time) =>
+  time.startOf("minute").toISO(),
+);

@@ -1,72 +1,50 @@
+import { createSelector } from "reselect";
 import { DateTime } from "luxon";
+import _ from "lodash";
 
-import { FeaturedRunAction, FeaturedRunActionTypes } from "./FeaturedRunTypes";
+import { getRuns, getActiveRunIds } from "../runs/RunStore";
+import { getCurrentTime } from "../timers/TimerStore";
+import { StoreState } from "../../Store";
 
-import { ActionFor } from "../../Actions";
+export const getFeaturedRunId = (state: StoreState) => state.featuredRun && state.featuredRun.runId;
+export const getRotationInterval = (state: StoreState) =>
+  state.featuredRun && state.featuredRun.rotationInterval;
+export const getRotationEnabled = (state: StoreState) =>
+  state.featuredRun && state.featuredRun.rotationEnabled;
+export const getRotateAtRaw = (state: StoreState) =>
+  state.featuredRun && state.featuredRun.rotateAt;
 
-type FeaturedRunState = {
-  runId?: string;
-  rotateAt?: DateTime;
-  // Evenly split feature time within an hour across the 7 teams
-  // This can be overwritten by the admin dashboard.
-  rotationInterval: number;
-  // `true` when the stream should automatically rotate to the next
-  // stream when `rotateAt` is reached. `false` if it should stay
-  // on the current run.
-  rotationEnabled: boolean;
-};
+export const getRotateAt = createSelector(
+  [getRotateAtRaw],
+  (rawTime) => rawTime && DateTime.fromISO(rawTime),
+);
 
-const defaultState: FeaturedRunState = {
-  rotationInterval: Math.floor((60 * 60) / 5),
-  rotationEnabled: true,
-};
+export const getFeaturedRun = createSelector([getRuns, getFeaturedRunId], (runs, runId) =>
+  runs.find((run) => run.id === runId),
+);
 
-function handleSetFeaturedRun(state: FeaturedRunState, { data }: ActionFor<"SET_FEATURED_RUN">) {
-  const { runId, rotateAt } = data;
+export const shouldRotate = createSelector(
+  [getRotationEnabled, getRotateAt, getCurrentTime],
+  (rotationEnabled, rotateAt, currentTime) => {
+    if (!rotationEnabled || !rotateAt || !currentTime) return false;
 
-  return {
-    ...state,
-    runId,
-    rotateAt,
-  };
-}
+    return rotateAt.diff(currentTime).valueOf() <= 0;
+  },
+);
 
-function handleSetFeaturedRunRotationInterval(
-  state: FeaturedRunState,
-  { data }: ActionFor<"SET_FEATURED_RUN_ROTATION_INTERVAL">,
-) {
-  const { rotationInterval } = data;
+export const getNextRotatesAt = createSelector(
+  [getCurrentTime, getRotationInterval],
+  (currentTime, rotationInterval) => {
+    if (currentTime == null || rotationInterval == null) return null;
 
-  return {
-    ...state,
-    rotationInterval,
-  };
-}
+    return currentTime.plus({ seconds: rotationInterval }).toISO();
+  },
+);
 
-function handleSetFeaturedRunRotationEnabled(
-  state: FeaturedRunState,
-  { data }: ActionFor<"SET_FEATURED_RUN_ROTATION_ENABLED">,
-) {
-  const { rotationEnabled } = data;
-
-  return {
-    ...state,
-    rotationEnabled,
-  };
-}
-
-export function featuredRunsReducer(
-  state = defaultState,
-  action: FeaturedRunAction,
-): FeaturedRunState {
-  switch (action.type) {
-    case FeaturedRunActionTypes.SET_FEATURED_RUN:
-      return handleSetFeaturedRun(state, action);
-    case FeaturedRunActionTypes.SET_FEATURED_RUN_ROTATION_INTERVAL:
-      return handleSetFeaturedRunRotationInterval(state, action);
-    case FeaturedRunActionTypes.SET_FEATURED_RUN_ROTATION_ENABLED:
-      return handleSetFeaturedRunRotationEnabled(state, action);
-  }
-
-  return state;
-}
+export const getNextFeaturedRunId = createSelector(
+  [getFeaturedRunId, getActiveRunIds],
+  (featuredRunId, activeRunIds) => {
+    const featuredIndex = _.findIndex(activeRunIds, (id) => id == featuredRunId) || 0;
+    return activeRunIds[(featuredIndex + 1) % activeRunIds.length];
+  },
+);

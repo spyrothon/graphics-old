@@ -1,62 +1,83 @@
-import { Run, RunAction, RunActionTypes, RunEventType, RunUpdate } from "./RunTypes";
+import { createSelector } from "reselect";
+import createCachedSelector from "re-reselect";
+import _ from "lodash";
 
-import { ActionFor } from "../../Actions";
+import { timeFromISO } from "../../Util";
+import { StoreState, getProp } from "../../Store";
 
-type RunState = {
-  runs: { [id: string]: Run };
-  runUpdateQueue: RunUpdate[];
-};
+import { getSortedTeams } from "../teams/TeamStore";
+import { getCurrentTime } from "../timers/TimerStore";
+import { Run } from "./RunTypes";
 
-const defaultState: RunState = { runs: {}, runUpdateQueue: [] };
+export const getRuns = (state: StoreState) => Object.values(state.runs.runs);
+export const getRun = (state: StoreState, props: { runId: string }) => state.runs.runs[props.runId];
 
-function handleReceiveRuns(state: RunState, { data }: ActionFor<"RECEIVE_RUNS">) {
-  const { runs } = data;
-  const runsById = runs.reduce((acc, run) => {
-    // @ts-ignore
-    acc[run.id] = run;
-    return acc;
-  }, {});
+export const getRunsByTeam = createSelector([getRuns], (runs) =>
+  _.chain(runs)
+    .sortBy("index")
+    .groupBy("team_id")
+    .value(),
+);
 
-  return {
-    ...state,
-    runs: {
-      ...state.runs,
-      ...runsById,
-    },
-  };
-}
+export const getCurrentRunSeconds = createCachedSelector(
+  [getRun, getCurrentTime],
+  (run, currentTime) => {
+    const { started_at, actual_seconds } = run;
+    if (actual_seconds) {
+      return actual_seconds;
+    } else if (started_at == null) {
+      return 0;
+    } else if (currentTime != null) {
+      return currentTime.diff(timeFromISO(started_at)).as("seconds");
+    } else {
+      // If currentTime doesn't exist, we can't state progress.
+      return 0;
+    }
+  },
+)(getProp<string>("runId"));
 
-function handleReceiveRunUpdate(state: RunState, { data }: ActionFor<"RECEIVE_RUN_UPDATE">) {
-  const { runId, updateId, type } = data;
-
-  if (type == RunEventType.FINISHED) {
-    return {
-      ...state,
-      runUpdateQueue: [...state.runUpdateQueue, { type, runId, updateId }],
-    };
+export const getRunProgress = createCachedSelector([getRun, getCurrentTime], (run, currentTime) => {
+  const { finished, started_at, est_seconds } = run;
+  if (finished) {
+    return 100;
+  } else if (started_at == null) {
+    return 0;
+  } else if (currentTime != null) {
+    const elapsed = currentTime.diff(timeFromISO(started_at)).as("seconds");
+    return Math.min(0.99, elapsed / est_seconds) * 100;
   } else {
-    return state;
+    // If currentTime doesn't exist, we can't state progress.
+    return 0;
   }
+})(getProp("runId"));
+
+export const getSortedRunsByTeam = createSelector([getRuns], (runs) =>
+  _.chain(Object.values(runs))
+    .sortBy("index")
+    .groupBy("team_id")
+    .value(),
+);
+
+export const getSortedRunsForTeam = createCachedSelector(
+  [getSortedRunsByTeam, getProp<string>("teamId")],
+  (runs, teamId) => {
+    return runs[teamId];
+  },
+)(getProp("teamId"));
+
+export function getActiveRun(runs: Run[]) {
+  return _.find(runs, (run) => !run.finished) || runs[runs.length - 1];
 }
 
-function handleRunUpdateHandled(state: RunState, { data }: ActionFor<"RUN_UPDATE_HANDLED">) {
-  const { updateId } = data;
-
-  return {
-    ...state,
-    runUpdateQueue: state.runUpdateQueue.filter(({ updateId: id }) => id !== updateId),
-  };
-}
-
-export function runsReducer(state = defaultState, action: RunAction): RunState {
-  switch (action.type) {
-    case RunActionTypes.RECEIVE_RUNS:
-      return handleReceiveRuns(state, action);
-    case RunActionTypes.RECEIVE_RUN_UPDATE:
-      return handleReceiveRunUpdate(state, action);
-    case RunActionTypes.RUN_UPDATE_HANDLED:
-      return handleRunUpdateHandled(state, action);
-  }
-
-  return state;
-}
+export const getActiveRunIds = createSelector(
+  [getSortedRunsByTeam, getSortedTeams],
+  (sortedRunsByTeam, teams) => {
+    return _.chain(teams)
+      .map((team) => {
+        const runs = sortedRunsByTeam[team.id];
+        return getActiveRun(runs);
+      })
+      .map("id")
+      .value();
+  },
+);

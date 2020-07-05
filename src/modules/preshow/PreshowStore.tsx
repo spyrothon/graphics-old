@@ -1,27 +1,8 @@
-import { PreshowAction, PreshowActionTypes } from "./PreshowTypes";
+import { createSelector } from "reselect";
+import _ from "lodash";
 
-import { ActionFor } from "../../Actions";
+import { StoreState } from "../../Store";
 
-type PreshowState = {
-  activeOverlay: object;
-};
+const getPreshow = (state: StoreState) => state.preshow;
 
-const defaultState: PreshowState = { activeOverlay: {} };
-
-function handlePreshowSetOverlay(state: PreshowState, { data }: ActionFor<"PRESHOW_SET_OVERLAY">) {
-  return {
-    ...state,
-    activeOverlay: {
-      ...data,
-    },
-  };
-}
-
-export function preshowReducer(state = defaultState, action: PreshowAction): PreshowState {
-  switch (action.type) {
-    case PreshowActionTypes.PRESHOW_SET_OVERLAY:
-      return handlePreshowSetOverlay(state, action);
-  }
-
-  return state;
-}
+export const getActiveOverlay = createSelector([getPreshow], (preshow) => preshow.activeOverlay);

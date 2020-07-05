@@ -1,23 +1,23 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
-import { accountsReducer } from "./modules/accounts/AccountStore";
-import { eventsReducer } from "./modules/events/EventStore";
-import { featuredRunsReducer } from "./modules/featured_run/FeaturedRunStore";
-import { fetchingReducer } from "./modules/fetching/FetchingStore";
-import { gamesReducer } from "./modules/games/GameStore";
-import { initReducer } from "./modules/init/InitStore";
-import { preshowReducer } from "./modules/preshow/PreshowStore";
-import { runsReducer } from "./modules/runs/RunStore";
-import { socketReducer } from "./modules/socket/SocketStore";
-import { streamsReducer } from "./modules/streams/StreamStore";
-import { teamsReducer } from "./modules/teams/TeamStore";
-import { timerReducer } from "./modules/timers/TimerStore";
+import { accountsReducer } from "./modules/accounts/AccountReducer";
+import { eventsReducer } from "./modules/events/EventReducer";
+import { featuredRunsReducer } from "./modules/featured_run/FeaturedRunReducer";
+import { fetchingReducer } from "./modules/fetching/FetchingReducer";
+import { gamesReducer } from "./modules/games/GameReducer";
+import { initReducer } from "./modules/init/InitReducer";
+import { preshowReducer } from "./modules/preshow/PreshowReducer";
+import { runsReducer } from "./modules/runs/RunReducer";
+import { socketReducer } from "./modules/socket/SocketReducer";
+import { streamsReducer } from "./modules/streams/StreamReducer";
+import { teamsReducer } from "./modules/teams/TeamReducer";
+import { timerReducer } from "./modules/timers/TimerReducer";
 
 export const combinedReducer = combineReducers({
   accounts: accountsReducer,
   events: eventsReducer,
-  featuredRuns: featuredRunsReducer,
+  featuredRun: featuredRunsReducer,
   fetching: fetchingReducer,
   games: gamesReducer,
   init: initReducer,
@@ -32,3 +32,10 @@ export const combinedReducer = combineReducers({
 export type StoreState = ReturnType<typeof combinedReducer>;
 
 export const store = createStore(combinedReducer, applyMiddleware(thunk));
+
+export const getProp = <T extends any>(key: string) => (
+  _: StoreState,
+  props: Record<string, any>,
+): T => {
+  return props[key];
+};
