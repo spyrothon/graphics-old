@@ -1,5 +1,5 @@
-@value brand, gray-700, black from '../style/theme.css';
-@value size-10, size-12, space-2, space-3 from '../style/theme.css';
+@value brand, gray-700, black from '../../../style/theme.css';
+@value size-10, size-12, space-2, space-3 from '../../../style/theme.css';
 
 .stream {
   height: 100%;

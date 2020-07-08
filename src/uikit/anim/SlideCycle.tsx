@@ -3,15 +3,16 @@ import classNames from "classnames";
 import { TimelineMax } from "gsap";
 import _ from "lodash";
 
-import { FadeShrink } from "./timelines";
+import { FadeShrink } from "./Timelines";
 
-import style from "./slide-cycle.mod.css";
+import style from "./SlideCycle.mod.css";
 
 type SlideCycleProps = {
   className?: string;
   childClassName?: string;
   timeline: TimelineMax;
   children: React.ReactNode;
+  itemDuration?: number;
 };
 
 class SlideCycle extends React.Component<SlideCycleProps> {
@@ -26,12 +27,12 @@ class SlideCycle extends React.Component<SlideCycleProps> {
   }
 
   componentDidMount() {
-    const { timeline } = this.props;
+    const { timeline, itemDuration = 5 } = this.props;
     const fadeTLs = _.map(this.childRefs, FadeShrink);
 
     timeline
       .staggerFromTo(this.childRefs, 0.4, { y: 80 }, { y: 0, ease: "Power4.easeOut" }, 0.08)
-      .add(fadeTLs, "+=3", "normal", 5);
+      .add(fadeTLs, "+=3", "normal", itemDuration);
   }
 
   render() {

@@ -38,18 +38,20 @@ export function commonThunk<ResponseStructure>(
   const fetchId = name || path;
   const url = `${API_BASE_URL}${path}?${query ? params(query) : ""}`;
 
-  return async (dispatch: SafeDispatch) => {
+  return (dispatch: SafeDispatch) => {
     dispatch(FetchingActions.fetchStarted(fetchId));
-    const response = await fetch(url, {
+    return fetch(url, {
       headers: defaultHeaders,
       method: method.toUpperCase(),
       credentials: credentials,
       body: JSON.stringify(body),
-    });
-    checkStatus(response);
-    const parsedResponse = await parseJSON(response);
-    dispatch(FetchingActions.fetchSucceeded(fetchId));
-    then?.(dispatch, parsedResponse);
+    })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((parsedResponse) => {
+        dispatch(FetchingActions.fetchSucceeded(fetchId));
+        then?.(dispatch, parsedResponse);
+      });
   };
 }
 

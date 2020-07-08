@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
 import { accountsReducer } from "./modules/accounts/AccountReducer";
@@ -7,6 +7,7 @@ import { featuredRunsReducer } from "./modules/featured_run/FeaturedRunReducer";
 import { fetchingReducer } from "./modules/fetching/FetchingReducer";
 import { gamesReducer } from "./modules/games/GameReducer";
 import { initReducer } from "./modules/init/InitReducer";
+import { omnibarReducer } from "./modules/omnibar/OmnibarReducer";
 import { preshowReducer } from "./modules/preshow/PreshowReducer";
 import { runsReducer } from "./modules/runs/RunReducer";
 import { socketReducer } from "./modules/socket/SocketReducer";
@@ -22,6 +23,7 @@ export const combinedReducer = combineReducers({
   fetching: fetchingReducer,
   games: gamesReducer,
   init: initReducer,
+  omnibar: omnibarReducer,
   preshow: preshowReducer,
   runs: runsReducer,
   socket: socketReducer,
@@ -32,7 +34,8 @@ export const combinedReducer = combineReducers({
 
 export type StoreState = ReturnType<typeof combinedReducer>;
 
-export const store = createStore(combinedReducer, applyMiddleware(thunk));
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(combinedReducer, composeEnhancers(applyMiddleware(thunk)));
 
 export const getProp = <T extends any>(key: string) => (
   _: StoreState,

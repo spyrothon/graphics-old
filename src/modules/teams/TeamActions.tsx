@@ -13,7 +13,7 @@ export function fetchTeams(eventId: string) {
       name: "teams",
     },
     (dispatch, response: TeamsResponse) => {
-      dispatch(receiveTeams(response.teams));
+      dispatch(receiveTeams(response.teams.filter((team) => team.event_id == eventId)));
     },
   );
 }

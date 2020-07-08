@@ -15,7 +15,7 @@ import style from "./RunSummary.mod.css";
 
 type RunSummaryProps = {
   runId: string;
-  midRow: "game" | "team";
+  midRow?: "game" | "team";
   timeRow?: React.ReactNode;
   showProgressBar?: boolean;
   wrapText?: boolean;
@@ -23,7 +23,14 @@ type RunSummaryProps = {
 };
 
 export default function RunSummary(props: RunSummaryProps) {
-  const { runId, showProgressBar = false, wrapText = true, midRow, timeRow, className } = props;
+  const {
+    runId,
+    showProgressBar = false,
+    wrapText = true,
+    midRow = "game",
+    timeRow,
+    className,
+  } = props;
 
   const { run, game, runner, team, progress, ready } = useSafeSelector((state) => {
     const run = getRun(state, { runId });
@@ -73,7 +80,7 @@ export default function RunSummary(props: RunSummaryProps) {
       return (
         <div className={style.detail}>
           <span className={style.muted}>ESTIMATE: </span>
-          <span className={style.estimate}>{runTime(run.est_seconds)}</span>
+          <span className={style.estimate}>{runTime(run.pb_seconds)}</span>
         </div>
       );
     }

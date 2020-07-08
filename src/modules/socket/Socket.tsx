@@ -1,24 +1,12 @@
-import queryString from "query-string";
 import SturdyWebsocket from "sturdy-websocket";
 
 import { SafeDispatch } from "../../hooks/useDispatch";
 import * as RunActions from "../runs/RunActions";
-import * as ForceResyncActions from "../../actions/force-resync";
+import forceResync from "./forceResync";
 import { SocketActionTypes } from "./SocketTypes";
+import { SOCKET_HOST } from "./SocketConstants";
 
-const SOCKET_PATH = "/api/live/stream";
-function getSocketURL() {
-  const { socket_host } = queryString.parse(window.location.search);
-
-  if (socket_host) return socket_host as string;
-
-  const { host, protocol } = window.location;
-
-  const wsProto = protocol == "https" ? "wss" : "ws";
-
-  return `${wsProto}://${host}${SOCKET_PATH}`;
-}
-const SOCKET = new SturdyWebsocket(getSocketURL());
+const SOCKET = new SturdyWebsocket(SOCKET_HOST);
 
 export function bindSocketToDispatch(dispatch: SafeDispatch) {
   SOCKET.onopen = function() {
@@ -70,7 +58,7 @@ function handleSocketUpdate(dispatch: SafeDispatch, event: MessageEvent) {
       return;
     case "FORCE_RESYNC":
       const { collection } = data.data;
-      ForceResyncActions.resync(dispatch, collection);
+      forceResync(dispatch, collection);
     default:
       return;
   }

@@ -3,7 +3,6 @@
 @value font-mono from '../style/theme.css';
 
 .run {
-  width: 100%;
   display: flex;
   align-items: center;
   font-size: size-12;
@@ -23,7 +22,6 @@
   margin-bottom: space-1;
   color: gray-400;
   color: var(--color);
-  font-family: font-mono;
   font-size: size-12;
   font-weight: 600;
   letter-spacing: 0.25px;
@@ -34,7 +32,6 @@
   margin-bottom: space-1;
   color: gray-400;
   color: var(--color);
-  font-family: font-mono;
   font-size: size-12;
   font-weight: 600;
   letter-spacing: 0.25px;
@@ -46,10 +43,8 @@
   font-size: size-14;
 }
 
-
 .detail {
   font-size: size-12;
-  font-family: font-mono;
   font-weight: 400;
   font-variant-numeric: tabular-nums;
 }
@@ -70,7 +65,6 @@
 .progress {
   margin-top: space-2;
 }
-
 
 .noWrap {
   .gameName,

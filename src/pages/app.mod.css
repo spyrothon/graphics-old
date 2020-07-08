@@ -5,18 +5,41 @@
 .layoutContainer {
   display: grid;
   grid-template:
-      "sidebar mainvideo" 711px
-      "subvideos subvideos" 128px
-      "omnibar omnibar" 61px
-    / 335px 1264px;
+    "fleft fleft fleft fright fright fright" 450px
+    "left left center center right right" 300px
+    "omnibar omnibar omnibar omnibar omnibar omnibar" 148px;
   grid-gap: 1px;
   font-family: font-text;
 }
 
-.mainVideo {
-  grid-area: mainvideo;
+.video {
   overflow: hidden;
   background-color: gray-800;
+}
+
+.featuredLeft {
+  composes: video;
+  grid-area: fleft;
+}
+
+.featuredRight {
+  composes: video;
+  grid-area: fright;
+}
+
+.left {
+  composes: video;
+  grid-area: left;
+}
+
+.center {
+  composes: video;
+  grid-area: center;
+}
+
+.right {
+  composes: video;
+  grid-area: right;
 }
 
 .sidebar {

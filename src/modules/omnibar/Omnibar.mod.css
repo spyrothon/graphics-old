@@ -1,0 +1,40 @@
+@value brand from '../../style/theme.css';
+@value gray-800, gray-600 from '../../style/theme.css';
+
+.container {
+  display: grid;
+  grid-gap: 1px;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.topRow {
+  display: flex;
+  background-color: gray-800;
+  overflow: hidden;
+}
+
+.bottomRow {
+  display: flex;
+  width: 100%;
+  background-color: gray-800;
+  overflow: hidden;
+}
+
+.bottomRowActive {
+  border-top: 4px solid brand;
+  background-color: gray-600;
+}
+
+.run {
+  flex: 1 1 auto;
+  max-width: 20%;
+  border-right: 1px solid brand;
+  padding: 0 16px;
+}
+
+.logo {
+  flex: 0 0 180px;
+  border-right: 1px solid brand;
+}

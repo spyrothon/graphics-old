@@ -5,9 +5,7 @@ import _ from "lodash";
 import { timeFromISO } from "../../Util";
 import { StoreState, getProp } from "../../Store";
 
-import { getSortedTeams } from "../teams/TeamStore";
 import { getCurrentTime } from "../timers/TimerStore";
-import { Run } from "./RunTypes";
 
 export const getRuns = (state: StoreState) => Object.values(state.runs.runs);
 export const getRun = (state: StoreState, props: { runId: string }) => state.runs.runs[props.runId];
@@ -64,20 +62,3 @@ export const getSortedRunsForTeam = createCachedSelector(
     return runs[teamId];
   },
 )(getProp("teamId"));
-
-export function getActiveRun(runs: Run[]) {
-  return _.find(runs, (run) => !run.finished) || runs[runs.length - 1];
-}
-
-export const getActiveRunIds = createSelector(
-  [getSortedRunsByTeam, getSortedTeams],
-  (sortedRunsByTeam, teams) => {
-    return _.chain(teams)
-      .map((team) => {
-        const runs = sortedRunsByTeam[team.id];
-        return getActiveRun(runs);
-      })
-      .map("id")
-      .value();
-  },
-);

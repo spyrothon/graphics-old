@@ -2,7 +2,8 @@ import { createSelector } from "reselect";
 import { DateTime } from "luxon";
 import _ from "lodash";
 
-import { getRuns, getActiveRunIds } from "../runs/RunStore";
+import { getActiveRunIds } from "../runs/ActiveRunStore";
+import { getRuns } from "../runs/RunStore";
 import { getCurrentTime } from "../timers/TimerStore";
 import { StoreState } from "../../Store";
 

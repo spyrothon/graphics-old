@@ -15,9 +15,10 @@ export function fetchRuns(eventId = EVENT_ID, { teamId, runIds }: FetchRunOption
   return commonThunk(
     {
       method: "GET",
-      path: `/api/v1/events/${eventId}/runs`,
+      path: `/api/v1/runs`,
       name: "runs",
       query: denulled({
+        event_id: eventId,
         team_id: teamId,
         run_ids: runIds,
       }),

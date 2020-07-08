@@ -44,6 +44,9 @@ module.exports = (_env, options) => {
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({ title: config.PAGE_TITLE, template: "./src/index.html" }),
     ],
+    resolve: {
+      extensions: [".tsx", ".ts", ".js", ".json"],
+    },
     module: {
       rules: [
         {

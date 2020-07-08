@@ -12,6 +12,7 @@ import { SocketActionTypes, SocketAction } from "./modules/socket/SocketTypes";
 import { StreamActionTypes, StreamAction } from "./modules/streams/StreamTypes";
 import { TeamActionTypes, TeamAction } from "./modules/teams/TeamTypes";
 import { TimerActionTypes, TimerAction } from "./modules/timers/TimerTypes";
+import { OmnibarActionTypes, OmnibarAction } from "./modules/omnibar/OmnibarTypes";
 
 export const ActionTypes = {
   ...AccountActionTypes,
@@ -20,6 +21,7 @@ export const ActionTypes = {
   ...FetchingActionTypes,
   ...GameActionTypes,
   ...InitActionTypes,
+  ...OmnibarActionTypes,
   ...PreshowActionTypes,
   ...RunActionTypes,
   ...SocketActionTypes,
@@ -35,6 +37,7 @@ export type Action =
   | FetchingAction
   | GameAction
   | InitAction
+  | OmnibarAction
   | PreshowAction
   | RunAction
   | SocketAction

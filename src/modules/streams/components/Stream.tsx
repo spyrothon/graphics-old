@@ -26,19 +26,20 @@ const QUALITIES = {
 
 type StreamProps = {
   runId: string;
-  quality: typeof QUALITIES[keyof typeof QUALITIES];
-  volume: number;
-  onStreamReady: () => unknown;
-  onStreamUnready: () => unknown;
+  quality?: typeof QUALITIES[keyof typeof QUALITIES];
+  volume?: number;
+  onStreamReady?: () => unknown;
+  onStreamUnready?: () => unknown;
 };
 
 export default function Stream(props: StreamProps) {
-  const { runId, quality, volume, onStreamReady, onStreamUnready } = props;
+  const { runId, quality = QUALITIES.NORMAL, volume = 0, onStreamReady, onStreamUnready } = props;
 
   const twitchName = useSafeSelector((state) => {
     const run = getRun(state, { runId });
-    const account = getAccount(state, { accountId: run.account_id });
+    if (run == null) return null;
 
+    const account = getAccount(state, { accountId: run.account_id });
     return account?.twitch?.toLowerCase();
   });
 
@@ -47,32 +48,35 @@ export default function Stream(props: StreamProps) {
 
   let player: Twitch.Player | undefined = undefined;
   React.useLayoutEffect(() => {
-    player = new Twitch.Player(playerContainerId, { ...GLOBAL_PLAYER_OPTIONS });
-  }, []);
-
-  React.useLayoutEffect(() => {
-    player?.addEventListener(Twitch.Player.PLAYING, onStreamReady);
-    player?.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
-    player?.setVolume(0);
-
-    return () => {
-      player?.removeEventListener(Twitch.Player.PLAYING, onStreamReady);
-      player?.removeEventListener(Twitch.Player.OFFLINE, onStreamUnready);
-    };
-  }, [player, onStreamReady, onStreamUnready]);
-
-  React.useEffect(() => {
     if (USE_STREAM_PLACEHOLDERS) return;
-
     if (twitchName == null) return;
+
+    if (player == null) {
+      player = new Twitch.Player(playerContainerId, {
+        ...GLOBAL_PLAYER_OPTIONS,
+        channel: twitchName,
+      });
+    }
 
     player?.setChannel(twitchName);
     player?.setQuality(quality);
     player?.setVolume(volume);
   }, [twitchName, quality, volume]);
 
+  React.useLayoutEffect(() => {
+    onStreamReady != null && player?.addEventListener(Twitch.Player.PLAYING, onStreamReady);
+    onStreamUnready != null && player?.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
+    player?.setVolume(volume);
+
+    return () => {
+      onStreamReady != null && player?.removeEventListener(Twitch.Player.PLAYING, onStreamReady);
+      onStreamUnready != null &&
+        player?.removeEventListener(Twitch.Player.OFFLINE, onStreamUnready);
+    };
+  }, [player, onStreamReady, onStreamUnready]);
+
   if (USE_STREAM_PLACEHOLDERS) {
-    const thumbSrc = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchName}-320x180.jpg`;
+    const thumbSrc = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchName}-854x480.jpg`;
 
     return (
       <div className={style.playerContainer}>
