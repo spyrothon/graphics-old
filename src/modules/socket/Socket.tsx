@@ -42,6 +42,8 @@ export function syncStateToServer(state: object) {
 function handleSocketUpdate(dispatch: SafeDispatch, event: MessageEvent) {
   const data = JSON.parse(event.data);
 
+  console.log("got a socket event", data);
+
   const { type } = data;
 
   switch (type) {

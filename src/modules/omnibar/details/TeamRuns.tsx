@@ -11,13 +11,12 @@ import styles from "./TeamRuns.mod.css";
 
 type TeamRunsProps = {
   teamId: string;
-  play?: boolean;
   className?: string;
   onComplete?: () => unknown;
 };
 
 export default function TeamRuns(props: TeamRunsProps) {
-  const { teamId, play = true, className, onComplete } = props;
+  const { teamId, className, onComplete } = props;
 
   const { team, runIds } = useSafeSelector((state) => ({
     team: TeamStore.getTeam(state, { teamId }),
@@ -42,7 +41,7 @@ export default function TeamRuns(props: TeamRunsProps) {
       // Out
       .to(headerRef.current, 0.5, { x: -320, ease: "Power2.easeIn" })
       .eventCallback("onComplete", () => onComplete?.())
-      .play(play);
+      .play();
   }, [teamId]);
 
   return (

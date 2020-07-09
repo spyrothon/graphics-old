@@ -19,7 +19,6 @@
 @value brand #eb3d4c;
 @value green #39f139;
 
-
 @value size-42 42px;
 @value size-40 40px;
 @value size-32 32px;
@@ -30,14 +29,12 @@
 @value size-12 12px;
 @value size-10 10px;
 
-
 @value space-1 2px;
 @value space-2 4px;
 @value space-3 8px;
 @value space-4 16px;
 @value space-5 32px;
 @value space-6 64px;
-
 
 @value radius-0 2px;
 @value radius-1 4px;

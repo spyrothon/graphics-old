@@ -8,7 +8,7 @@ import { getRuns } from "../runs/RunStore";
 import { getCurrentTime } from "../timers/TimerStore";
 import { StoreState, getProp } from "../../Store";
 
-const getTeams = (state: StoreState) => Object.values(state.teams);
+export const getTeams = (state: StoreState) => Object.values(state.teams);
 export const getTeam = (state: StoreState, props: { teamId: string }) => state.teams[props.teamId];
 
 export const getSortedTeams = createSelector([getTeams], (teams) => _.sortBy(teams, "id"));

@@ -1,12 +1,9 @@
-@value black, gray-500, gray-700, gray-800 from '../style/theme.css';
-@value space-1, space-2, space-3, space-4 from '../style/theme.css';
-@value font-text from '../style/theme.css';
-
-.layoutContainer {
+.container {
   display: grid;
   grid-template:
-    "streams" 751px
-    "omnibar" 148px;
+    "fleft fleft fleft fright fright fright" 450px
+    "left left center center right right" 300px
+    / 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 1px;
   font-family: font-text;
 }
@@ -39,8 +36,4 @@
 .right {
   composes: video;
   grid-area: right;
-}
-
-.omnibar {
-  grid-area: omnibar;
 }

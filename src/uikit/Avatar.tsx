@@ -6,7 +6,7 @@ import style from "./Avatar.mod.css";
 
 type AvatarProps = {
   url?: string;
-  src: string;
+  src?: string;
   size?: 16 | 24 | 32 | 48 | 64 | 96 | 128;
   className?: string;
 };
@@ -14,7 +14,7 @@ type AvatarProps = {
 export default function Avatar(props: AvatarProps) {
   const {
     url = ASSETS_URL,
-    src,
+    src = "default-avatar",
     size = 128, // should be one of 16, 24, 32, 48, 64, 96, 128
     className,
   } = props;

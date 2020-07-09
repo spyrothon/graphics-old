@@ -32,7 +32,7 @@ type StreamProps = {
   onStreamUnready?: () => unknown;
 };
 
-export default function Stream(props: StreamProps) {
+const Stream = React.memo((props: StreamProps) => {
   const { runId, quality = QUALITIES.NORMAL, volume = 0, onStreamReady, onStreamUnready } = props;
 
   const twitchName = useSafeSelector((state) => {
@@ -52,6 +52,7 @@ export default function Stream(props: StreamProps) {
     if (twitchName == null) return;
 
     if (player == null) {
+      console.log("building new player");
       player = new Twitch.Player(playerContainerId, {
         ...GLOBAL_PLAYER_OPTIONS,
         channel: twitchName,
@@ -86,6 +87,8 @@ export default function Stream(props: StreamProps) {
   }
 
   return <div className={style.playerContainer} id={playerContainerId} ref={playerContainer} />;
-}
+});
 
 Stream.Qualities = QUALITIES;
+
+export default Stream;

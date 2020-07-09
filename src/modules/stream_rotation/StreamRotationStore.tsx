@@ -7,20 +7,17 @@ import { getRuns } from "../runs/RunStore";
 import { getCurrentTime } from "../timers/TimerStore";
 import { StoreState } from "../../Store";
 
-export const getFeaturedRunId = (state: StoreState) => state.featuredRun && state.featuredRun.runId;
-export const getRotationInterval = (state: StoreState) =>
-  state.featuredRun && state.featuredRun.rotationInterval;
-export const getRotationEnabled = (state: StoreState) =>
-  state.featuredRun && state.featuredRun.rotationEnabled;
-export const getRotateAtRaw = (state: StoreState) =>
-  state.featuredRun && state.featuredRun.rotateAt;
+export const getStreamRotationId = (state: StoreState) => state.streamRotation.runId;
+export const getRotationInterval = (state: StoreState) => state.streamRotation.rotationInterval;
+export const getRotationEnabled = (state: StoreState) => state.streamRotation.rotationEnabled;
+export const getRotateAtRaw = (state: StoreState) => state.streamRotation.rotateAt;
 
 export const getRotateAt = createSelector(
   [getRotateAtRaw],
   (rawTime) => rawTime && DateTime.fromISO(rawTime),
 );
 
-export const getFeaturedRun = createSelector([getRuns, getFeaturedRunId], (runs, runId) =>
+export const getStreamRotation = createSelector([getRuns, getStreamRotationId], (runs, runId) =>
   runs.find((run) => run.id === runId),
 );
 
@@ -42,10 +39,10 @@ export const getNextRotatesAt = createSelector(
   },
 );
 
-export const getNextFeaturedRunId = createSelector(
-  [getFeaturedRunId, getActiveRunIds],
-  (featuredRunId, activeRunIds) => {
-    const featuredIndex = _.findIndex(activeRunIds, (id) => id == featuredRunId) || 0;
+export const getNextstreamRotationId = createSelector(
+  [getStreamRotationId, getActiveRunIds],
+  (streamRotationId, activeRunIds) => {
+    const featuredIndex = _.findIndex(activeRunIds, (id) => id == streamRotationId) || 0;
     return activeRunIds[(featuredIndex + 1) % activeRunIds.length];
   },
 );

@@ -35,14 +35,14 @@ export const getCurrentRunSeconds = createCachedSelector(
 )(getProp<string>("runId"));
 
 export const getRunProgress = createCachedSelector([getRun, getCurrentTime], (run, currentTime) => {
-  const { finished, started_at, est_seconds } = run;
+  const { finished, started_at, pb_seconds } = run;
   if (finished) {
     return 100;
   } else if (started_at == null) {
     return 0;
   } else if (currentTime != null) {
     const elapsed = currentTime.diff(timeFromISO(started_at)).as("seconds");
-    return Math.min(0.99, elapsed / est_seconds) * 100;
+    return Math.min(0.99, elapsed / pb_seconds) * 100;
   } else {
     // If currentTime doesn't exist, we can't state progress.
     return 0;

@@ -1,6 +1,8 @@
 import { createSelector } from "reselect";
+import createCachedSelector from "re-reselect";
 import _ from "lodash";
 
+import { getProp } from "../../Store";
 import { getSortedTeams } from "../teams/TeamStore";
 import { getSortedRunsByTeam } from "./RunStore";
 import { Run } from "./RunTypes";
@@ -21,3 +23,13 @@ export const getActiveRunIds = createSelector(
       .value();
   },
 );
+
+export const getActiveRunForTeam = createCachedSelector(
+  [getSortedRunsByTeam, getProp<string>("teamId")],
+  (sortedRunsByTeam, teamId) => {
+    const runs = sortedRunsByTeam[teamId];
+    if (runs == null) return null;
+
+    return getActiveRun(sortedRunsByTeam[teamId]);
+  },
+)(getProp<string>("teamId"));

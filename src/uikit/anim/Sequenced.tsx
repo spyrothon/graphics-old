@@ -2,7 +2,8 @@ import * as React from "react";
 import _ from "lodash";
 
 type SequencedProps = {
-  onLoop: () => unknown;
+  onLoop?: () => unknown;
+  onNext?: (index: number) => unknown;
   children: React.ReactNode;
 };
 
@@ -31,16 +32,19 @@ class Sequenced extends React.Component<SequencedProps, SequencedState> {
   }
 
   handleComplete() {
-    const { children, onLoop } = this.props;
+    const { children, onNext, onLoop } = this.props;
     const { currentChild } = this.state;
 
     const nextChild = currentChild + 1;
 
     if (nextChild >= React.Children.count(children)) {
-      onLoop && onLoop();
+      onLoop?.();
     }
 
-    this.setState({ currentChild: nextChild % React.Children.count(children) });
+    const nextIndex = nextChild % React.Children.count(children);
+    onNext?.(nextIndex);
+
+    this.setState({ currentChild: nextIndex });
   }
 
   render() {
