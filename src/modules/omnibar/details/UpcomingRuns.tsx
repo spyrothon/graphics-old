@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 import humanizeDuration from "humanize-duration";
 import _ from "lodash";
 import { DateTime } from "luxon";
@@ -61,7 +62,7 @@ export default function UpcomingRuns(props: UpcomingRunsProps) {
 
   return (
     <div className={styles.content}>
-      <div ref={headerRef} className={styles.teamHeader}>
+      <div ref={headerRef} className={classNames(styles.teamHeader, styles.inverted)}>
         <p>Upcoming Runs</p>
       </div>
       <SlideCycle className={styles.content} timeline={childTimeline}>

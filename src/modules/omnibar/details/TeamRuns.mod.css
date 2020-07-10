@@ -23,6 +23,11 @@
     white-space: nowrap;
     color: white;
   }
+
+  &.inverted p {
+    background-color: white;
+    color: gray-700;
+  }
 }
 
 .run {
