@@ -1,11 +1,13 @@
 @value white, gray-400, gray-600 from '../style/theme.css';
-@value size-10, size-12, size-14, size-16, size-20, space-1, space-2, space-3, space-6, radius-1 from '../style/theme.css';
+@value size-10, size-12, size-14, size-16, size-20, size-24, space-1, space-2, space-3, space-6, radius-1 from '../style/theme.css';
 @value font-mono from '../style/theme.css';
 
 .team {
+  position: relative;
   align-items: center;
   font-size: size-12;
   color: white;
+  padding: 8px 12px 8px 12px;
 }
 
 .runnerAvatar {
@@ -45,7 +47,10 @@
 }
 
 .progress {
-  margin-top: space-2;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
 }
 
 .noWrap {
@@ -57,5 +62,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-height: 1em;
+  }
+}
+
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: stretch;
+
+  .teamName {
+    flex: 1 1 auto;
+    font-size: size-16;
+  }
+
+  .finalTime {
+    flex: 0 0 auto;
+    font-size: size-24;
+    padding-bottom: 4px;
   }
 }

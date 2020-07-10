@@ -3,7 +3,8 @@ import { StreamRotationAction, StreamRotationActionTypes } from "./StreamRotatio
 import { ActionFor } from "../../Actions";
 
 type StreamRotationState = {
-  runId?: string;
+  featuredLeftId?: string;
+  featuredRightId?: string;
   rotateAt?: string;
   // Evenly split feature time within an hour across the 7 teams
   // This can be overwritten by the admin dashboard.
@@ -15,19 +16,41 @@ type StreamRotationState = {
 };
 
 const defaultState: StreamRotationState = {
-  rotationInterval: Math.floor((60 * 60) / 5),
+  rotationInterval: Math.floor(6),
   rotationEnabled: true,
 };
 
-function handleSetFeaturedRunLeft(
+function handleSetFeaturedLeftId(
   state: StreamRotationState,
-  { data }: ActionFor<"SET_FEATURED_RUN_LEFT">,
+  { data }: ActionFor<"SET_STREAM_ROTATION_FEATURED_LEFT_ID">,
 ) {
   const { runId, rotateAt } = data;
-
   return {
     ...state,
-    runId,
+    featuredLeftId: runId,
+    rotateAt,
+  };
+}
+
+function handleSetFeaturedRightId(
+  state: StreamRotationState,
+  { data }: ActionFor<"SET_STREAM_ROTATION_FEATURED_RIGHT_ID">,
+) {
+  const { runId, rotateAt } = data;
+  return {
+    ...state,
+    featuredRightId: runId,
+    rotateAt,
+  };
+}
+
+function handleSetStreamRotationAt(
+  state: StreamRotationState,
+  { data }: ActionFor<"SET_STREAM_ROTATION_AT">,
+) {
+  const { rotateAt } = data;
+  return {
+    ...state,
     rotateAt,
   };
 }
@@ -61,10 +84,12 @@ export function streamRotationReducer(
   action: StreamRotationAction,
 ): StreamRotationState {
   switch (action.type) {
-    case StreamRotationActionTypes.SET_FEATURED_RUN_LEFT:
-      return handleSetFeaturedRunLeft(state, action);
-    case StreamRotationActionTypes.SET_FEATURED_RUN_RIGHT:
-      return handleSetFeaturedRunRight(state, action);
+    case StreamRotationActionTypes.SET_STREAM_ROTATION_FEATURED_LEFT_ID:
+      return handleSetFeaturedLeftId(state, action);
+    case StreamRotationActionTypes.SET_STREAM_ROTATION_FEATURED_RIGHT_ID:
+      return handleSetFeaturedRightId(state, action);
+    case StreamRotationActionTypes.SET_STREAM_ROTATION_AT:
+      return handleSetStreamRotationAt(state, action);
     case StreamRotationActionTypes.SET_STREAM_ROTATION_INTERVAL:
       return handleSetStreamRotationRotationInterval(state, action);
     case StreamRotationActionTypes.SET_STREAM_ROTATION_ENABLED:

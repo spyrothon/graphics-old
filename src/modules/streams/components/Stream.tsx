@@ -8,7 +8,7 @@ import style from "./Stream.mod.css";
 
 // Set this to use thumbnails instead of interactive twitch players.
 // Reduces load times and helps React Dev Tools not break.
-const USE_STREAM_PLACEHOLDERS = true;
+const USE_STREAM_PLACEHOLDERS = false;
 
 const GLOBAL_PLAYER_OPTIONS = {
   width: "100%",
@@ -25,7 +25,7 @@ const QUALITIES = {
 };
 
 type StreamProps = {
-  runId: string;
+  runId?: string;
   quality?: typeof QUALITIES[keyof typeof QUALITIES];
   volume?: number;
   onStreamReady?: () => unknown;
@@ -36,6 +36,8 @@ const Stream = React.memo((props: StreamProps) => {
   const { runId, quality = QUALITIES.NORMAL, volume = 0, onStreamReady, onStreamUnready } = props;
 
   const twitchName = useSafeSelector((state) => {
+    if (runId == null) return null;
+
     const run = getRun(state, { runId });
     if (run == null) return null;
 
@@ -45,34 +47,48 @@ const Stream = React.memo((props: StreamProps) => {
 
   const playerContainer = React.useRef<HTMLDivElement>(null);
   const [playerContainerId] = React.useState(() => _.uniqueId("stream_player_"));
+  const player = React.useRef<Twitch.Player>();
 
-  let player: Twitch.Player | undefined = undefined;
   React.useLayoutEffect(() => {
     if (USE_STREAM_PLACEHOLDERS) return;
     if (twitchName == null) return;
 
-    if (player == null) {
-      console.log("building new player");
-      player = new Twitch.Player(playerContainerId, {
+    if (player.current == null) {
+      const newPlayer = new Twitch.Player(playerContainerId, {
         ...GLOBAL_PLAYER_OPTIONS,
         channel: twitchName,
+        muted: true,
       });
+      player.current = newPlayer;
     }
 
-    player?.setChannel(twitchName);
-    player?.setQuality(quality);
-    player?.setVolume(volume);
+    player.current.setChannel(twitchName);
+    player.current.setQuality(quality);
+    player.current.setVolume(volume);
   }, [twitchName, quality, volume]);
 
+  // The embed won't let you control volume until you mute and unmute the player
+  // after it starts playing.
+  function initPlayerVolume() {
+    player.current?.setVolume(0.01);
+    player.current?.setMuted(false);
+    player.current?.setVolume(volume);
+  }
+
   React.useLayoutEffect(() => {
-    onStreamReady != null && player?.addEventListener(Twitch.Player.PLAYING, onStreamReady);
-    onStreamUnready != null && player?.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
-    player?.setVolume(volume);
+    const { current } = player;
+    if (current == null) return;
+
+    current.addEventListener(Twitch.Player.PLAYING, initPlayerVolume);
+    onStreamReady != null && current.addEventListener(Twitch.Player.PLAYING, onStreamReady);
+    onStreamUnready != null && current.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
+    current.setVolume(volume);
 
     return () => {
-      onStreamReady != null && player?.removeEventListener(Twitch.Player.PLAYING, onStreamReady);
+      current.removeEventListener(Twitch.Player.PLAYING, initPlayerVolume);
+      onStreamReady != null && current.removeEventListener(Twitch.Player.PLAYING, onStreamReady);
       onStreamUnready != null &&
-        player?.removeEventListener(Twitch.Player.OFFLINE, onStreamUnready);
+        current.removeEventListener(Twitch.Player.OFFLINE, onStreamUnready);
     };
   }, [player, onStreamReady, onStreamUnready]);
 

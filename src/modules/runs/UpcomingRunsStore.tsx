@@ -23,7 +23,7 @@ export const getEstimatedRunSchedulesByTeam = createSelector(
     return _.mapValues(runsByTeam, (runs) => {
       let lastEndedAt = timeFromISO(currentTimeISO);
       return _.map(runs, (run, index) => {
-        const runDuration = run.actual_seconds || run.est_seconds;
+        const runDuration = run.actual_seconds || run.est_seconds || run.pb_seconds;
         if (run.started_at) {
           const startedAt = timeFromISO(run.started_at);
           lastEndedAt = startedAt.plus({ seconds: runDuration });

@@ -4,5 +4,5 @@ export enum OmnibarActionTypes {
 
 export type OmnibarAction = {
   type: "OMNI_SET_HIGHLIGHTED_TEAM";
-  data: { teamId: string };
+  data: { teamId?: string };
 };

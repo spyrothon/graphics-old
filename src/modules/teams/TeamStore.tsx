@@ -35,7 +35,7 @@ export const getTeamRunIdsGameOrdered = createCachedSelector([getTeamRuns], (run
 )(getProp<string>("teamId"));
 
 export const getTeamOriginalEstimate = createCachedSelector([getTeamRuns], (runs) =>
-  _.sumBy(runs, "est_seconds"),
+  _.sumBy(runs, "pb_seconds"),
 )(getProp<string>("teamId"));
 
 export const getTeamLiveEstimate = createCachedSelector(
@@ -47,16 +47,16 @@ export const getTeamLiveEstimate = createCachedSelector(
       } else if (run.started_at) {
         return Math.max(
           currentTime.diff(timeFromISO(run.started_at)).as("seconds"),
-          run.est_seconds,
+          run.pb_seconds,
         );
       } else {
-        return run.est_seconds || 0;
+        return run.pb_seconds || 0;
       }
     });
   },
 )(getProp<string>("teamId"));
 
-const getTeamCurrentRunTime = createCachedSelector(
+export const getTeamCurrentRunTime = createCachedSelector(
   [getTeamRuns, getCurrentTime],
   (runs, currentTime) => {
     return _.sumBy(runs, (run) => {
