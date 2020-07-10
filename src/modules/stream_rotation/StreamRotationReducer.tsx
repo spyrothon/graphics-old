@@ -17,7 +17,7 @@ type StreamRotationState = {
 };
 
 const defaultState: StreamRotationState = {
-  rotationInterval: Math.floor(10),
+  rotationInterval: Math.floor((60 * 60) / 5),
   rotationEnabled: true,
   rotationIndex: 0,
 };
