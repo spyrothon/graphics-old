@@ -14,6 +14,7 @@ const GLOBAL_PLAYER_OPTIONS = {
   width: "100%",
   height: "100%",
   controls: false,
+  parent: ["graphics.mcsn.gg"],
 };
 
 const QUALITIES = {

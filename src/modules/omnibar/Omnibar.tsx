@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
-import Sequenced from "../../uikit/anim/sequenced";
+import Sequenced from "../../uikit/anim/Sequenced";
 import { getTeams } from "../teams/TeamStore";
 import BottomBar from "./BottomBar";
 import { setHighlightedTeam } from "./OmnibarActions";
