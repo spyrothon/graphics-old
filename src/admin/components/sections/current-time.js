@@ -14,7 +14,7 @@ const CurrentTimeSection = (props) => {
 
   return (
     <Section className={className} title="Current Time (UTC)">
-      <p class={style.time}>{simpleDateTimeUTC(currentTime)}</p>
+      <p className={style.time}>{simpleDateTimeUTC(currentTime)}</p>
     </Section>
   );
 };

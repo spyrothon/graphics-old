@@ -11,6 +11,7 @@ import {
   getNextRotatesAt,
   getFeaturedLeftId,
   getFeaturedRightId,
+  getRotationIndex,
 } from "./StreamRotationStore";
 
 import styles from "./StreamRotation.mod.css";
@@ -25,43 +26,54 @@ export default function StreamRotation(props: StreamRotationProps) {
   const dispatch = useSafeDispatch();
 
   const activeRunIds = useSafeSelector(getActiveRunIds);
-  const [featuredLeftId, featuredRightId] = useSafeSelector((state) => [
-    getFeaturedLeftId(state),
-    getFeaturedRightId(state),
-  ]);
-  const [leftId, centerId, rightId] = activeRunIds.filter(
-    (runId) => runId != featuredLeftId && runId != featuredRightId,
-  );
-  console.log(featuredLeftId, featuredRightId, leftId, centerId, rightId);
+  // const [featuredLeftId, featuredRightId] = useSafeSelector((state) => [
+  //   getFeaturedLeftId(state),
+  //   getFeaturedRightId(state),
+  // ]);
+  // const [leftId, centerId, rightId] = activeRunIds.filter(
+  //   (runId) => runId != featuredLeftId && runId != featuredRightId,
+  // );
 
-  const { nextRotatesAt, shouldRotate } = useSafeSelector((state) => ({
+  const { nextRotatesAt, shouldRotate, rotationIndex } = useSafeSelector((state) => ({
     nextRotatesAt: getNextRotatesAt(state),
     shouldRotate: getShouldRotate(state),
+    rotationIndex: getRotationIndex(state),
   }));
+
+  const rotatedRunIds = [
+    ...activeRunIds.slice(rotationIndex),
+    ...activeRunIds.slice(0, rotationIndex),
+  ];
+  const [featuredLeftId, featuredRightId, leftId, centerId, rightId] = rotatedRunIds;
 
   const [rotateLeft, setRotateLeft] = React.useState(false);
 
-  const rotateFeatured = React.useCallback(() => {
-    const featuredId = rotateLeft ? featuredLeftId : featuredRightId;
+  // const rotateFeatured = React.useCallback(() => {
+  //   const featuredId = rotateLeft ? featuredLeftId : featuredRightId;
 
-    const featuredIndex = activeRunIds.findIndex((runId) => runId == featuredId);
-    let nextFeaturedId;
-    for (let i = 1; i <= activeRunIds.length; i++) {
-      i += featuredIndex;
-      const runId = activeRunIds[i % activeRunIds.length];
-      if (runId != featuredLeftId && runId != featuredRightId) {
-        nextFeaturedId = runId;
-        break;
-      }
-    }
+  //   const featuredIndex = activeRunIds.findIndex((runId) => runId == featuredId);
+  //   let nextFeaturedId;
+  //   for (let i = 1; i <= activeRunIds.length; i++) {
+  //     i += featuredIndex;
+  //     const runId = activeRunIds[i % activeRunIds.length];
+  //     if (runId != featuredLeftId && runId != featuredRightId) {
+  //       nextFeaturedId = runId;
+  //       break;
+  //     }
+  //   }
 
-    dispatch(
-      rotateLeft
-        ? StreamRotationActions.setFeaturedRunLeft(nextFeaturedId, nextRotatesAt)
-        : StreamRotationActions.setFeaturedRunRight(nextFeaturedId, nextRotatesAt),
-    );
-    setRotateLeft(!rotateLeft);
-  }, [activeRunIds, nextRotatesAt]);
+  //   dispatch(
+  //     rotateLeft
+  //       ? StreamRotationActions.setFeaturedRunLeft(nextFeaturedId, nextRotatesAt)
+  //       : StreamRotationActions.setFeaturedRunRight(nextFeaturedId, nextRotatesAt),
+  //   );
+  //   setRotateLeft(!rotateLeft);
+  // }, [activeRunIds, nextRotatesAt]);
+
+  function rotateFeatured() {
+    console.log("rotating", rotationIndex);
+    dispatch(StreamRotationActions.setRotationIndex(rotationIndex + 1, nextRotatesAt));
+  }
 
   // set the initial featured runs
   React.useEffect(() => {

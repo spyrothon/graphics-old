@@ -10,6 +10,17 @@ import StateSync from "./modules/socket/StateSync";
 
 import { store } from "./Store";
 
+// import Admin from "./admin/admin.js";
+// import { adminStore } from "./admin/reducer.js";
+
+// if (window.location.pathname === "/admin") {
+//   ReactDOM.render(
+//     <Provider store={adminStore}>
+//       <Admin />
+//     </Provider>,
+//     document.querySelector("#app-container"),
+//   );
+// } else {
 ReactDOM.render(
   <Provider store={store}>
     <App />
@@ -17,3 +28,4 @@ ReactDOM.render(
   </Provider>,
   document.querySelector("#app-container"),
 );
+// }

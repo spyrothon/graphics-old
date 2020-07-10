@@ -7,10 +7,10 @@ const Section = (props) => {
   const { title, children, className } = props;
 
   return (
-    <div class={classNames(style.section, className)}>
-      <h1 class={style.sectionTitle}>{title}</h1>
+    <div className={classNames(style.section, className)}>
+      <h1 className={style.sectionTitle}>{title}</h1>
 
-      <div class={style.sectionContent}>{children}</div>
+      <div className={style.sectionContent}>{children}</div>
     </div>
   );
 };

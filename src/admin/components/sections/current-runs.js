@@ -32,10 +32,10 @@ class CurrentRunsSection extends Component {
 
     return (
       <Section className={className} title="Current Runs">
-        <ul class={style.availableRuns}>
+        <ul className={style.availableRuns}>
           {_.map(activeRunIds, (runId) => (
             <li
-              class={classNames(style.availableRunContainer, {
+              className={classNames(style.availableRunContainer, {
                 [style.isActive]: runId === featuredRunId,
               })}>
               <Run className={style.availableRun} runId={runId} midRow="team" showProgressBar />

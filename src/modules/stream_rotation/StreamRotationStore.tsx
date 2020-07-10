@@ -10,6 +10,7 @@ export const getFeaturedRightId = (state: StoreState) => state.streamRotation.fe
 export const getRotationInterval = (state: StoreState) => state.streamRotation.rotationInterval;
 export const getRotationEnabled = (state: StoreState) => state.streamRotation.rotationEnabled;
 export const getRotateAtRaw = (state: StoreState) => state.streamRotation.rotateAt;
+export const getRotationIndex = (state: StoreState) => state.streamRotation.rotationIndex;
 
 export const getRotateAt = createSelector(
   [getRotateAtRaw],

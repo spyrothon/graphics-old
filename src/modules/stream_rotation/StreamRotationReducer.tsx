@@ -13,12 +13,26 @@ type StreamRotationState = {
   // stream when `rotateAt` is reached. `false` if it should stay
   // on the current run.
   rotationEnabled: boolean;
+  rotationIndex: number;
 };
 
 const defaultState: StreamRotationState = {
-  rotationInterval: Math.floor((60 * 60) / 5),
+  rotationInterval: Math.floor(10),
   rotationEnabled: true,
+  rotationIndex: 0,
 };
+
+function handleSetRotationIndex(
+  state: StreamRotationState,
+  { data }: ActionFor<"SET_STREAM_ROTATION_INDEX">,
+) {
+  const { index, rotateAt } = data;
+  return {
+    ...state,
+    rotationIndex: index,
+    rotateAt,
+  };
+}
 
 function handleSetFeaturedLeftId(
   state: StreamRotationState,
@@ -84,6 +98,8 @@ export function streamRotationReducer(
   action: StreamRotationAction,
 ): StreamRotationState {
   switch (action.type) {
+    case StreamRotationActionTypes.SET_STREAM_ROTATION_INDEX:
+      return handleSetRotationIndex(state, action);
     case StreamRotationActionTypes.SET_STREAM_ROTATION_FEATURED_LEFT_ID:
       return handleSetFeaturedLeftId(state, action);
     case StreamRotationActionTypes.SET_STREAM_ROTATION_FEATURED_RIGHT_ID:

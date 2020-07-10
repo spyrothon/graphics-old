@@ -90,24 +90,24 @@ class FeaturedRunSection extends Component {
       <Section className={className} title="Featured Run">
         <Run runId={featuredRunId} showProgressBar />
 
-        <div class={style.actions}>
+        <div className={style.actions}>
           <p>Rotates At: {rotateAt ? <strong>{simpleDateTimeUTC(rotateAt)}</strong> : "not set"}</p>
           {rotationEnabled ? (
-            <p class={style.success}>Will rotate when scheduled</p>
+            <p className={style.success}>Will rotate when scheduled</p>
           ) : (
-            <p class={style.failure}>Will not rotate</p>
+            <p className={style.failure}>Will not rotate</p>
           )}
 
           <Button onClick={this.handleRotateNow}>Rotate Now</Button>
         </div>
 
-        <h1 class={style.subHeader}>Auto Rotation</h1>
+        <h1 className={style.subHeader}>Auto Rotation</h1>
 
-        <div class={style.actions}>
+        <div className={style.actions}>
           {rotationEnabled ? (
-            <p class={style.success}>The stream is set to auto rotate</p>
+            <p className={style.success}>The stream is set to auto rotate</p>
           ) : (
-            <p class={style.failure}>The stream will not auto rotate</p>
+            <p className={style.failure}>The stream will not auto rotate</p>
           )}
 
           {rotationEnabled ? (
@@ -117,7 +117,7 @@ class FeaturedRunSection extends Component {
           )}
         </div>
 
-        <h1 class={style.subHeader}>Rotation Interval</h1>
+        <h1 className={style.subHeader}>Rotation Interval</h1>
 
         {rotationInterval ? (
           <p>
@@ -125,11 +125,11 @@ class FeaturedRunSection extends Component {
             <strong>{rotationInterval ? runTime(rotationInterval) : "unset"}</strong>
           </p>
         ) : (
-          <p class={style.failure}>The rotation interval is not set</p>
+          <p className={style.failure}>The rotation interval is not set</p>
         )}
 
         <input
-          class={style.intervalInput}
+          className={style.intervalInput}
           type="number"
           min="0"
           step="1"

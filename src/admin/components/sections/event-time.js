@@ -2,17 +2,17 @@ import * as React from "react";
 import classNames from "classnames";
 import { connect } from "react-redux";
 
-import * as EventStore from "../../../selectors/events";
+import * as EventStore from "../../../modules/events/EventStore";
 import * as AdminEventActions from "../../actions/event";
 import Section from "../section";
 import Button from "../button";
-import LoadingSpinner from "../../../uikit/loading-spinner";
+import LoadingSpinner from "../../../uikit/LoadingSpinner";
 
 import { EVENT_ID, EventStates } from "../../../constants";
 import { runTime } from "../../../util";
 import style from "./event-time.mod.css";
 
-class EventTimeSection extends Component {
+class EventTimeSection extends React.Component {
   constructor(props) {
     super(props);
     this.handleFinishClick = this._handleFinishClick.bind(this);
@@ -43,9 +43,9 @@ class EventTimeSection extends Component {
     const { event, eventState, eventTimeSeconds, tick, ready, className, dispatch } = this.props;
 
     return (
-      <Fragment>
+      <React.Fragment>
         <h1>{eventState.toUpperCase()}</h1>
-        <p class={style.time}>{runTime(eventTimeSeconds || 0)}</p>
+        <p className={style.time}>{runTime(eventTimeSeconds || 0)}</p>
 
         <Button
           onClick={() => dispatch(AdminEventActions.startEvent(EVENT_ID))}
@@ -66,7 +66,7 @@ class EventTimeSection extends Component {
         <Button onClick={this.handleResetClick} disabled={eventState !== EventStates.FINISHED}>
           Reset Event
         </Button>
-      </Fragment>
+      </React.Fragment>
     );
   }
 

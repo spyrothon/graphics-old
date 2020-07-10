@@ -48,7 +48,7 @@ class PreshowSection extends Component {
 
     return (
       <Section className={className} title="Preshow">
-        <h1 class={style.subHeader}>Set Active Team</h1>
+        <h1 className={style.subHeader}>Set Active Team</h1>
 
         <select value={selectedTeamId || ""} onChange={(ev) => this.setSelectedTeam(ev)}>
           <option value="" disabled>

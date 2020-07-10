@@ -41,17 +41,17 @@ class TeamsSection extends Component {
 
     return (
       <Section className={className} title="Team Times">
-        <div class={style.teams}>
+        <div className={style.teams}>
           {_.map(teams, (team) => {
             const teamState = this.getTeamState(team);
 
             return (
-              <div class={style.team} style={{ "--color": `#${team.color}` }}>
-                <h2 class={style.subHeader}>{team.name}</h2>
-                <p class={style.time}>{this.getTeamTime(team)}</p>
-                <p class={style.state}>{teamState.toUpperCase(0)}</p>
+              <div className={style.team} style={{ "--color": `#${team.color}` }}>
+                <h2 className={style.subHeader}>{team.name}</h2>
+                <p className={style.time}>{this.getTeamTime(team)}</p>
+                <p className={style.state}>{teamState.toUpperCase(0)}</p>
 
-                <div class={style.teamActions}>
+                <div className={style.teamActions}>
                   <Button
                     onClick={() => dispatch(AdminTeamActions.finishTeam(EVENT_ID, team.id))}
                     disabled={teamState !== EventStates.STARTED}>

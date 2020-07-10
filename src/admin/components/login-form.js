@@ -4,7 +4,7 @@ import * as AuthActions from "../actions/auth";
 
 import style from "./login-form.mod.css";
 
-class LoginForm extends Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this._handleSubmit.bind(this);
@@ -48,23 +48,23 @@ class LoginForm extends Component {
     const { username, password } = this.state;
 
     return (
-      <div class={style.container}>
+      <div className={style.container}>
         <input
-          class={style.input}
+          className={style.input}
           type="text"
           placeholder="username"
           value={username}
           onChange={this.handleUsernameChange}
         />
         <input
-          class={style.input}
+          className={style.input}
           type="password"
           placeholder="password"
           value={password}
           onChange={this.handlePasswordChange}
         />
 
-        <button class={style.button} onClick={this.handleSubmit}>
+        <button className={style.button} onClick={this.handleSubmit}>
           Login
         </button>
       </div>

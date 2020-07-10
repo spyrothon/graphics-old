@@ -1,5 +1,4 @@
 import * as React from "react";
-import classNames from "classnames";
 import { connect } from "react-redux";
 
 import * as SocketStatusStore from "../../selectors/socket";
@@ -13,9 +12,9 @@ const SocketStatusSection = (props) => {
   return (
     <Section className={className} title="Connection Status">
       {isConnected ? (
-        <p class={style.connected}>Connected</p>
+        <p className={style.connected}>Connected</p>
       ) : (
-        <p class={style.notConnected}>Not Connected</p>
+        <p className={style.notConnected}>Not Connected</p>
       )}
     </Section>
   );
