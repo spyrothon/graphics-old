@@ -42,7 +42,7 @@ export default function TeamRuns(props: TeamRunsProps) {
       .to(headerRef.current, 0.5, { x: -320, ease: "Power2.easeIn" })
       .eventCallback("onComplete", () => onComplete?.())
       .play();
-  }, [teamId]);
+  }, []);
 
   return (
     <div

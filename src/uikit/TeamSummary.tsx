@@ -2,7 +2,6 @@ import * as React from "react";
 import classNames from "classnames";
 
 import { useSafeSelector } from "../Store";
-import { runTime } from "../Util";
 import { getAccount } from "../modules/accounts/AccountStore";
 import { getActiveRunForTeam } from "../modules/runs/ActiveRunStore";
 import { getTeam } from "../modules/teams/TeamStore";

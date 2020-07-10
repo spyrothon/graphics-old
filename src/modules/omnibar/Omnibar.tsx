@@ -2,15 +2,16 @@ import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
-import Logo from "../../uikit/Logo";
 import Sequenced from "../../uikit/anim/sequenced";
 import { getTeams } from "../teams/TeamStore";
 import BottomBar from "./BottomBar";
 import { setHighlightedTeam } from "./OmnibarActions";
 import { getHighlightedTeamId } from "./OmnibarStore";
 import TeamRuns from "./details/TeamRuns";
+import UpcomingRuns from "./details/UpcomingRuns";
 
 import styles from "./Omnibar.mod.css";
+import LogoTimer from "./details/LogoTimer";
 
 export default function Omnibar() {
   const dispatch = useSafeDispatch();
@@ -33,14 +34,17 @@ export default function Omnibar() {
   return (
     <div className={styles.container}>
       <div className={styles.topRow}>
-        <Sequenced onNext={rotateTeam}>
-          {teams.map((team) => (
-            <TeamRuns teamId={team.id} />
-          ))}
+        <Sequenced>
+          <UpcomingRuns />
+          <Sequenced onNext={rotateTeam}>
+            {teams.map((team) => (
+              <TeamRuns key={team.id} teamId={team.id} />
+            ))}
+          </Sequenced>
         </Sequenced>
       </div>
       <div className={styles.bottomRow}>
-        <Logo className={styles.logo} />
+        <LogoTimer className={styles.logo} />
         <BottomBar />
       </div>
     </div>

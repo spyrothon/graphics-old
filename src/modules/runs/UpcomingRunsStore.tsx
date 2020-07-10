@@ -51,7 +51,8 @@ export const getEstimatedRunSchedulesByTeam = createSelector(
 export const getUpcomingRuns = createSelector(
   [getEstimatedRunSchedulesByTeam, getProp<number>("count")],
   (runsByTeam, count) => {
-    const sortedNextRuns = _.chain(runsByTeam)
+    // @ts-ignore `flatMap` does collapse an object of arrays, but the type doesn't know that
+    const sortedNextRuns: TeamScheduleRun[] = _.chain(runsByTeam)
       .flatMap()
       .reject("isStarted")
       // @ts-ignore `flatMap` does collapse an object of arrays, but the type doesn't know that
