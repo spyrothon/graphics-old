@@ -37,7 +37,7 @@ export default function StreamRotation(props: StreamRotationProps) {
   const { nextRotatesAt, shouldRotate, rotationIndex } = useSafeSelector((state) => ({
     nextRotatesAt: getNextRotatesAt(state),
     shouldRotate: getShouldRotate(state),
-    rotationIndex: getRotationIndex(state),
+    rotationIndex: getRotationIndex(state) % activeRunIds.length,
   }));
 
   const rotatedRunIds = [
