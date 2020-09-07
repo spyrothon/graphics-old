@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 export const ActionTypes = {};
 
 export type Action = {
