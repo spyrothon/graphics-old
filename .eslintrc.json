@@ -1,6 +1,6 @@
 {
-  "parser": "babel-eslint",
-  "plugins": ["standard", "promise", "import", "react", "react-hooks", "prettier"],
+  "parser": "@babel/eslint-parser",
+  "plugins": ["@babel", "standard", "promise", "import", "react", "react-hooks", "prettier"],
   "extends": ["standard", "standard-jsx", "prettier", "prettier/react", "prettier/standard"],
   "env": {
     "es6": true,
