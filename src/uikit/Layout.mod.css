@@ -1,0 +1,15 @@
+.layout {
+  position: relative;
+  width: 1600px;
+  height: 900px;
+  border: 1px solid #000;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  width: 1600px;
+  height: 900px;
+  filter: url(#sharpBlur) saturate(0.7);
+  z-index: -1;
+}
