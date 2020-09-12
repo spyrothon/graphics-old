@@ -25,7 +25,6 @@ export default function FittedText(props: FittedTextProps) {
     const currentFontSize = parseInt(inner.style.getPropertyValue("font-size"));
 
     setFontSize(Math.min(maxSize, (outerWidth / innerWidth) * currentFontSize));
-    console.log(outerWidth, innerWidth, currentFontSize);
   }, [maxSize, children]);
 
   return (

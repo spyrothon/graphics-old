@@ -1,14 +1,20 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
-
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 
-export const combinedReducer = combineReducers({});
-
-export type StoreState = ReturnType<typeof combinedReducer>;
+import remoteReducer from "./modules/remote/RemoteReducer";
+import runInfoReducer from "./modules/run-info/RunInfoReducer";
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const combinedReducer = combineReducers({
+  remote: remoteReducer,
+  runInfo: runInfoReducer,
+});
 export const store = createStore(combinedReducer, composeEnhancers(applyMiddleware(thunk)));
+
+export type StoreState = ReturnType<typeof combinedReducer>;
+export type Store = typeof store;
 
 export const getProp = <T extends any>(key: string) => (
   _: StoreState,

@@ -23,8 +23,8 @@ export const SVGFilters = {
 export default function SVGLibrary() {
   return (
     <svg style={{ display: "none" }}>
-      {Object.values(SVGFilters).map((Filter) => (
-        <Filter />
+      {Object.values(SVGFilters).map((Filter, index) => (
+        <Filter key={index} />
       ))}
     </svg>
   );
