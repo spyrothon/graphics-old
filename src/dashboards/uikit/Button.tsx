@@ -4,6 +4,7 @@ import classNames from "classnames";
 import styles from "./Button.mod.css";
 
 const ButtonColors = {
+  DEFAULT: styles.colorDefault,
   PRIMARY: styles.colorPrimary,
 };
 
@@ -27,7 +28,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const Button = (props: ButtonProps) => {
   const {
-    color = ButtonColors.PRIMARY,
+    color = ButtonColors.DEFAULT,
     size = ButtonSizes.NORMAL,
     look = ButtonLooks.FILLED,
     fullwidth,

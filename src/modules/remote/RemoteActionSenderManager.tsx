@@ -3,7 +3,7 @@ import { store } from "../../Store";
 import { REMOTE_WEBSOCKET_PROTOCOL, REMOTE_SYNC_HOST } from "./RemoteConstants";
 import ActionSender from "./ActionSender";
 
-class RemoteSyncSenderManager {
+class RemoteActionSenderManager {
   private sender: ActionSender | undefined;
 
   init() {
@@ -17,4 +17,4 @@ class RemoteSyncSenderManager {
   }
 }
 
-export default new RemoteSyncSenderManager();
+export default new RemoteActionSenderManager();

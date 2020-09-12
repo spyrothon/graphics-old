@@ -37,8 +37,8 @@
   --_button-secondary: var(--text-inverted);
 }
 
-.colorNormal {
-  --_button-primary: var(--background-primary);
+.colorDefault {
+  --_button-primary: var(--background-secondary);
   --_button-hover: var(--background-tertiary);
   --_button-secondary: var(--text-normal);
 }

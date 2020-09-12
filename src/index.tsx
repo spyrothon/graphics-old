@@ -7,13 +7,13 @@ import { store } from "./Store";
 import AdminDashboard from "./dashboards/AdminDashboard";
 import Standard1 from "./layouts/standard/Standard1";
 import SVGLibrary from "./uikit/svg/SVGLibrary";
-import RemoteSyncReceiverManager from "./modules/remote/RemoteSyncReceiverManager";
-import RemoteSyncSenderManager from "./modules/remote/RemoteSyncSenderManager";
+import RemoteActionReceiverManager from "./modules/remote/RemoteActionReceiverManager";
+import RemoteActionSenderManager from "./modules/remote/RemoteActionSenderManager";
 import ThemeProvider from "./uikit/ThemeProvider";
 
 switch (window.location.pathname) {
   case "/admin":
-    RemoteSyncSenderManager.init();
+    RemoteActionSenderManager.init();
     ReactDOM.render(
       <Provider store={store}>
         <ThemeProvider>
@@ -25,7 +25,7 @@ switch (window.location.pathname) {
     break;
 
   default:
-    RemoteSyncReceiverManager.init();
+    RemoteActionReceiverManager.init();
     ReactDOM.render(
       <Provider store={store}>
         <ThemeProvider>

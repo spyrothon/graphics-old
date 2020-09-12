@@ -2,11 +2,6 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
-
 .container {
   padding: 16px;
   height: 100%;
@@ -27,4 +22,9 @@ body {
 .panelRunInfo {
   position: absolute;
   inset: 0 50% 75% 0;
+}
+
+.panelRemoteConnection {
+  position: absolute;
+  inset: 0 0 75% 75%;
 }
