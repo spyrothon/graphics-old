@@ -17,8 +17,6 @@ wss.on("connection", (ws) => {
       client.send(message);
     });
   });
-
-  ws.send("something");
 });
 
 console.log("Testing Socket Server started, listening on port", config.SYNC_HOST_PORT);

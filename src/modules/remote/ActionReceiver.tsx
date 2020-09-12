@@ -1,9 +1,10 @@
 import SturdyWebSocket from "sturdy-websocket";
 
-import { Action } from "../../Actions";
+import { Action, ActionFor } from "../../Actions";
 import { Store } from "../../Store";
 import { remoteConnected, remoteDisconnected } from "./RemoteActions";
 import { REMOTE_SOCKET_PING_INTERVAL } from "./RemoteConstants";
+import { RemoteActionType } from "./RemoteTypes";
 
 export default class ActionReceiver {
   private socket?: SturdyWebSocket;
@@ -39,4 +40,8 @@ export default class ActionReceiver {
       console.warn("[REMOTE] received message that could not be processed: ", e);
     }
   };
+
+  send(action: ActionFor<RemoteActionType.REMOTE_STATE_EXPORT>) {
+    this.socket?.send(JSON.stringify(action));
+  }
 }
