@@ -1,6 +1,8 @@
 import * as React from "react";
 import RemoteSyncSenderManager from "../modules/remote/RemoteSyncSenderManager";
 import { updateGameName } from "../modules/run-info/RunInfoActions";
+import TextInput from "./uikit/TextInput";
+import Button from "./uikit/Button";
 
 export default function AdminDashboard() {
   const [gameName, setGameName] = React.useState("");
@@ -11,8 +13,8 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <input onChange={(event) => setGameName(event.target.value)} />
-      <button onClick={() => sendUpdate()}>Set Game Name</button>
+      <TextInput label="Game Name" onChange={(event) => setGameName(event.target.value)} />
+      <Button onClick={() => sendUpdate()}>Set Game Name</Button>
     </div>
   );
 }
