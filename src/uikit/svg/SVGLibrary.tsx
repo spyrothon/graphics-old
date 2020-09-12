@@ -7,11 +7,11 @@ export enum Filters {
 function SharpBlur() {
   return (
     <filter id={Filters.SHARP_BLUR}>
-      <feGaussianBlur stdDeviation="12"></feGaussianBlur>
+      <feGaussianBlur stdDeviation="12" />
       <feColorMatrix
         type="matrix"
-        values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 9 0"></feColorMatrix>
-      <feComposite in2="SourceGraphic" operator="in"></feComposite>
+        values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 9 0" />
+      <feComposite in2="SourceGraphic" operator="in" />
     </filter>
   );
 }

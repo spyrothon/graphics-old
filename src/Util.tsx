@@ -1,5 +1,4 @@
 import { DateTime, Duration } from "luxon";
-import _ from "lodash";
 
 export function timeFromISO(isoString: string) {
   return DateTime.fromISO(isoString, { zone: "utc" });

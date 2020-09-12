@@ -30,6 +30,6 @@ export default class ActionSender {
   handleReopen = () => this.store.dispatch(remoteConnected());
   handleDown = () => this.store.dispatch(remoteDisconnected());
   handleClose = () => this.store.dispatch(remoteDisconnected());
-  handleError(event: Event) {}
-  handleMessage(event: MessageEvent) {}
+  handleError(_event: Event) {}
+  handleMessage(_event: MessageEvent) {}
 }

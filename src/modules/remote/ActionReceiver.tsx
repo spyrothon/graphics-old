@@ -5,7 +5,7 @@ import { Store } from "../../Store";
 import { remoteConnected, remoteDisconnected } from "./RemoteActions";
 import { REMOTE_SOCKET_PING_INTERVAL } from "./RemoteConstants";
 
-export default class SyncReceiver {
+export default class ActionReceiver {
   private socket?: SturdyWebSocket;
 
   constructor(private store: Store, private host: string) {}
@@ -26,7 +26,7 @@ export default class SyncReceiver {
   handleReopen = () => this.store.dispatch(remoteConnected());
   handleDown = () => this.store.dispatch(remoteDisconnected());
   handleClose = () => this.store.dispatch(remoteDisconnected());
-  handleError(event: Event) {}
+  handleError(_event: Event) {}
 
   handleMessage = (event: MessageEvent) => {
     // Naive cast because MessageEvent _could_ be ArrayBuffer, but isn't for this usage.
