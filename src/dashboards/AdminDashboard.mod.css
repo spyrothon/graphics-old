@@ -3,6 +3,7 @@
 }
 
 .container {
+  background-color: var(--background-tertiary);
   padding: 16px;
   height: 100%;
   display: flex;
@@ -21,10 +22,23 @@
 
 .panelRunInfo {
   position: absolute;
-  inset: 0 50% 75% 0;
+  background-color: #fff;
+  inset: 0 50% 25% 0;
 }
 
 .panelRemoteConnection {
   position: absolute;
+  background-color: #fff;
   inset: 0 0 75% 75%;
+}
+
+.panelAllRuns {
+  position: absolute;
+  background-color: #fff;
+  inset: 0 25% 50% 50%;
+}
+
+.inputRow {
+  display: flex;
+  gap: 4px;
 }

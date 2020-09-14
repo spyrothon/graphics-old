@@ -17,6 +17,17 @@
   padding: 16px;
 }
 
+.categoryName {
+  position: absolute;
+  box-sizing: border-box;
+  top: 250px;
+  left: 0;
+  width: 475px;
+  height: 180px;
+  margin: 0;
+  padding: 16px;
+}
+
 .omnibar {
   position: absolute;
   bottom: 0;

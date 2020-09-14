@@ -1,30 +1,69 @@
-import { RunInfoActionType } from "./RunInfoTypes";
 import { ActionFor, Action } from "../../Actions";
+import { createRunInfo } from "./RunInfo";
+import { RunInfo, RunInfoActionType } from "./RunInfoTypes";
 
 type RunInfoReducerState = {
-  gameName: string;
+  currentRun: RunInfo;
+  fetching: boolean;
+  runs: { [id: string]: RunInfo };
 };
 
-function handleSetGameName(
+function handleUpdateCurrentRun(
   state: RunInfoReducerState,
-  action: ActionFor<RunInfoActionType.RUN_INFO_SET_GAME_NAME>,
+  action: ActionFor<RunInfoActionType.RUN_INFO_UPDATE_CURRENT_RUN>,
 ) {
-  const { gameName } = action;
+  const { runInfo } = action;
 
   return {
     ...state,
-    gameName,
+    currentRun: { ...state.currentRun, ...runInfo },
   };
 }
 
-const defaultState = {
-  gameName: "",
+function handleFetchRunsStarted(
+  state: RunInfoReducerState,
+  _action: ActionFor<RunInfoActionType.RUN_INFO_FETCH_RUNS_STARTED>,
+) {
+  return {
+    ...state,
+    fetching: true,
+  };
+}
+
+function handleFetchRunsSuccess(
+  state: RunInfoReducerState,
+  action: ActionFor<RunInfoActionType.RUN_INFO_FETCH_RUNS_SUCCESS>,
+) {
+  const { runs } = action;
+  const runsById = runs.reduce<{ [id: string]: RunInfo }>((acc, run) => {
+    acc[run.id] = run;
+    return acc;
+  }, {});
+
+  return {
+    ...state,
+    fetching: false,
+    runs: { ...state.runs, ...runsById },
+  };
+}
+
+const defaultState: RunInfoReducerState = {
+  currentRun: createRunInfo({}),
+  fetching: false,
+  runs: {},
 };
 
-export default function runInfoReducer(state: RunInfoReducerState = defaultState, action: Action) {
+export default function runInfoReducer(
+  state: RunInfoReducerState = defaultState,
+  action: Action,
+): RunInfoReducerState {
   switch (action.type) {
-    case RunInfoActionType.RUN_INFO_SET_GAME_NAME:
-      return handleSetGameName(state, action);
+    case RunInfoActionType.RUN_INFO_UPDATE_CURRENT_RUN:
+      return handleUpdateCurrentRun(state, action);
+    case RunInfoActionType.RUN_INFO_FETCH_RUNS_STARTED:
+      return handleFetchRunsStarted(state, action);
+    case RunInfoActionType.RUN_INFO_FETCH_RUNS_SUCCESS:
+      return handleFetchRunsSuccess(state, action);
   }
 
   return state;

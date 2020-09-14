@@ -1,5 +1,6 @@
 {
-  "API_ENDPOINT": "//localhost:3000",
+  "API_BASE": "//localhost:4000/api",
+  "API_VERSION": "v1",
   "ASSETS_ENDPOINT": "//localhost:8080",
   "SYNC_HOST": "//localhost:45661",
   "SYNC_HOST_PORT": 45661,
