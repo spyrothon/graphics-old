@@ -1,5 +1,9 @@
-.container * {
-  box-sizing: border-box;
+:global(.admin) {
+  margin: 0;
+
+  & * {
+    box-sizing: border-box;
+  }
 }
 
 .container {

@@ -1,12 +1,14 @@
 import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
+import useSafeDispatch from "../../hooks/useDispatch";
 import { fetchRuns } from "../../modules/run-info/RunInfoActions";
 import * as RunInfoStore from "../../modules/run-info/RunInfoStore";
 import { RunInfo } from "../../modules/run-info/RunInfoTypes";
 import Panel from "../uikit/Panel";
 import Text from "../uikit/Text";
-import useSafeDispatch from "../../hooks/useDispatch";
+
+import styles from "./AllRunsPanel.mod.css";
 
 export default function AllRunsPanel(props: { className?: string }) {
   const { isFetching, runs } = useSafeSelector((state) => ({
@@ -22,8 +24,13 @@ export default function AllRunsPanel(props: { className?: string }) {
 
   function renderRun(run: RunInfo) {
     return (
-      <div key={run.id}>
-        {run.gameName} - {run.categoryName}
+      <div className={styles.run} key={run.id}>
+        <Text marginless className={styles.runHeader}>
+          <strong>{run.gameName}</strong> - {run.categoryName}
+        </Text>
+        <Text size={Text.Sizes.SIZE_14} marginless>
+          {run.runners.length} Runners, {run.commentators.length} Commentators
+        </Text>
       </div>
     );
   }
