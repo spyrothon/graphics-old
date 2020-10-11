@@ -45,8 +45,7 @@ export default function RunRow(props: RunRowProps) {
           {run.categoryName}
         </Text>
         <Text size={Text.Sizes.SIZE_12} marginless>
-          Runners: {renderNameList(run.runners)} &mdash; Commentators:{" "}
-          {renderNameList(run.commentators)}
+          {renderNameList(run.runners)}, with {renderNameList(run.commentators)}
         </Text>
       </div>
     </div>

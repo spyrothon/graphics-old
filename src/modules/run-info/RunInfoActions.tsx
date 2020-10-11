@@ -26,15 +26,3 @@ export function fetchRuns() {
     dispatch({ type: RunInfoActionType.RUN_INFO_FETCH_RUNS_SUCCESS, runs: runs.map(fromServer) });
   };
 }
-
-export function persistRun(runInfo: RunInfo) {
-  return async (dispatch: SafeDispatch) => {
-    dispatch({ type: RunInfoActionType.RUN_INFO_PERSIST_RUN_STARTED, runId: runInfo.id });
-
-    const runResponse = await HTTPUtils.put(Endpoints.UPDATE_RUN(runInfo.id), toServer(runInfo));
-    dispatch({
-      type: RunInfoActionType.RUN_INFO_PERSIST_RUN_SUCCESS,
-      runInfo: fromServer(runResponse),
-    });
-  };
-}
