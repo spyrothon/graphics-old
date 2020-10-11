@@ -22,6 +22,7 @@ type TextProps = {
   color?: typeof TextColors[keyof typeof TextColors];
   marginless?: boolean;
   oneline?: boolean;
+  smallCaps?: boolean;
   className?: string;
   children: React.ReactNode;
 };
@@ -32,6 +33,7 @@ const Text = (props: TextProps) => {
     color = TextColors.NORMAL,
     marginless = false,
     oneline = false,
+    smallCaps = false,
     className,
     children,
   } = props;
@@ -40,6 +42,7 @@ const Text = (props: TextProps) => {
     <div
       className={classNames(styles.text, color, size, className, {
         [styles.oneline]: oneline,
+        [styles.smallCaps]: smallCaps,
         [styles.marginless]: marginless,
       })}>
       {children}

@@ -40,12 +40,16 @@
   --foreground-secondary: var(--gray-500);
   --foreground-tertiary: var(--gray-400);
 
+  --text-normal: #111;
+  --text-muted: #777;
   --text-link: #0076a3;
   --text-inverted: #fff;
 
   --background-primary: #fff;
   --background-secondary: #efe5e9;
   --background-tertiary: #f9f6f7;
+  --background-hover: var(--background-tertiary);
+  --background-active: var(--background-secondary);
 
   --border-primary: 1px solid var(--primary);
   --border-secondary: 1px solid var(--background-secondary);

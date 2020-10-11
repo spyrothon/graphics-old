@@ -1,0 +1,35 @@
+:global(.admin) {
+  margin: 0;
+
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.header {
+  flex: 0 1 auto;
+  background-color: var(--background-secondary);
+  border-bottom: var(--border-primary);
+}
+
+.content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  flex: 0 1 auto;
+  border-right: var(--border-primary);
+}
+
+.main {
+  flex: 1 1 auto;
+}

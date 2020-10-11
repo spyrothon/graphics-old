@@ -1,48 +1,7 @@
-:global(.admin) {
-  margin: 0;
-
-  & * {
-    box-sizing: border-box;
-  }
+.sidebar {
+  width: clamp(220px, 30vw, 320px);
 }
 
-.container {
-  background-color: var(--background-tertiary);
+.main {
   padding: 16px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  flex: 0 0 auto;
-}
-
-.mosaic {
-  flex: 1 0 800px;
-  min-width: 1200px;
-  position: relative;
-}
-
-.panelRunInfo {
-  position: absolute;
-  background-color: #fff;
-  inset: 0 50% 25% 0;
-}
-
-.panelRemoteConnection {
-  position: absolute;
-  background-color: #fff;
-  inset: 0 0 75% 75%;
-}
-
-.panelAllRuns {
-  position: absolute;
-  background-color: #fff;
-  inset: 0 25% 50% 50%;
-}
-
-.inputRow {
-  display: flex;
-  gap: 4px;
 }

@@ -11,4 +11,5 @@ export const ASSETS_URL = process.env.ASSETS_ENDPOINT;
 
 export const Endpoints = {
   RUNS: "/runs",
+  UPDATE_RUN: (id: string) => `/runs/${id}`,
 };
