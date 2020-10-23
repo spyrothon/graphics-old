@@ -1,0 +1,51 @@
+.fetching {
+  padding: 16px;
+  text-align: center;
+}
+
+.row {
+  padding: 8px;
+  border-bottom: var(--border-secondary);
+
+  &:hover {
+    background-color: var(--background-hover);
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: var(--background-active);
+  }
+
+  &.selected {
+    border-right: 4px solid var(--primary);
+    background-color: var(--background-hover);
+  }
+}
+
+.run {
+  composes: row;
+  display: flex;
+  align-items: middle;
+}
+
+.scheduleNumber {
+  flex: 0 1 auto;
+  margin-right: 8px;
+}
+
+.runContent {
+  flex: 1 1 auto;
+}
+
+.runButton {
+  composes: row;
+  padding: 16px 0;
+  border-top: var(--border-primary);
+  user-select: none;
+}
+
+.runButtonText {
+  color: var(--primary);
+  margin: 0;
+  text-align: center;
+}

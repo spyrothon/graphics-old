@@ -26,9 +26,12 @@ module.exports = (_env, options) => {
   console.log("APP_CONFIG: ", defineVars);
 
   return {
-    entry: "./src/index.tsx",
+    entry: {
+      graphics: "./graphics/index.tsx",
+      admin: "./admin/index.tsx",
+    },
     output: {
-      filename: "index.[contenthash].js",
+      filename: "[name].[contenthash].js",
       path: path.resolve(__dirname, "./public"),
       publicPath: "/",
     },
@@ -42,7 +45,7 @@ module.exports = (_env, options) => {
         chunkFilename: "[id].[hash].css",
       }),
       new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({ title: config.PAGE_TITLE, template: "./src/index.html" }),
+      new HtmlWebpackPlugin({ title: config.PAGE_TITLE, template: "./index.html" }),
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".js", ".json"],
