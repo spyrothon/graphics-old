@@ -35,12 +35,14 @@ export type RunEditorStateValue = {
   setBaseRun: (run?: Run) => unknown;
   updateField: <F extends keyof Run>(field: F, value: Run[F]) => unknown;
   getField: <F extends keyof Run>(field: F) => Run[F] | undefined;
-  updateRunnerField: <F extends keyof RunParticipant>(
+  updateParticipantField: <F extends keyof RunParticipant>(
+    type: "runners" | "commentators",
     index: number,
     field: F,
     value: RunParticipant[F],
   ) => unknown;
-  getRunnerField: <F extends keyof RunParticipant>(
+  getParticipantField: <F extends keyof RunParticipant>(
+    type: "runners" | "commentators",
     index: number,
     field: F,
   ) => RunParticipant[F] | undefined;
@@ -60,28 +62,30 @@ export default function useRunEditorState(): RunEditorStateValue {
   function getField<F extends keyof Run>(field: F): Run[F] | undefined {
     return (state.runEdits[field] as Run[F]) ?? state.baseRun?.[field];
   }
-  function updateRunnerField<F extends keyof RunParticipant>(
+  function updateParticipantField<F extends keyof RunParticipant>(
+    type: "runners" | "commentators",
     index: number,
     field: F,
     value: RunParticipant[F],
   ) {
-    const runners = Array.from(getField("runners") ?? []);
+    const list = Array.from(getField(type) ?? []);
 
-    if (runners[index] == null) {
-      runners[index] = {
+    if (list[index] == null) {
+      list[index] = {
         displayName: "",
         twitchName: "",
         twitterName: "",
       };
     }
-    runners[index][field] = value;
-    dispatch({ type: "updateField", field: "runners", value: runners });
+    list[index][field] = value;
+    dispatch({ type: "updateField", field: type, value: list });
   }
-  function getRunnerField<F extends keyof RunParticipant>(
+  function getParticipantField<F extends keyof RunParticipant>(
+    type: "runners" | "commentators",
     index: number,
     field: F,
   ): RunParticipant[F] | undefined {
-    const runner = getField("runners")?.[index];
+    const runner = getField(type)?.[index];
     return runner?.[field];
   }
   function getEditedRun(): Run {
@@ -97,8 +101,8 @@ export default function useRunEditorState(): RunEditorStateValue {
     setBaseRun,
     updateField,
     getField,
-    updateRunnerField,
-    getRunnerField,
+    updateParticipantField,
+    getParticipantField,
     getEditedRun,
     hasChanges,
   };

@@ -3,11 +3,21 @@
 }
 
 .actions {
+  display: flex;
+  align-items: center;
   position: sticky;
   top: 0;
   padding: 16px;
   background-color: var(--background-primary);
   border-bottom: var(--border-primary);
+}
+
+.saveFailed {
+  margin-left: 8px;
+}
+
+.saveSucceeded {
+  margin-left: 8px;
 }
 
 .editor {
@@ -23,11 +33,15 @@
   flex: 2 1 440px;
 }
 
-.runners {
+.participants {
   flex: 1 0 480px;
 }
 
 .inputRow {
   display: flex;
   gap: 4px;
+}
+
+.participantInput {
+  margin: 4px 0;
 }

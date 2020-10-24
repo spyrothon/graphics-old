@@ -1,12 +1,13 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Run, RunParticipant } from "../../../api/APITypes";
+import { Run } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Anchor from "../../uikit/Anchor";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
+import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
 import * as DurationUtils from "../time/DurationUtils";
 import { persistRun } from "./RunActions";
@@ -27,13 +28,50 @@ export default function RunEditor(props: RunEditorProps) {
   const currentRun = useSafeSelector(RunStore.getCurrentRun);
   const editor = useRunEditorState();
 
+  const [saving, setSaving] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const [saveFailed, setSaveFailed] = React.useState(false);
+
   React.useEffect(() => {
     editor.setBaseRun(currentRun);
   }, [currentRun]);
 
   function handleSaveRun() {
     const run = editor.getEditedRun();
-    run != null && dispatch(persistRun(run));
+    if (run == null) return false;
+
+    setSaving(true);
+    setSaveFailed(false);
+    dispatch(persistRun(run))
+      .then(() => {
+        setSaving(false);
+        setSaveFailed(false);
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2500);
+      })
+      .catch(() => {
+        setSaving(false);
+        setSaved(true);
+        setSaveFailed(true);
+      });
+  }
+
+  function getSaveText() {
+    if (!saved) return null;
+
+    if (saveFailed) {
+      return (
+        <Text className={styles.saveFailed} marginless>
+          <strong>Failed to save the run!</strong>
+        </Text>
+      );
+    }
+
+    return (
+      <Text className={styles.saveSucceeded} marginless>
+        <strong>Saved!</strong>
+      </Text>
+    );
   }
 
   function getNote<F extends keyof Run>(field: F) {
@@ -59,27 +97,36 @@ export default function RunEditor(props: RunEditorProps) {
     );
   }
 
-  function renderRunnerFields(index: number) {
+  function renderParticipantFields(type: "runners" | "commentators", index: number) {
     return (
       <div className={styles.runner}>
-        <Header size={Header.Sizes.H4} marginless>
-          Runner {index + 1}
-        </Header>
         <div className={styles.inputRow}>
           <TextInput
-            label="Display Name"
-            value={editor.getRunnerField(index, "displayName")}
-            onChange={(event) => editor.updateRunnerField(index, "displayName", event.target.value)}
+            marginless
+            className={styles.participantInput}
+            label={index === 0 ? "Display Name" : undefined}
+            value={editor.getParticipantField(type, index, "displayName")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "displayName", event.target.value)
+            }
           />
           <TextInput
-            label="Twitch"
-            value={editor.getRunnerField(index, "twitchName")}
-            onChange={(event) => editor.updateRunnerField(index, "twitchName", event.target.value)}
+            marginless
+            className={styles.participantInput}
+            label={index === 0 ? "Twitch" : undefined}
+            value={editor.getParticipantField(type, index, "twitchName")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "twitchName", event.target.value)
+            }
           />
           <TextInput
-            label="Twitter"
-            value={editor.getRunnerField(index, "twitterName")}
-            onChange={(event) => editor.updateRunnerField(index, "twitterName", event.target.value)}
+            marginless
+            className={styles.participantInput}
+            label={index === 0 ? "Twitter" : undefined}
+            value={editor.getParticipantField(type, index, "twitterName")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "twitterName", event.target.value)
+            }
           />
         </div>
       </div>
@@ -89,9 +136,10 @@ export default function RunEditor(props: RunEditorProps) {
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.actions}>
-        <Button onClick={handleSaveRun} disabled={!editor.hasChanges()}>
-          Save Changes
+        <Button onClick={handleSaveRun} disabled={saving || !editor.hasChanges()}>
+          {saving ? "Saving..." : "Save Changes"}
         </Button>
+        {getSaveText()}
       </div>
       <div className={styles.editor}>
         <div className={styles.runInfo}>
@@ -137,12 +185,17 @@ export default function RunEditor(props: RunEditorProps) {
           />
         </div>
 
-        <div className={styles.runners}>
+        <div className={styles.participants}>
           <Header>Runners</Header>
-          {renderRunnerFields(0)}
-          {renderRunnerFields(1)}
-          {renderRunnerFields(2)}
-          {renderRunnerFields(3)}
+          {renderParticipantFields("runners", 0)}
+          {renderParticipantFields("runners", 1)}
+          {renderParticipantFields("runners", 2)}
+          {renderParticipantFields("runners", 3)}
+          <Header>Commentators</Header>
+          {renderParticipantFields("commentators", 0)}
+          {renderParticipantFields("commentators", 1)}
+          {renderParticipantFields("commentators", 2)}
+          {renderParticipantFields("commentators", 3)}
         </div>
       </div>
     </div>

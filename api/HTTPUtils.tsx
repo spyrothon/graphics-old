@@ -115,7 +115,13 @@ export async function send<T>(verb: HTTPVerb, url: string, options?: RequestInit
   checkStatus(response);
 
   const json = await response.json();
-  return parseJSON<T>(json);
+  const parsed = parseJSON<T>(json);
+
+  if (response.status === 422) {
+    return Promise.reject(parsed);
+  } else {
+    return Promise.resolve(parsed);
+  }
 }
 
 export default {

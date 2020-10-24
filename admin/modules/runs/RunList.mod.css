@@ -17,7 +17,7 @@
   }
 
   &.selected {
-    border-right: 4px solid var(--primary);
+    border-right: 8px solid var(--primary);
     background-color: var(--background-hover);
   }
 }
