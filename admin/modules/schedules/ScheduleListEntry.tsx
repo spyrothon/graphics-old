@@ -12,6 +12,12 @@ import * as DurationUtils from "../time/DurationUtils";
 import styles from "./ScheduleList.mod.css";
 import { selectScheduleEntry } from "./ScheduleActions";
 
+function renderNameList(participants: RunParticipant[]) {
+  if (participants.length === 0) return "None";
+
+  return participants.map((participant) => participant.displayName).join(", ");
+}
+
 type RunEntryProps = {
   runId: string;
   position: number;
@@ -21,12 +27,6 @@ function RunEntry(props: RunEntryProps) {
   const { runId, position } = props;
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
   if (run == null) return null;
-
-  function renderNameList(participants: RunParticipant[]) {
-    if (participants.length === 0) return "None";
-
-    return participants.map((participant) => participant.displayName).join(", ");
-  }
 
   return (
     <div className={styles.content}>
@@ -43,10 +43,10 @@ function RunEntry(props: RunEntryProps) {
           marginless
           className={styles.category}
           oneline>
-          {run.categoryName}
+          {run.categoryName} - {DurationUtils.toString(run.estimateSeconds)}
         </Text>
         <Text size={Text.Sizes.SIZE_12} marginless>
-          {renderNameList(run.runners)}, with {renderNameList(run.commentators)}
+          {renderNameList(run.runners)}
         </Text>
       </div>
     </div>
@@ -70,7 +70,7 @@ function InterviewEntry(props: InterviewEntryProps) {
       </Text>
       <div className={styles.runContent}>
         <Text marginless className={styles.runHeader} oneline>
-          <strong>Interview</strong>
+          <strong>{interview.topic}</strong>
         </Text>
         <Text
           size={Text.Sizes.SIZE_12}
@@ -78,7 +78,7 @@ function InterviewEntry(props: InterviewEntryProps) {
           marginless
           className={styles.category}
           oneline>
-          {interview.topic}
+          {renderNameList(interview.interviewees)}
         </Text>
       </div>
     </div>

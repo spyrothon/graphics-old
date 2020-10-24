@@ -96,6 +96,42 @@ export default function InterviewEditor(props: InterviewEditorProps) {
     );
   }
 
+  function renderParticipantFields(type: "interviewers" | "interviewees", index: number) {
+    return (
+      <div className={styles.runner}>
+        <div className={styles.inputRow}>
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label={index === 0 ? "Display Name" : undefined}
+            value={editor.getParticipantField(type, index, "displayName")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "displayName", event.target.value)
+            }
+          />
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label={index === 0 ? "Twitch" : undefined}
+            value={editor.getParticipantField(type, index, "twitchName")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "twitchName", event.target.value)
+            }
+          />
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label={index === 0 ? "Twitter" : undefined}
+            value={editor.getParticipantField(type, index, "twitterName")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "twitterName", event.target.value)
+            }
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.actions}>
@@ -105,8 +141,8 @@ export default function InterviewEditor(props: InterviewEditorProps) {
         {getSaveText()}
       </div>
       <div className={styles.editor}>
-        <div>
-          <Header>Interview Information</Header>
+        <div className={styles.info}>
+          <Header className={styles.header}>Interview Information</Header>
           <TextInput
             label="Topic"
             value={editor.getField("topic")}
@@ -120,6 +156,15 @@ export default function InterviewEditor(props: InterviewEditorProps) {
             onChange={(event) => editor.updateField("notes", event.target.value)}
             multiline
           />
+        </div>
+        <div className={styles.participants}>
+          <Header className={styles.header}>Interviewer</Header>
+          {renderParticipantFields("interviewers", 0)}
+          <Header className={styles.header}>Interviewees</Header>
+          {renderParticipantFields("interviewees", 0)}
+          {renderParticipantFields("interviewees", 1)}
+          {renderParticipantFields("interviewees", 2)}
+          {renderParticipantFields("interviewees", 3)}
         </div>
       </div>
     </div>

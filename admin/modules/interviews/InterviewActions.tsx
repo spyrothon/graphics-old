@@ -25,7 +25,12 @@ export function fetchInterviewsSuccess(interviews: Interview[]): InterviewAction
 
 export function persistInterview(interview: Interview) {
   return async (dispatch: SafeDispatch) => {
-    const updatedInterview = await APIClient.updateInterview(interview.id, interview);
+    const filteredInterview = {
+      ...interview,
+      interviewees: interview.interviewees.filter((entry) => entry?.displayName !== ""),
+      interviewers: interview.interviewers.filter((entry) => entry?.displayName !== ""),
+    };
+    const updatedInterview = await APIClient.updateInterview(interview.id, filteredInterview);
     dispatch({
       type: InterviewActionType.INTERVIEWS_UPDATE_INTERVIEW,
       interview: updatedInterview,
