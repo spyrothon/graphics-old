@@ -1,12 +1,14 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-import thunk from "redux-thunk";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
+import thunk from "redux-thunk";
 
+import interviewsReducer from "./modules/interviews/InterviewsReducer";
 import schedulesReducer from "./modules/schedules/SchedulesReducer";
 import remoteReducer from "./modules/remote/RemoteReducer";
 import runsReducer from "./modules/runs/RunsReducer";
 
 export const combinedReducer = combineReducers({
+  interviews: interviewsReducer,
   schedules: schedulesReducer,
   remote: remoteReducer,
   runs: runsReducer,

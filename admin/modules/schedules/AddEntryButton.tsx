@@ -4,16 +4,10 @@ import Text from "../../uikit/Text";
 
 import styles from "./ScheduleList.mod.css";
 
-type AddRunButtonProps = {
-  onClick: () => unknown;
-};
-
-export default function AddRunButton(props: AddRunButtonProps) {
-  const { onClick } = props;
-
+export default function AddEntryButton() {
   return (
-    <div className={styles.runButton} onClick={onClick}>
-      <Text className={styles.runButtonText}>+ Add a Run</Text>
+    <div className={styles.addButton} onClick={() => null}>
+      <Text className={styles.addButtonText}>+ Add a Run</Text>
     </div>
   );
 }

@@ -144,7 +144,7 @@ export default function RunEditor(props: RunEditorProps) {
       </div>
       <div className={styles.editor}>
         <div className={styles.runInfo}>
-          <Header>Run Information</Header>
+          <Header className={styles.header}>Run Information</Header>
           <TextInput
             label="Game Name"
             value={editor.getField("gameName")}
@@ -182,17 +182,18 @@ export default function RunEditor(props: RunEditorProps) {
             label="Notes"
             value={editor.getField("notes")}
             note={getNote("notes")}
+            multiline
             onChange={(event) => editor.updateField("notes", event.target.value)}
           />
         </div>
 
         <div className={styles.participants}>
-          <Header>Runners</Header>
+          <Header className={styles.header}>Runners</Header>
           {renderParticipantFields("runners", 0)}
           {renderParticipantFields("runners", 1)}
           {renderParticipantFields("runners", 2)}
           {renderParticipantFields("runners", 3)}
-          <Header className={styles.participantsHeader}>Commentators</Header>
+          <Header className={styles.header}>Commentators</Header>
           {renderParticipantFields("commentators", 0)}
           {renderParticipantFields("commentators", 1)}
           {renderParticipantFields("commentators", 2)}

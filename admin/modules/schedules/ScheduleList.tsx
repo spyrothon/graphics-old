@@ -8,6 +8,7 @@ import ScheduleListEntry from "./ScheduleListEntry";
 import * as ScheduleStore from "./ScheduleStore";
 
 import styles from "./ScheduleList.mod.css";
+import AddEntryButton from "./AddEntryButton";
 
 const MAIN_SCHEDULE_ID = "1";
 
@@ -54,6 +55,7 @@ export default function ScheduleList(props: RunListProps) {
           />
         ))
       )}
+      <AddEntryButton />
     </div>
   );
 }

@@ -5,21 +5,9 @@ import { RunActionType } from "./RunsTypes";
 type RunMap = { [id: string]: Run };
 
 type RunReducerState = {
-  currentRunId?: string;
   fetching: boolean;
   runs: RunMap;
 };
-
-function handleSetCurrentRun(
-  state: RunReducerState,
-  action: ActionFor<RunActionType.RUNS_SET_CURRENT_RUN>,
-) {
-  const { runId } = action;
-  return {
-    ...state,
-    currentRunId: runId,
-  };
-}
 
 function handleUpdateRun(state: RunReducerState, action: ActionFor<RunActionType.RUNS_UPDATE_RUN>) {
   const { run } = action;
@@ -61,7 +49,6 @@ function handleFetchRunsSuccess(
 }
 
 const defaultState: RunReducerState = {
-  currentRunId: undefined,
   fetching: false,
   runs: {},
 };
@@ -71,8 +58,6 @@ export default function runsReducer(
   action: Action,
 ): RunReducerState {
   switch (action.type) {
-    case RunActionType.RUNS_SET_CURRENT_RUN:
-      return handleSetCurrentRun(state, action);
     case RunActionType.RUNS_UPDATE_RUN:
       return handleUpdateRun(state, action);
     case RunActionType.RUNS_FETCH_RUNS_STARTED:

@@ -1,17 +1,12 @@
 import { Run } from "../../../api/APITypes";
 
 export enum RunActionType {
-  RUNS_SET_CURRENT_RUN = "RUNS_SET_CURRENT_RUN",
   RUNS_UPDATE_RUN = "RUNS_UPDATE_RUN",
   RUNS_FETCH_RUNS_STARTED = "RUNS_FETCH_RUNS_STARTED",
   RUNS_FETCH_RUNS_SUCCESS = "RUNS_FETCH_RUNS_SUCCESS",
 }
 
 export type RunAction =
-  | {
-      type: RunActionType.RUNS_SET_CURRENT_RUN;
-      runId?: string;
-    }
   | {
       type: RunActionType.RUNS_UPDATE_RUN;
       run: Run;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 
 import InputWrapper, { InputWrapperPassthroughProps } from "./InputWrapper";
 
@@ -9,11 +10,12 @@ export enum TextInputType {
   EMAIL = "email",
 }
 
-export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & {
   type?: TextInputType;
   value?: string;
   placeholder?: string;
   label?: string;
+  multiline?: boolean;
 } & InputWrapperPassthroughProps;
 
 export default function TextInput(props: TextInputProps) {
@@ -24,9 +26,18 @@ export default function TextInput(props: TextInputProps) {
     note,
     className,
     value,
+    multiline = false,
     marginless,
     ...inputProps
   } = props;
+
+  const Tag = multiline ? "textarea" : "input";
+
+  const typeProps = multiline
+    ? {
+        rows: 4,
+      }
+    : {};
 
   return (
     <InputWrapper
@@ -36,7 +47,14 @@ export default function TextInput(props: TextInputProps) {
       className={className}
       marginless={marginless}
       {...inputProps}>
-      <input className={styles.input} name={name} type={type} value={value ?? ""} {...inputProps} />
+      <Tag
+        className={classNames(styles.input, { [styles.multiline]: multiline })}
+        name={name}
+        type={type}
+        value={value ?? ""}
+        {...typeProps}
+        {...inputProps}
+      />
     </InputWrapper>
   );
 }

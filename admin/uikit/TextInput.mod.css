@@ -13,3 +13,9 @@
     outline: none;
   }
 }
+
+.multiline {
+  font-family: var(--font-primary);
+  resize: vertical;
+  min-height: 64px;
+}

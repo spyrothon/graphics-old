@@ -30,14 +30,14 @@
 }
 
 .runInfo {
-  flex: 2 1 440px;
+  flex: 2 1 400px;
 }
 
 .participants {
-  flex: 1 0 480px;
+  flex: 1 0 440px;
 }
 
-.participantsHeader {
+.header:not(:first-child) {
   margin-top: 16px;
 }
 

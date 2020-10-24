@@ -1,5 +1,20 @@
 /* eslint-disable camelcase */
 
+export interface Interview {
+  id: string;
+  topic: string;
+  notes: string;
+  interviewees: RunParticipant[];
+  interviewers: RunParticipant[];
+}
+
+export interface InitialInterview {
+  topic?: string;
+  notes?: string;
+  interviewees?: RunParticipant[];
+  interviewers?: RunParticipant[];
+}
+
 export interface Schedule {
   id: string;
   scheduleEntries: ScheduleEntry[];
@@ -10,11 +25,13 @@ export interface ScheduleEntry {
   scheduleId: string;
   position: number;
   setupSeconds?: number;
-  runId: string;
+  runId?: string;
+  interviewId?: string;
 }
 
 export interface ScheduleResponse extends Schedule {
   runs: Run[];
+  interviews: Interview[];
 }
 
 export interface Run {

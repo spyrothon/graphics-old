@@ -5,7 +5,9 @@ import { RunParticipant, ScheduleEntry } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
+import * as InterviewStore from "../interviews/InterviewStore";
 import * as RunStore from "../runs/RunStore";
+import * as DurationUtils from "../time/DurationUtils";
 
 import styles from "./ScheduleList.mod.css";
 import { selectScheduleEntry } from "./ScheduleActions";
@@ -13,14 +15,11 @@ import { selectScheduleEntry } from "./ScheduleActions";
 type RunEntryProps = {
   runId: string;
   position: number;
-  selected: boolean;
-  onClick: () => unknown;
 };
 
 function RunEntry(props: RunEntryProps) {
-  const { runId, position, selected, onClick } = props;
+  const { runId, position } = props;
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
-
   if (run == null) return null;
 
   function renderNameList(participants: RunParticipant[]) {
@@ -30,7 +29,7 @@ function RunEntry(props: RunEntryProps) {
   }
 
   return (
-    <div className={classNames(styles.entry, { [styles.selected]: selected })} onClick={onClick}>
+    <div className={styles.content}>
       <Text className={styles.scheduleNumber} color={Text.Colors.MUTED} marginless>
         #{position}
       </Text>
@@ -55,22 +54,31 @@ function RunEntry(props: RunEntryProps) {
 }
 
 type InterviewEntryProps = {
+  interviewId: string;
   position: number;
-  selected: boolean;
-  onClick: () => unknown;
 };
 
 function InterviewEntry(props: InterviewEntryProps) {
-  const { position, selected, onClick } = props;
+  const { interviewId, position } = props;
+  const interview = useSafeSelector((state) => InterviewStore.getInterview(state, { interviewId }));
+  if (interview == null) return null;
 
   return (
-    <div className={classNames(styles.entry, { [styles.selected]: selected })} onClick={onClick}>
+    <div className={styles.content}>
       <Text className={styles.scheduleNumber} color={Text.Colors.MUTED} marginless>
         #{position}
       </Text>
       <div className={styles.runContent}>
         <Text marginless className={styles.runHeader} oneline>
-          <strong>INTERVIEW</strong>
+          <strong>Interview</strong>
+        </Text>
+        <Text
+          size={Text.Sizes.SIZE_12}
+          color={Text.Colors.MUTED}
+          marginless
+          className={styles.category}
+          oneline>
+          {interview.topic}
         </Text>
       </div>
     </div>
@@ -84,7 +92,7 @@ type ScheduleListEntryProps = {
 
 export default function ScheduleListEntry(props: ScheduleListEntryProps) {
   const { scheduleEntry, selected } = props;
-  const { runId, position } = scheduleEntry;
+  const { runId, interviewId, position, setupSeconds } = scheduleEntry;
 
   const dispatch = useSafeDispatch();
 
@@ -92,13 +100,26 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
     dispatch(selectScheduleEntry(scheduleEntry.id));
   }
 
-  if (runId != null) {
-    return (
-      <RunEntry runId={runId} position={position} selected={selected} onClick={handleSelect} />
-    );
-  } else {
-    return <InterviewEntry position={position} selected={selected} onClick={handleSelect} />;
-  }
+  const setup =
+    setupSeconds != null && setupSeconds > 0 ? (
+      <Text className={styles.setup} size={Text.Sizes.SIZE_12} color={Text.Colors.MUTED} marginless>
+        Setup: {DurationUtils.toString(setupSeconds)}
+      </Text>
+    ) : null;
 
-  return <div></div>;
+  const content = (() => {
+    if (runId != null) return <RunEntry runId={runId} position={position} />;
+    if (interviewId != null)
+      return <InterviewEntry interviewId={interviewId} position={position} />;
+    return null;
+  })();
+
+  return (
+    <div
+      className={classNames(styles.entry, { [styles.selected]: selected })}
+      onClick={handleSelect}>
+      {setup}
+      {content}
+    </div>
+  );
 }

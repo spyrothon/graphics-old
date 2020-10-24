@@ -1,6 +1,6 @@
 // Converts from seconds to 00:00:00
 export function toString(rawSeconds: string | number, stringifyNull = false) {
-  if (!rawSeconds) return stringifyNull ? "00:00:00" : undefined;
+  if (rawSeconds == null) return stringifyNull ? "00:00:00" : undefined;
   if (typeof rawSeconds !== "number") {
     rawSeconds = parseInt(rawSeconds);
   }
