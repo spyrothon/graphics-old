@@ -1,5 +1,7 @@
 .sidebar {
+  height: 100%;
   width: clamp(220px, 30vw, 320px);
+  overflow: scroll;
 }
 
 .main {

@@ -1,5 +1,22 @@
 /* eslint-disable camelcase */
 
+export interface Schedule {
+  id: string;
+  scheduleEntries: ScheduleEntry[];
+}
+
+export interface ScheduleEntry {
+  id: string;
+  scheduleId: string;
+  position: number;
+  setupSeconds?: number;
+  runId: string;
+}
+
+export interface ScheduleResponse extends Schedule {
+  runs: Run[];
+}
+
 export interface Run {
   id: string;
   gameName: string;

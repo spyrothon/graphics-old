@@ -22,7 +22,7 @@
   }
 }
 
-.run {
+.entry {
   composes: row;
   display: flex;
   align-items: middle;

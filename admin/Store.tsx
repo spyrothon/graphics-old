@@ -2,10 +2,12 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 
+import schedulesReducer from "./modules/schedules/SchedulesReducer";
 import remoteReducer from "./modules/remote/RemoteReducer";
 import runsReducer from "./modules/runs/RunsReducer";
 
 export const combinedReducer = combineReducers({
+  schedules: schedulesReducer,
   remote: remoteReducer,
   runs: runsReducer,
 });

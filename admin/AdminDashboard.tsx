@@ -1,23 +1,31 @@
 import * as React from "react";
 
+import { useSafeSelector } from "./Store";
 import DashboardHeader from "./modules/dashboards/DashboardHeader";
-import RunList from "./modules/runs/RunList";
+import InterviewEditor from "./modules/interviews/InterviewEditor";
 import RunEditor from "./modules/runs/RunEditor";
+import ScheduleList from "./modules/schedules/ScheduleList";
+import * as ScheduleStore from "./modules/schedules/ScheduleStore";
 import SidebarLayout from "./uikit/SidebarLayout";
 
 import styles from "./AdminDashboard.mod.css";
 
 export default function AdminDashboard() {
+  const selectedScheduleEntry = useSafeSelector((state) => ScheduleStore.getSelectedEntry(state));
+
   function renderHeader() {
     return <DashboardHeader name="Graphics Dashboard" />;
   }
 
   function renderSidebar() {
-    return <RunList className={styles.sidebar} />;
+    return <ScheduleList className={styles.sidebar} />;
   }
 
   function renderMain() {
-    return <RunEditor className={styles.main} />;
+    const { runId } = selectedScheduleEntry ?? {};
+    if (runId != null) return <RunEditor runId={runId} className={styles.main} />;
+
+    return <InterviewEditor className={styles.main} />;
   }
 
   return (

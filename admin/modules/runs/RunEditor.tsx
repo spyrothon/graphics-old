@@ -18,14 +18,15 @@ import styles from "./RunEditor.mod.css";
 import Header from "../../uikit/Header";
 
 type RunEditorProps = {
+  runId: string;
   className?: string;
 };
 
 export default function RunEditor(props: RunEditorProps) {
-  const { className } = props;
+  const { runId, className } = props;
 
   const dispatch = useSafeDispatch();
-  const currentRun = useSafeSelector(RunStore.getCurrentRun);
+  const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
   const editor = useRunEditorState();
 
   const [saving, setSaving] = React.useState(false);
@@ -33,8 +34,8 @@ export default function RunEditor(props: RunEditorProps) {
   const [saveFailed, setSaveFailed] = React.useState(false);
 
   React.useEffect(() => {
-    editor.setBaseRun(currentRun);
-  }, [currentRun]);
+    editor.setBaseRun(run);
+  }, [run]);
 
   function handleSaveRun() {
     const run = editor.getEditedRun();
@@ -75,14 +76,14 @@ export default function RunEditor(props: RunEditorProps) {
   }
 
   function getNote<F extends keyof Run>(field: F) {
-    let originalValue: any = currentRun?.[field];
+    let originalValue: any = run?.[field];
     const newValue = editor.getField(field);
-    if (currentRun == null || originalValue == null || originalValue == newValue) return null;
+    if (run == null || originalValue == null || originalValue == newValue) return null;
 
     const renderValue = () => {
       switch (field) {
         case "estimateSeconds":
-          return DurationUtils.toString(currentRun["estimateSeconds"]);
+          return DurationUtils.toString(run["estimateSeconds"]);
         case "notes":
           return "original";
         default:
@@ -191,7 +192,7 @@ export default function RunEditor(props: RunEditorProps) {
           {renderParticipantFields("runners", 1)}
           {renderParticipantFields("runners", 2)}
           {renderParticipantFields("runners", 3)}
-          <Header>Commentators</Header>
+          <Header className={styles.participantsHeader}>Commentators</Header>
           {renderParticipantFields("commentators", 0)}
           {renderParticipantFields("commentators", 1)}
           {renderParticipantFields("commentators", 2)}

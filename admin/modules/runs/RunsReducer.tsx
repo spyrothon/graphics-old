@@ -66,7 +66,7 @@ const defaultState: RunReducerState = {
   runs: {},
 };
 
-export default function RunReducer(
+export default function runsReducer(
   state: RunReducerState = defaultState,
   action: Action,
 ): RunReducerState {

@@ -28,24 +28,3 @@
   gap: 16px;
   padding: 16px;
 }
-
-.runInfo {
-  flex: 2 1 440px;
-}
-
-.participants {
-  flex: 1 0 480px;
-}
-
-.participantsHeader {
-  margin-top: 16px;
-}
-
-.inputRow {
-  display: flex;
-  gap: 4px;
-}
-
-.participantInput {
-  margin: 4px 0;
-}
