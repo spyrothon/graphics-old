@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Run } from "../../../api/APITypes";
+import { Run, ScheduleEntry } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Anchor from "../../uikit/Anchor";
@@ -18,12 +18,13 @@ import styles from "./RunEditor.mod.css";
 import Header from "../../uikit/Header";
 
 type RunEditorProps = {
-  runId: string;
+  scheduleEntry: ScheduleEntry;
   className?: string;
 };
 
 export default function RunEditor(props: RunEditorProps) {
-  const { runId, className } = props;
+  const { scheduleEntry, className } = props;
+  const { runId } = scheduleEntry;
 
   const dispatch = useSafeDispatch();
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
@@ -137,10 +138,12 @@ export default function RunEditor(props: RunEditorProps) {
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.actions}>
-        <Button onClick={handleSaveRun} disabled={saving || !editor.hasChanges()}>
-          {saving ? "Saving..." : "Save Changes"}
-        </Button>
-        {getSaveText()}
+        <div className={styles.saveAction}>
+          <Button onClick={handleSaveRun} disabled={saving || !editor.hasChanges()}>
+            {saving ? "Saving..." : "Save Changes"}
+          </Button>
+          {getSaveText()}
+        </div>
       </div>
       <div className={styles.editor}>
         <div className={styles.runInfo}>

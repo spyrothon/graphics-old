@@ -55,7 +55,7 @@ export default function ScheduleList(props: RunListProps) {
           />
         ))
       )}
-      <AddEntryButton />
+      <AddEntryButton scheduleId={MAIN_SCHEDULE_ID} />
     </div>
   );
 }

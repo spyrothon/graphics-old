@@ -1,5 +1,5 @@
 import APIClient from "../../../api/APIClient";
-import { Run } from "../../../api/APITypes";
+import { Run, InitialRun } from "../../../api/APITypes";
 import { SafeDispatch } from "../../hooks/useDispatch";
 import { RunAction, RunActionType } from "./RunsTypes";
 

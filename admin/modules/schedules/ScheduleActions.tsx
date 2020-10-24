@@ -12,6 +12,30 @@ export function selectScheduleEntry(entryId?: string): ScheduleAction {
   };
 }
 
+export function addRunToSchedule(scheduleId: string) {
+  return async (dispatch: SafeDispatch) => {
+    const run = await APIClient.createRun({ gameName: "New Run" });
+    dispatch(fetchRunsSuccess([run]));
+    const updatedSchedule = await APIClient.addScheduleEntry(scheduleId, { runId: run.id });
+    const newEntry = updatedSchedule.scheduleEntries[updatedSchedule.scheduleEntries.length - 1];
+    dispatch(loadSchedule(updatedSchedule));
+    dispatch(selectScheduleEntry(newEntry.id));
+  };
+}
+
+export function addInterviewToSchedule(scheduleId: string) {
+  return async (dispatch: SafeDispatch) => {
+    const interview = await APIClient.createInterview({ topic: "New Interview" });
+    dispatch(fetchInterviewsSuccess([interview]));
+    const updatedSchedule = await APIClient.addScheduleEntry(scheduleId, {
+      interviewId: interview.id,
+    });
+    const newEntry = updatedSchedule.scheduleEntries[updatedSchedule.scheduleEntries.length - 1];
+    dispatch(loadSchedule(updatedSchedule));
+    dispatch(selectScheduleEntry(newEntry.id));
+  };
+}
+
 export function fetchSchedule(scheduleId: string) {
   return async (dispatch: SafeDispatch) => {
     dispatch({ type: ScheduleActionType.SCHEDULES_FETCH_SCHEDULE_STARTED });

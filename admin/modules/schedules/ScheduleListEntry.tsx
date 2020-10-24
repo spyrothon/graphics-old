@@ -43,7 +43,7 @@ function RunEntry(props: RunEntryProps) {
           marginless
           className={styles.category}
           oneline>
-          {run.categoryName} - {DurationUtils.toString(run.estimateSeconds)}
+          {DurationUtils.toString(run.estimateSeconds)} &middot; {run.categoryName}
         </Text>
         <Text size={Text.Sizes.SIZE_12} marginless>
           {renderNameList(run.runners)}
@@ -78,6 +78,9 @@ function InterviewEntry(props: InterviewEntryProps) {
           marginless
           className={styles.category}
           oneline>
+          {DurationUtils.toString(interview.estimateSeconds)}
+        </Text>
+        <Text size={Text.Sizes.SIZE_12} marginless>
           {renderNameList(interview.interviewees)}
         </Text>
       </div>

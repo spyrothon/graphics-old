@@ -4,6 +4,7 @@ export interface Interview {
   id: string;
   topic: string;
   notes: string;
+  estimateSeconds: number;
   interviewees: RunParticipant[];
   interviewers: RunParticipant[];
 }
@@ -29,6 +30,13 @@ export interface ScheduleEntry {
   interviewId?: string;
 }
 
+export interface InitialScheduleEntry {
+  position?: number;
+  setupSeconds?: number;
+  runId?: string;
+  interviewId?: string;
+}
+
 export interface ScheduleResponse extends Schedule {
   runs: Run[];
   interviews: Interview[];
@@ -36,8 +44,8 @@ export interface ScheduleResponse extends Schedule {
 
 export interface Run {
   id: string;
-  gameName: string;
-  categoryName: string;
+  gameName?: string;
+  categoryName?: string;
   estimateSeconds: number;
   platform?: string;
   releaseYear?: string;
@@ -49,9 +57,9 @@ export interface Run {
 }
 
 export interface InitialRun {
-  gameName: string;
-  categoryName: string;
-  estimateSeconds: number;
+  gameName?: string;
+  categoryName?: string;
+  estimateSeconds?: number;
   platform?: string;
   releaseYear?: string;
   notes?: string;

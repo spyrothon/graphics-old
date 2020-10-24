@@ -1,14 +1,16 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Interview } from "../../../api/APITypes";
+import { Interview, ScheduleEntry } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Anchor from "../../uikit/Anchor";
 import Button from "../../uikit/Button";
+import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
+import * as DurationUtils from "../time/DurationUtils";
 import { persistInterview } from "./InterviewActions";
 import * as InterviewStore from "./InterviewStore";
 import useInterviewEditorState from "./useInterviewEditorState";
@@ -16,17 +18,16 @@ import useInterviewEditorState from "./useInterviewEditorState";
 import styles from "./InterviewEditor.mod.css";
 
 type InterviewEditorProps = {
-  interviewId: string;
+  scheduleEntry: ScheduleEntry;
   className?: string;
 };
 
 export default function InterviewEditor(props: InterviewEditorProps) {
-  const { interviewId, className } = props;
+  const { scheduleEntry, className } = props;
+  const { interviewId } = scheduleEntry;
 
   const dispatch = useSafeDispatch();
-  const interview: Interview | undefined = useSafeSelector((state) =>
-    InterviewStore.getInterview(state, { interviewId }),
-  );
+  const interview = useSafeSelector((state) => InterviewStore.getInterview(state, { interviewId }));
   const editor = useInterviewEditorState();
 
   React.useEffect(() => {
@@ -82,6 +83,8 @@ export default function InterviewEditor(props: InterviewEditorProps) {
 
     const renderValue = () => {
       switch (field) {
+        case "estimateSeconds":
+          return DurationUtils.toString(interview["estimateSeconds"]);
         case "notes":
           return "original";
         default:
@@ -148,6 +151,12 @@ export default function InterviewEditor(props: InterviewEditorProps) {
             value={editor.getField("topic")}
             note={getNote("topic")}
             onChange={(event) => editor.updateField("topic", event.target.value)}
+          />
+          <DurationInput
+            label="Estimated Time"
+            value={editor.getField("estimateSeconds")}
+            note={getNote("estimateSeconds")}
+            onChange={(value) => editor.updateField("estimateSeconds", value)}
           />
           <TextInput
             label="Notes"

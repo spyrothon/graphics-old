@@ -22,10 +22,10 @@ export default function AdminDashboard() {
   }
 
   function renderMain() {
-    const { runId, interviewId } = selectedScheduleEntry ?? {};
-    if (runId != null) return <RunEditor runId={runId} className={styles.main} />;
-    if (interviewId != null)
-      return <InterviewEditor interviewId={interviewId} className={styles.main} />;
+    if (selectedScheduleEntry?.runId != null)
+      return <RunEditor scheduleEntry={selectedScheduleEntry} className={styles.main} />;
+    if (selectedScheduleEntry?.interviewId != null)
+      return <InterviewEditor scheduleEntry={selectedScheduleEntry} className={styles.main} />;
   }
 
   return (
