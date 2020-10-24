@@ -28,10 +28,9 @@ export interface InitialRun {
 }
 
 export interface RunParticipant {
-  userId: number;
   displayName: string;
   twitchName: string;
-  nickname?: string;
+  twitterName?: string;
 }
 
 /* eslint-enable camelcase */

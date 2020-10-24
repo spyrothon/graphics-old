@@ -17,11 +17,11 @@ export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 } & InputWrapperPassthroughProps;
 
 export default function TextInput(props: TextInputProps) {
-  const { name, label, type = TextInputType.TEXT, note, className, ...inputProps } = props;
+  const { name, label, type = TextInputType.TEXT, note, className, value, ...inputProps } = props;
 
   return (
     <InputWrapper name={name} label={label} note={note} className={className} {...inputProps}>
-      <input className={styles.input} name={name} type={type} {...inputProps} />
+      <input className={styles.input} name={name} type={type} value={value ?? ""} {...inputProps} />
     </InputWrapper>
   );
 }

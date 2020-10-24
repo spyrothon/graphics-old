@@ -20,15 +20,32 @@ export function toString(rawSeconds: string | number, stringifyNull = false) {
 
 // Converts from 00:00:00 to seconds
 export function fromString(value: string) {
-  const [hoursRaw, minutesRaw, secondsRaw] = value.split(":");
-  const hours = parseInt(hoursRaw);
-  if (isNaN(hours)) return 0;
+  const parts = value.split(":");
 
-  const minutes = parseInt(minutesRaw);
-  if (isNaN(minutes)) return hours * 3600;
-
-  const seconds = parseInt(secondsRaw);
-  if (isNaN(seconds)) return hours * 3600 + minutes * 60;
-
-  return hours * 3600 + minutes * 60 + seconds;
+  switch (parts.length) {
+    // When only one part is given, parse it as seconds
+    case 1: {
+      return parseInt(parts[0]);
+    }
+    // Two parts are treated as minutes:seconds
+    case 2: {
+      const [minutesRaw, secondsRaw] = parts;
+      const minutes = parseInt(minutesRaw);
+      const seconds = parseInt(secondsRaw);
+      if (isNaN(minutes) || isNaN(seconds)) return 0;
+      return minutes * 60 + seconds;
+    }
+    // Three parts is the full representation
+    case 3: {
+      const [hoursRaw, minutesRaw, secondsRaw] = parts;
+      const hours = parseInt(hoursRaw);
+      const minutes = parseInt(minutesRaw);
+      const seconds = parseInt(secondsRaw);
+      if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return 0;
+      return hours * 3600 + minutes * 60 + seconds;
+    }
+    // Anything else is unmanageable
+    default:
+      return 0;
+  }
 }

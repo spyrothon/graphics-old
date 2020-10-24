@@ -1,3 +1,32 @@
+.container {
+  position: relative;
+}
+
+.actions {
+  position: sticky;
+  top: 0;
+  padding: 16px;
+  background-color: var(--background-primary);
+  border-bottom: var(--border-primary);
+}
+
+.editor {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-height: 100%;
+  gap: 16px;
+  padding: 16px;
+}
+
+.runInfo {
+  flex: 2 1 440px;
+}
+
+.runners {
+  flex: 1 0 480px;
+}
+
 .inputRow {
   display: flex;
   gap: 4px;
