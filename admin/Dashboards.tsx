@@ -1,4 +1,6 @@
 import * as React from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { Provider } from "react-redux";
 
 import ThemeProvider from "../graphics/uikit/ThemeProvider";
@@ -12,10 +14,12 @@ export default function Dashboards() {
   }, []);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <AdminDashboard />
-      </ThemeProvider>
-    </Provider>
+    <DndProvider backend={HTML5Backend}>
+      <Provider store={store}>
+        <ThemeProvider>
+          <AdminDashboard />
+        </ThemeProvider>
+      </Provider>
+    </DndProvider>
   );
 }

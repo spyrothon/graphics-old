@@ -28,7 +28,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const Button = (props: ButtonProps) => {
   const {
-    color = ButtonColors.DEFAULT,
+    color = ButtonColors.PRIMARY,
     size = ButtonSizes.NORMAL,
     look = ButtonLooks.FILLED,
     fullwidth,

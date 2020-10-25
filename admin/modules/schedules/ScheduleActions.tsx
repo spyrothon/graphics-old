@@ -1,5 +1,5 @@
 import APIClient from "../../../api/APIClient";
-import { Schedule } from "../../../api/APITypes";
+import { Schedule, ScheduleEntry } from "../../../api/APITypes";
 import { SafeDispatch } from "../../hooks/useDispatch";
 import { fetchRunsSuccess } from "../runs/RunActions";
 import { ScheduleActionType, ScheduleAction } from "./ScheduleTypes";
@@ -33,6 +33,26 @@ export function addInterviewToSchedule(scheduleId: string) {
     const newEntry = updatedSchedule.scheduleEntries[updatedSchedule.scheduleEntries.length - 1];
     dispatch(loadSchedule(updatedSchedule));
     dispatch(selectScheduleEntry(newEntry.id));
+  };
+}
+
+export function removeScheduleEntry(scheduleId: string, entryId: string) {
+  return async (dispatch: SafeDispatch) => {
+    await APIClient.removeScheduleEntry(scheduleId, entryId);
+    dispatch({ type: ScheduleActionType.SCHEDULES_ENTRY_DELETED, entryId });
+  };
+}
+
+export function reorderScheduleEntries(schedule: Schedule, entryIds: string[]) {
+  return async (dispatch: SafeDispatch) => {
+    const orderedEntries = entryIds
+      .map((entryId) => schedule.scheduleEntries.find((entry) => entry.id === entryId))
+      .filter((entry): entry is ScheduleEntry => entry != null)
+      .map((entry, index) => ({ ...entry, position: index }));
+
+    const newSchedule = { ...schedule, scheduleEntries: orderedEntries };
+    const updatedSchedule = await APIClient.updateSchedule(schedule.id, newSchedule);
+    dispatch(loadSchedule(updatedSchedule));
   };
 }
 

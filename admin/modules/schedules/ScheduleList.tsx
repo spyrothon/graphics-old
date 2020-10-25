@@ -3,7 +3,7 @@ import * as React from "react";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
-import { fetchSchedule, selectScheduleEntry } from "./ScheduleActions";
+import { fetchSchedule, selectScheduleEntry, reorderScheduleEntries } from "./ScheduleActions";
 import ScheduleListEntry from "./ScheduleListEntry";
 import * as ScheduleStore from "./ScheduleStore";
 
@@ -20,7 +20,8 @@ export default function ScheduleList(props: RunListProps) {
   const { className } = props;
   const dispatch = useSafeDispatch();
 
-  const { isFetching, scheduleEntries, selectedEntryId } = useSafeSelector((state) => ({
+  const { schedule, isFetching, scheduleEntries, selectedEntryId } = useSafeSelector((state) => ({
+    schedule: ScheduleStore.getSchedule(state),
     isFetching: ScheduleStore.isFetchingSchedule(state),
     scheduleEntries: ScheduleStore.getScheduleEntries(state),
     selectedEntryId: ScheduleStore.getSelectedEntryId(state),
@@ -42,6 +43,18 @@ export default function ScheduleList(props: RunListProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
+  function handleReorder(movedEntryId: string, newIndex: number) {
+    if (schedule == null) return;
+
+    const updatedEntryIds = scheduleEntries
+      .map((entry) => entry.id)
+      .filter((entryId) => entryId !== movedEntryId);
+
+    updatedEntryIds.splice(newIndex, 0, movedEntryId);
+
+    dispatch(reorderScheduleEntries(schedule, updatedEntryIds));
+  }
+
   return (
     <div className={className}>
       {isFetching ? (
@@ -52,10 +65,23 @@ export default function ScheduleList(props: RunListProps) {
             key={entry.id}
             scheduleEntry={entry}
             selected={entry.id === selectedEntryId}
+            onReorder={handleReorder}
           />
         ))
       )}
       <AddEntryButton scheduleId={MAIN_SCHEDULE_ID} />
+      <div
+        onClick={() =>
+          schedule != null &&
+          dispatch(
+            reorderScheduleEntries(
+              schedule,
+              scheduleEntries.map((entry) => entry.id),
+            ),
+          )
+        }>
+        Reorder
+      </div>
     </div>
   );
 }

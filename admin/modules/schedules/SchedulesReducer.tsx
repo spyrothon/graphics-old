@@ -41,6 +41,24 @@ function handleEntrySelected(
   };
 }
 
+function handleEntryDeleted(
+  state: ScheduleReducerState,
+  action: ActionFor<ScheduleActionType.SCHEDULES_ENTRY_DELETED>,
+) {
+  const { entryId } = action;
+  if (state.schedule == null) return state;
+
+  const newState = {
+    ...state,
+    schedule: {
+      ...state.schedule,
+      scheduleEntries: state.schedule.scheduleEntries.filter((entry) => entry.id !== entryId),
+    },
+  };
+
+  return newState;
+}
+
 const defaultState: ScheduleReducerState = {
   fetching: false,
   schedule: undefined,
@@ -58,6 +76,8 @@ export default function schedulesReducer(
       return handleFetchScheduleSuccess(state, action);
     case ScheduleActionType.SCHEDULES_ENTRY_SELECTED:
       return handleEntrySelected(state, action);
+    case ScheduleActionType.SCHEDULES_ENTRY_DELETED:
+      return handleEntryDeleted(state, action);
   }
 
   return state;

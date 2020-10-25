@@ -67,7 +67,7 @@ type PostOptions = CommonOptions & {
   encoder?: typeof Encoders[keyof typeof Encoders];
 };
 
-export async function post<T>(url: string, data?: object, opts: PostOptions = {}) {
+export async function post<T>(url: string, data: object, opts: PostOptions = {}) {
   const { headers, encoder = Encoders.JSON } = opts;
 
   return send<T>(HTTPVerb.POST, url, {
@@ -93,17 +93,27 @@ export async function put<T>(url: string, data: object, opts: PostOptions = {}) 
 
 type DeleteOptions = CommonOptions;
 
-export async function del<T>(url: string, opts: DeleteOptions = {}) {
+export async function del(url: string, opts: DeleteOptions = {}) {
   const { headers } = opts;
 
-  return send<T>(HTTPVerb.DELETE, url, {
+  return send(HTTPVerb.DELETE, url, {
     headers: {
       ...headers,
     },
   });
 }
 
-export async function send<T>(verb: HTTPVerb, url: string, options?: RequestInit): Promise<T> {
+export async function send<T>(
+  verb: HTTPVerb.DELETE,
+  url: string,
+  options?: RequestInit,
+): Promise<void>;
+export async function send<T>(verb: HTTPVerb, url: string, options?: RequestInit): Promise<T>;
+export async function send<T>(
+  verb: HTTPVerb,
+  url: string,
+  options?: RequestInit,
+): Promise<T | void> {
   // Prepend API_BASE_URL on plain-path requests
   const resolvedUrl = url[0] === "/" ? `${API_ENDPOINT}${url}` : url;
 
@@ -114,13 +124,21 @@ export async function send<T>(verb: HTTPVerb, url: string, options?: RequestInit
   });
   checkStatus(response);
 
-  const json = await response.json();
-  const parsed = parseJSON<T>(json);
+  try {
+    const json = await response.json();
+    const parsed = parseJSON<T>(json);
 
-  if (response.status === 422) {
-    return Promise.reject(parsed);
-  } else {
-    return Promise.resolve(parsed);
+    if (response.status === 422) {
+      return Promise.reject(parsed);
+    } else {
+      return Promise.resolve(parsed);
+    }
+  } catch (err) {
+    if (response.status === 204) {
+      return Promise.resolve();
+    } else {
+      return Promise.reject(err);
+    }
   }
 }
 

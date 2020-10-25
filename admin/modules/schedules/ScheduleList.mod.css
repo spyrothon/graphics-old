@@ -16,9 +16,20 @@
   }
 
   &.selected {
-    border-right: 8px solid var(--primary);
+    border-right: 4px solid var(--primary);
     background-color: var(--background-hover);
   }
+}
+
+.dropOver {
+}
+
+.dragging {
+  opacity: 0;
+}
+
+.dropTarget {
+  background-color: var(--background-secondary);
 }
 
 .setup {
@@ -31,7 +42,7 @@
 .content {
   padding: 8px;
   display: flex;
-  align-items: middle;
+  align-items: flex-start;
 }
 
 .setup + .content {
@@ -45,6 +56,18 @@
 
 .runContent {
   flex: 1 1 auto;
+}
+
+.removeAction {
+  border-radius: 2px;
+  padding: 0 4px;
+  line-height: 1;
+  height: 16px;
+  align-items: flex-start;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 .addButtons {

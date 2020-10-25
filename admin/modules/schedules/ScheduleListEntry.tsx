@@ -1,89 +1,83 @@
 import * as React from "react";
 import classNames from "classnames";
+import { useDrag, useDrop } from "react-dnd";
 
-import { RunParticipant, ScheduleEntry } from "../../../api/APITypes";
+import { RunParticipant, ScheduleEntry, Schedule } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
 import * as InterviewStore from "../interviews/InterviewStore";
 import * as RunStore from "../runs/RunStore";
+import * as ScheduleStore from "../schedules/ScheduleStore";
 import * as DurationUtils from "../time/DurationUtils";
+import {
+  removeScheduleEntry,
+  selectScheduleEntry,
+  reorderScheduleEntries,
+} from "./ScheduleActions";
 
 import styles from "./ScheduleList.mod.css";
-import { selectScheduleEntry } from "./ScheduleActions";
 
 function renderNameList(participants: RunParticipant[]) {
-  if (participants.length === 0) return "None";
+  if (participants.length === 0) return null;
 
   return participants.map((participant) => participant.displayName).join(", ");
 }
 
 type RunEntryProps = {
   runId: string;
-  position: number;
 };
 
 function RunEntry(props: RunEntryProps) {
-  const { runId, position } = props;
+  const { runId } = props;
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
   if (run == null) return null;
 
   return (
-    <div className={styles.content}>
-      <Text className={styles.scheduleNumber} color={Text.Colors.MUTED} marginless>
-        #{position}
+    <div className={styles.runContent}>
+      <Text marginless className={styles.runHeader} oneline>
+        <strong>{run.gameName}</strong>
       </Text>
-      <div className={styles.runContent}>
-        <Text marginless className={styles.runHeader} oneline>
-          <strong>{run.gameName}</strong>
-        </Text>
-        <Text
-          size={Text.Sizes.SIZE_12}
-          color={Text.Colors.MUTED}
-          marginless
-          className={styles.category}
-          oneline>
-          {DurationUtils.toString(run.estimateSeconds)} &middot; {run.categoryName}
-        </Text>
-        <Text size={Text.Sizes.SIZE_12} marginless>
-          {renderNameList(run.runners)}
-        </Text>
-      </div>
+      <Text
+        size={Text.Sizes.SIZE_12}
+        color={Text.Colors.MUTED}
+        marginless
+        className={styles.category}
+        oneline>
+        {DurationUtils.toString(run.estimateSeconds)} &middot; {run.categoryName}
+      </Text>
+      <Text size={Text.Sizes.SIZE_12} marginless>
+        {renderNameList(run.runners)}
+      </Text>
     </div>
   );
 }
 
 type InterviewEntryProps = {
   interviewId: string;
-  position: number;
 };
 
 function InterviewEntry(props: InterviewEntryProps) {
-  const { interviewId, position } = props;
+  const { interviewId } = props;
   const interview = useSafeSelector((state) => InterviewStore.getInterview(state, { interviewId }));
   if (interview == null) return null;
 
   return (
-    <div className={styles.content}>
-      <Text className={styles.scheduleNumber} color={Text.Colors.MUTED} marginless>
-        #{position}
+    <div className={styles.runContent}>
+      <Text marginless className={styles.runHeader} oneline>
+        <strong>{interview.topic}</strong>
       </Text>
-      <div className={styles.runContent}>
-        <Text marginless className={styles.runHeader} oneline>
-          <strong>{interview.topic}</strong>
-        </Text>
-        <Text
-          size={Text.Sizes.SIZE_12}
-          color={Text.Colors.MUTED}
-          marginless
-          className={styles.category}
-          oneline>
-          {DurationUtils.toString(interview.estimateSeconds)}
-        </Text>
-        <Text size={Text.Sizes.SIZE_12} marginless>
-          {renderNameList(interview.interviewees)}
-        </Text>
-      </div>
+      <Text
+        size={Text.Sizes.SIZE_12}
+        color={Text.Colors.MUTED}
+        marginless
+        className={styles.category}
+        oneline>
+        {DurationUtils.toString(interview.estimateSeconds)}
+      </Text>
+      <Text size={Text.Sizes.SIZE_12} marginless>
+        {renderNameList(interview.interviewees)}
+      </Text>
     </div>
   );
 }
@@ -91,16 +85,52 @@ function InterviewEntry(props: InterviewEntryProps) {
 type ScheduleListEntryProps = {
   scheduleEntry: ScheduleEntry;
   selected: boolean;
+  onReorder: (entryId: string, newIndex: number) => unknown;
+};
+
+type DragItem = {
+  type: "schedule-entry";
+  entry: ScheduleEntry;
+  height?: number;
 };
 
 export default function ScheduleListEntry(props: ScheduleListEntryProps) {
-  const { scheduleEntry, selected } = props;
-  const { runId, interviewId, position, setupSeconds } = scheduleEntry;
-
+  const { scheduleEntry, selected, onReorder } = props;
+  const { id: entryId, runId, interviewId, position, setupSeconds } = scheduleEntry;
   const dispatch = useSafeDispatch();
+
+  const entryRef = React.useRef<HTMLDivElement>(null);
+
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: "schedule-entry", entry: scheduleEntry, height: 60 },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  const [{ isDropOver, draggedHeight }, drop] = useDrop({
+    accept: "schedule-entry",
+    drop: (item: DragItem) =>
+      item.entry.position === position ? null : onReorder(item.entry.id, position),
+    collect: (monitor) => ({
+      isDropOver: monitor.isOver(),
+      draggedHeight: monitor.getItem()?.entry.id === entryId ? 0 : monitor.getItem()?.height,
+    }),
+  });
+  drag(drop(entryRef));
 
   function handleSelect() {
     dispatch(selectScheduleEntry(scheduleEntry.id));
+  }
+
+  function handleDelete(event: React.SyntheticEvent<HTMLElement>) {
+    if (!window.confirm(`Are you sure you want to delete this entry? #${position}`)) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    event.stopPropagation();
+    dispatch(removeScheduleEntry(scheduleEntry.scheduleId, scheduleEntry.id));
   }
 
   const setup =
@@ -111,18 +141,33 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
     ) : null;
 
   const content = (() => {
-    if (runId != null) return <RunEntry runId={runId} position={position} />;
-    if (interviewId != null)
-      return <InterviewEntry interviewId={interviewId} position={position} />;
+    if (runId != null) return <RunEntry runId={runId} />;
+    if (interviewId != null) return <InterviewEntry interviewId={interviewId} />;
     return null;
   })();
 
   return (
     <div
-      className={classNames(styles.entry, { [styles.selected]: selected })}
+      ref={entryRef}
+      className={classNames(styles.entry, {
+        [styles.selected]: selected,
+        [styles.dropOver]: isDropOver,
+        [styles.dragging]: isDragging,
+      })}
       onClick={handleSelect}>
+      {isDropOver ? (
+        <div className={styles.dropTarget} style={{ height: draggedHeight }}></div>
+      ) : null}
       {setup}
-      {content}
+      <div className={styles.content}>
+        <Text className={styles.scheduleNumber} color={Text.Colors.MUTED} marginless>
+          #{position + 1}
+        </Text>
+        {content}
+        <div className={styles.removeAction} onClick={handleDelete}>
+          &times;
+        </div>
+      </div>
     </div>
   );
 }

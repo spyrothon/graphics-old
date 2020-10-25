@@ -6,6 +6,8 @@ const Endpoints = {
   SCHEDULES: "/schedules",
   SCHEDULE: (id: string) => `/schedules/${id}`,
   SCHEDULE_ADD_ENTRY: (id: string) => `/schedules/${id}/add-entry`,
+  SCHEDULE_REMOVE_ENTRY: (scheduleId: string, entryId: string) =>
+    `/schedules/${scheduleId}/entries/${entryId}`,
 };
 
 export default Endpoints;

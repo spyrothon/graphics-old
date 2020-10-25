@@ -22,3 +22,7 @@ export async function deleteSchedule(scheduleId: string) {
 export async function addScheduleEntry(scheduleId: string, entry: InitialScheduleEntry) {
   return await HTTPUtils.post<ScheduleResponse>(Endpoints.SCHEDULE_ADD_ENTRY(scheduleId), entry);
 }
+
+export async function removeScheduleEntry(scheduleId: string, entryId: string) {
+  return await HTTPUtils.delete(Endpoints.SCHEDULE_REMOVE_ENTRY(scheduleId, entryId));
+}
