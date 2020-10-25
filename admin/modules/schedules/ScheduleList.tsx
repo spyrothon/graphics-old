@@ -70,18 +70,6 @@ export default function ScheduleList(props: RunListProps) {
         ))
       )}
       <AddEntryButton scheduleId={MAIN_SCHEDULE_ID} />
-      <div
-        onClick={() =>
-          schedule != null &&
-          dispatch(
-            reorderScheduleEntries(
-              schedule,
-              scheduleEntries.map((entry) => entry.id),
-            ),
-          )
-        }>
-        Reorder
-      </div>
     </div>
   );
 }

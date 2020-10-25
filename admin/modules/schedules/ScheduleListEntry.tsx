@@ -8,13 +8,8 @@ import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
 import * as InterviewStore from "../interviews/InterviewStore";
 import * as RunStore from "../runs/RunStore";
-import * as ScheduleStore from "../schedules/ScheduleStore";
 import * as DurationUtils from "../time/DurationUtils";
-import {
-  removeScheduleEntry,
-  selectScheduleEntry,
-  reorderScheduleEntries,
-} from "./ScheduleActions";
+import { removeScheduleEntry, selectScheduleEntry } from "./ScheduleActions";
 
 import styles from "./ScheduleList.mod.css";
 
@@ -122,7 +117,7 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
     dispatch(selectScheduleEntry(scheduleEntry.id));
   }
 
-  function handleDelete(event: React.SyntheticEvent<HTMLElement>) {
+  async function handleDelete(event: React.SyntheticEvent<HTMLElement>) {
     if (!window.confirm(`Are you sure you want to delete this entry? #${position}`)) {
       event.preventDefault();
       event.stopPropagation();
@@ -130,7 +125,7 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
     }
 
     event.stopPropagation();
-    dispatch(removeScheduleEntry(scheduleEntry.scheduleId, scheduleEntry.id));
+    await dispatch(removeScheduleEntry(scheduleEntry.scheduleId, scheduleEntry.id));
   }
 
   const setup =
