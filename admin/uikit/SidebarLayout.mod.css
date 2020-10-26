@@ -26,6 +26,11 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
+  padding: 16px;
+}
+
+.fullPage {
+  padding: 0;
 }
 
 .sidebar {

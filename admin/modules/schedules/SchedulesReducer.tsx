@@ -59,6 +59,28 @@ function handleEntryDeleted(
   return newState;
 }
 
+function handleEntryUpdated(
+  state: ScheduleReducerState,
+  action: ActionFor<ScheduleActionType.SCHEDULES_ENTRY_UPDATED>,
+) {
+  const { entry: updatedEntry } = action;
+  if (state.schedule == null) return state;
+
+  const scheduleEntries = state.schedule.scheduleEntries.map((entry) =>
+    entry.id === updatedEntry.id ? updatedEntry : entry,
+  );
+
+  const newState = {
+    ...state,
+    schedule: {
+      ...state.schedule,
+      scheduleEntries,
+    },
+  };
+
+  return newState;
+}
+
 const defaultState: ScheduleReducerState = {
   fetching: false,
   schedule: undefined,
@@ -78,6 +100,8 @@ export default function schedulesReducer(
       return handleEntrySelected(state, action);
     case ScheduleActionType.SCHEDULES_ENTRY_DELETED:
       return handleEntryDeleted(state, action);
+    case ScheduleActionType.SCHEDULES_ENTRY_UPDATED:
+      return handleEntryUpdated(state, action);
   }
 
   return state;

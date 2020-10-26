@@ -1,5 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 import styles from "./Anchor.mod.css";
 
@@ -38,15 +39,22 @@ const Anchor = (props: AnchorProps) => {
     );
   }
 
+  if (href == null) {
+    return (
+      <span
+        tabIndex={0}
+        role="link"
+        {...linkProps}
+        className={classNames(styles.anchor, className)}>
+        {children}
+      </span>
+    );
+  }
+
   return (
-    <a
-      tabIndex={0}
-      href={href}
-      role={href == null ? "button" : "link"}
-      {...linkProps}
-      className={classNames(styles.anchor, className)}>
+    <Link tabIndex={0} to={href} {...linkProps} className={classNames(styles.anchor, className)}>
       {children}
-    </a>
+    </Link>
   );
 };
 

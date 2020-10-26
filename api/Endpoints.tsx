@@ -5,8 +5,8 @@ const Endpoints = {
   RUN: (id: string) => `/runs/${id}`,
   SCHEDULES: "/schedules",
   SCHEDULE: (id: string) => `/schedules/${id}`,
-  SCHEDULE_ADD_ENTRY: (id: string) => `/schedules/${id}/add-entry`,
-  SCHEDULE_REMOVE_ENTRY: (scheduleId: string, entryId: string) =>
+  SCHEDULE_ENTRIES: (id: string) => `/schedules/${id}/entries`,
+  SCHEDULE_ENTRY: (scheduleId: string, entryId: string) =>
     `/schedules/${scheduleId}/entries/${entryId}`,
 };
 

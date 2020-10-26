@@ -5,11 +5,21 @@
 .actions {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   padding: 16px;
   background-color: var(--background-primary);
   border-bottom: var(--border-primary);
+}
+
+.saveAction {
+  flex: 1 1 auto;
+}
+
+.entryFields {
+  flex: 0 0 auto;
+  margin-left: 8px;
 }
 
 .saveFailed {

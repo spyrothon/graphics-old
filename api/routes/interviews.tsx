@@ -20,5 +20,5 @@ export async function updateInterview(interviewId: string, interview: Interview)
 }
 
 export async function deleteInterview(interviewId: string) {
-  return await HTTPUtils.delete<void>(Endpoints.INTERVIEW(interviewId));
+  return await HTTPUtils.delete(Endpoints.INTERVIEW(interviewId));
 }

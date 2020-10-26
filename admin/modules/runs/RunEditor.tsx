@@ -7,15 +7,16 @@ import useSafeDispatch from "../../hooks/useDispatch";
 import Anchor from "../../uikit/Anchor";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
+import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
+import { updateScheduleEntry } from "../schedules/ScheduleActions";
 import * as DurationUtils from "../time/DurationUtils";
 import { persistRun } from "./RunActions";
 import * as RunStore from "./RunStore";
 import useRunEditorState from "./useRunEditorState";
 
 import styles from "./RunEditor.mod.css";
-import Header from "../../uikit/Header";
 
 type RunEditorProps = {
   scheduleEntry: ScheduleEntry;
@@ -29,14 +30,20 @@ export default function RunEditor(props: RunEditorProps) {
   const dispatch = useSafeDispatch();
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
   const editor = useRunEditorState();
+  const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
+  const hasEntryChanges = scheduleEntry.setupSeconds !== editedEntry.setupSeconds;
 
-  const [saving, setSaving] = React.useState(false);
-  const [saved, setSaved] = React.useState(false);
-  const [saveFailed, setSaveFailed] = React.useState(false);
+  React.useEffect(() => {
+    setEditedEntry(scheduleEntry);
+  }, [scheduleEntry]);
 
   React.useEffect(() => {
     editor.setBaseRun(run);
   }, [run]);
+
+  const [saving, setSaving] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const [saveFailed, setSaveFailed] = React.useState(false);
 
   function handleSaveRun() {
     const run = editor.getEditedRun();
@@ -44,7 +51,10 @@ export default function RunEditor(props: RunEditorProps) {
 
     setSaving(true);
     setSaveFailed(false);
-    dispatch(persistRun(run))
+    Promise.all([
+      editor.hasChanges() ? dispatch(persistRun(run)) : undefined,
+      hasEntryChanges ? dispatch(updateScheduleEntry(editedEntry)) : undefined,
+    ])
       .then(() => {
         setSaving(false);
         setSaveFailed(false);
@@ -139,10 +149,20 @@ export default function RunEditor(props: RunEditorProps) {
     <div className={classNames(styles.container, className)}>
       <div className={styles.actions}>
         <div className={styles.saveAction}>
-          <Button onClick={handleSaveRun} disabled={saving || !editor.hasChanges()}>
+          <Button
+            onClick={handleSaveRun}
+            disabled={saving || (!editor.hasChanges() && !hasEntryChanges)}>
             {saving ? "Saving..." : "Save Changes"}
           </Button>
           {getSaveText()}
+        </div>
+        <div className={styles.entryFields}>
+          <DurationInput
+            label="Setup Time"
+            value={editedEntry.setupSeconds}
+            marginless
+            onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
+          />
         </div>
       </div>
       <div className={styles.editor}>
@@ -196,6 +216,8 @@ export default function RunEditor(props: RunEditorProps) {
           {renderParticipantFields("runners", 1)}
           {renderParticipantFields("runners", 2)}
           {renderParticipantFields("runners", 3)}
+          {renderParticipantFields("runners", 4)}
+          {renderParticipantFields("runners", 5)}
           <Header className={styles.header}>Commentators</Header>
           {renderParticipantFields("commentators", 0)}
           {renderParticipantFields("commentators", 1)}

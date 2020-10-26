@@ -41,7 +41,7 @@ function RunEntry(props: RunEntryProps) {
         oneline>
         {DurationUtils.toString(run.estimateSeconds)} &middot; {run.categoryName}
       </Text>
-      <Text size={Text.Sizes.SIZE_12} marginless>
+      <Text size={Text.Sizes.SIZE_12} marginless oneline>
         {renderNameList(run.runners)}
       </Text>
     </div>
@@ -70,7 +70,7 @@ function InterviewEntry(props: InterviewEntryProps) {
         oneline>
         {DurationUtils.toString(interview.estimateSeconds)}
       </Text>
-      <Text size={Text.Sizes.SIZE_12} marginless>
+      <Text size={Text.Sizes.SIZE_12} marginless oneline>
         {renderNameList(interview.interviewees)}
       </Text>
     </div>
@@ -156,7 +156,7 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
       {setup}
       <div className={styles.content}>
         <Text className={styles.scheduleNumber} color={Text.Colors.MUTED} marginless>
-          #{position + 1}
+          {position + 1}
         </Text>
         {content}
         <div className={styles.removeAction} onClick={handleDelete}>

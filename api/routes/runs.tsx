@@ -20,5 +20,5 @@ export async function updateRun(runId: string, runData: Run) {
 }
 
 export async function deleteRun(runId: string) {
-  return await HTTPUtils.delete<void>(Endpoints.RUN(runId));
+  return await HTTPUtils.delete(Endpoints.RUN(runId));
 }

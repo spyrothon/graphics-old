@@ -10,6 +10,7 @@ import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
+import { updateScheduleEntry } from "../schedules/ScheduleActions";
 import * as DurationUtils from "../time/DurationUtils";
 import { persistInterview } from "./InterviewActions";
 import * as InterviewStore from "./InterviewStore";
@@ -29,6 +30,12 @@ export default function InterviewEditor(props: InterviewEditorProps) {
   const dispatch = useSafeDispatch();
   const interview = useSafeSelector((state) => InterviewStore.getInterview(state, { interviewId }));
   const editor = useInterviewEditorState();
+  const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
+  const hasEntryChanges = scheduleEntry.setupSeconds !== editedEntry.setupSeconds;
+
+  React.useEffect(() => {
+    setEditedEntry(scheduleEntry);
+  }, [scheduleEntry]);
 
   React.useEffect(() => {
     editor.setBase(interview);
@@ -44,7 +51,10 @@ export default function InterviewEditor(props: InterviewEditorProps) {
 
     setSaving(true);
     setSaveFailed(false);
-    dispatch(persistInterview(interview))
+    Promise.all([
+      editor.hasChanges() ? dispatch(persistInterview(interview)) : undefined,
+      hasEntryChanges ? dispatch(updateScheduleEntry(editedEntry)) : undefined,
+    ])
       .then(() => {
         setSaving(false);
         setSaveFailed(false);
@@ -138,10 +148,22 @@ export default function InterviewEditor(props: InterviewEditorProps) {
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.actions}>
-        <Button onClick={handleSave} disabled={saving || !editor.hasChanges()}>
-          {saving ? "Saving..." : "Save Changes"}
-        </Button>
-        {getSaveText()}
+        <div className={styles.saveAction}>
+          <Button
+            onClick={handleSave}
+            disabled={saving || (!editor.hasChanges() && !hasEntryChanges)}>
+            {saving ? "Saving..." : "Save Changes"}
+          </Button>
+          {getSaveText()}
+        </div>
+        <div className={styles.entryFields}>
+          <DurationInput
+            label="Setup Time"
+            value={editedEntry.setupSeconds}
+            marginless
+            onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
+          />
+        </div>
       </div>
       <div className={styles.editor}>
         <div className={styles.info}>

@@ -35,10 +35,10 @@ export default function ScheduleList(props: RunListProps) {
   React.useEffect(() => {
     if (isFetching) return;
 
-    const firstRun = scheduleEntries.find((entry) => entry.runId != null);
-    if (firstRun == null) return;
+    const first = scheduleEntries[0];
+    if (first == null) return;
 
-    dispatch(selectScheduleEntry(firstRun.id));
+    dispatch(selectScheduleEntry(first.id));
     // Only want this to run immediately after the runs have loaded
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);

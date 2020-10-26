@@ -43,6 +43,13 @@ export function removeScheduleEntry(scheduleId: string, entryId: string) {
   };
 }
 
+export function updateScheduleEntry(entry: ScheduleEntry) {
+  return async (dispatch: SafeDispatch) => {
+    const updatedEntry = await APIClient.updateScheduleEntry(entry.scheduleId, entry);
+    dispatch({ type: ScheduleActionType.SCHEDULES_ENTRY_UPDATED, entry: updatedEntry });
+  };
+}
+
 export function reorderScheduleEntries(schedule: Schedule, entryIds: string[]) {
   return async (dispatch: SafeDispatch) => {
     const orderedEntries = entryIds
