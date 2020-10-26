@@ -18,7 +18,13 @@ export interface InitialInterview {
 
 export interface Schedule {
   id: string;
+  currentEntryId?: string;
   scheduleEntries: ScheduleEntry[];
+}
+
+export interface ScheduleResponse extends Schedule {
+  runs: Run[];
+  interviews: Interview[];
 }
 
 export interface ScheduleEntry {
@@ -35,11 +41,6 @@ export interface InitialScheduleEntry {
   setupSeconds?: number;
   runId?: string;
   interviewId?: string;
-}
-
-export interface ScheduleResponse extends Schedule {
-  runs: Run[];
-  interviews: Interview[];
 }
 
 export interface Run {

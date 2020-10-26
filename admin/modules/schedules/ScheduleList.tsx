@@ -1,16 +1,16 @@
 import * as React from "react";
+import classNames from "classnames";
 
+import { MAIN_SCHEDULE_ID } from "../../Constants";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
-import { fetchSchedule, selectScheduleEntry, reorderScheduleEntries } from "./ScheduleActions";
+import { selectScheduleEntry, reorderScheduleEntries } from "./ScheduleActions";
 import ScheduleListEntry from "./ScheduleListEntry";
 import * as ScheduleStore from "./ScheduleStore";
 
 import styles from "./ScheduleList.mod.css";
 import AddEntryButton from "./AddEntryButton";
-
-const MAIN_SCHEDULE_ID = "1";
 
 type RunListProps = {
   className?: string;
@@ -26,10 +26,6 @@ export default function ScheduleList(props: RunListProps) {
     scheduleEntries: ScheduleStore.getScheduleEntries(state),
     selectedEntryId: ScheduleStore.getSelectedEntryId(state),
   }));
-
-  React.useEffect(() => {
-    dispatch(fetchSchedule(MAIN_SCHEDULE_ID));
-  }, []);
 
   // Auto-select the first run when the runs are first loaded
   React.useEffect(() => {
@@ -56,7 +52,7 @@ export default function ScheduleList(props: RunListProps) {
   }
 
   return (
-    <div className={className}>
+    <div className={classNames(styles.container, className)}>
       {isFetching ? (
         <Text className={styles.fetching}>Fetching Schedule</Text>
       ) : (
