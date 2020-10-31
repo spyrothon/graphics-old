@@ -8,6 +8,7 @@ import styles from "./TextInput.mod.css";
 export enum TextInputType {
   TEXT = "text",
   EMAIL = "email",
+  PASSWORD = "password",
 }
 
 export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> & {

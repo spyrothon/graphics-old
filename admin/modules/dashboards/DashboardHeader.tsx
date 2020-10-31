@@ -50,6 +50,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
       <div className={styles.pages}>
         <NavLink route={Routes.SCHEDULE_EDITOR} label="Schedule Editor" />
         <NavLink route={Routes.LIVE_DASHBOARD} label="Live Dashboard" />
+        <NavLink route={Routes.LOGOUT} label="Logout" />
       </div>
       <div className={styles.right}>
         <RemoteConnectionStatus />

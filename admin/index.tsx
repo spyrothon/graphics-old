@@ -5,16 +5,14 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { Provider } from "react-redux";
 
 import ThemeProvider from "../graphics/uikit/ThemeProvider";
-import AdminHelmet from "./AdminHelmet";
-import Dashboards from "./Dashboards";
+import App from "./App";
 import { store } from "./Store";
 
 ReactDOM.render(
   <DndProvider backend={HTML5Backend}>
     <Provider store={store}>
       <ThemeProvider>
-        <AdminHelmet />
-        <Dashboards />
+        <App />
       </ThemeProvider>
     </Provider>
   </DndProvider>,

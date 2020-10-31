@@ -1,4 +1,5 @@
-.theme {
+html,
+.themeDefault {
   /* Colors */
   --black: hsl(0, 0%, 4%);
   --gray-800: hsl(0, 0%, 7%);

@@ -1,7 +1,13 @@
 export const Routes = {
-  BASE_PATH: "/admin",
-  SCHEDULE_EDITOR: "/schedule-editor",
-  LIVE_DASHBOARD: "/live",
+  // PUBLIC
+  BASE_PATH: "/",
+  SCHEDULE: "/schedule",
+
+  ADMIN_BASE_PATH: "/admin",
+  LOGIN: "/admin/login",
+  LOGOUT: "/admin/logout",
+  SCHEDULE_EDITOR: "/admin/schedule-editor",
+  LIVE_DASHBOARD: "/admin/live",
 };
 
 export const MAIN_SCHEDULE_ID = "1";
