@@ -136,9 +136,10 @@
 
   .eventInfo {
     position: fixed;
-    top: 32px;
+    top: 64px;
     right: 5vw;
     width: 40vw;
+    max-width: 480px;
     padding: 0;
   }
 }
