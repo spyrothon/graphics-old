@@ -140,6 +140,9 @@ export default function Schedule() {
         <div className={styles.eventInfo}>
           <img className={styles.logo} src={logo} />
           <div className={styles.dates}>November 6-8, 2020</div>
+          <div className={styles.timezone}>
+            All times are shown in <strong>{scheduleStartTime.offsetNameShort}</strong>.
+          </div>
         </div>
         {renderEntries()}
       </div>
