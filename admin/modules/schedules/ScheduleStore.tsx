@@ -10,6 +10,10 @@ const getSchedulesState = (globalState: StoreState) => globalState.schedules;
 
 export const isFetchingSchedule = createSelector([getSchedulesState], (state) => state.fetching);
 
+export const getScheduleStartTime = createSelector([], () =>
+  DateTime.fromISO("2020-11-06T23:30:00Z"),
+);
+
 export const getSchedule = createSelector([getSchedulesState], (state) => state.schedule);
 export const getScheduleEntries = createSelector(
   [getSchedulesState],
@@ -35,9 +39,9 @@ export const getSelectedEntry = createSelector(
 );
 
 export const getEntriesWithStartTimes = createSelector(
-  [getSchedule, getScheduleEntries, getRunsById, getInterviewsById],
-  (_schedule, entries, runs, interviews) => {
-    const scheduleStart = DateTime.fromISO("2020-11-06T23:30:00Z");
+  [getScheduleStartTime, getScheduleEntries, getRunsById, getInterviewsById],
+  (scheduleStartTime, entries, runs, interviews) => {
+    const scheduleStart = scheduleStartTime;
 
     let lastActualStartTime = scheduleStart;
     let lastEstimatedStartTime = scheduleStart;
@@ -52,34 +56,27 @@ export const getEntriesWithStartTimes = createSelector(
         if (entry.runId != null) {
           const run = runs[entry.runId];
           if (run != null) {
-            nextActualStartTime = lastActualStartTime.plus({
+            lastActualStartTime = nextActualStartTime.plus({
               seconds: run.actualTime ?? run.estimateSeconds,
             });
-            nextEstimatedStartTime = lastEstimatedStartTime.plus({ seconds: run.estimateSeconds });
+            lastEstimatedStartTime = nextEstimatedStartTime.plus({ seconds: run.estimateSeconds });
           }
         }
         if (entry.interviewId != null) {
           const interview = interviews[entry.interviewId];
           if (interview != null) {
-            nextActualStartTime = lastActualStartTime.plus({ seconds: interview.estimateSeconds });
-            nextEstimatedStartTime = lastEstimatedStartTime.plus({
+            lastActualStartTime = nextActualStartTime.plus({ seconds: interview.estimateSeconds });
+            lastEstimatedStartTime = nextEstimatedStartTime.plus({
               seconds: interview.estimateSeconds,
             });
           }
         }
 
-        const entryWithTimes = {
+        return {
           ...entry,
-          actualStartTime: lastActualStartTime,
-          estimatedStartTime: lastEstimatedStartTime,
+          actualStartTime: nextActualStartTime,
+          estimatedStartTime: nextEstimatedStartTime,
         };
-
-        lastActualStartTime = nextActualStartTime;
-        lastEstimatedStartTime = nextEstimatedStartTime;
-
-        console.log(entryWithTimes, lastActualStartTime, lastEstimatedStartTime);
-
-        return entryWithTimes;
       },
     );
   },
