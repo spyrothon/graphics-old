@@ -29,6 +29,7 @@ export default function App() {
         <Route path={Routes.LOGIN} component={AuthLogin} />
         <Route path={Routes.LOGOUT} component={AuthLogout} />
         <Route path={Routes.SCHEDULE} component={Schedule} />
+        <Route exact path={Routes.BASE_PATH} component={Schedule} />
         {isLoggedIn ? <Dashboards /> : null}
         <Route>
           <BlankPage />
