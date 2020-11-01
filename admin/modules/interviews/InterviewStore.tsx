@@ -9,6 +9,7 @@ export const isFetchingInterviews = createSelector([getInterviewsState], (state)
 export const getInterviews = createSelector([getInterviewsState], (state) =>
   Object.values(state.interviews),
 );
+export const getInterviewsById = createSelector([getInterviewsState], (state) => state.interviews);
 export const getInterview = createCachedSelector(
   [getInterviewsState, getProp<string>("interviewId")],
   (state, interviewId) => state.interviews[interviewId],

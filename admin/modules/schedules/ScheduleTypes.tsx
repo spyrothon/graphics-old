@@ -1,4 +1,5 @@
 import { Schedule, ScheduleEntry } from "../../../api/APITypes";
+import type { DateTime } from "luxon";
 
 export enum ScheduleActionType {
   SCHEDULES_ENTRY_SELECTED = "SCHEDULES_ENTRY_SELECTED",
@@ -17,3 +18,8 @@ export type ScheduleAction =
       type: ScheduleActionType.SCHEDULES_FETCH_SCHEDULE_SUCCESS;
       schedule: Schedule;
     };
+
+export interface ScheduleEntryWithTimes extends ScheduleEntry {
+  estimatedStartTime: DateTime;
+  actualStartTime: DateTime;
+}
