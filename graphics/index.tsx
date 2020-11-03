@@ -1,6 +1,16 @@
-// import * as React from "react";
-// import * as ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
-// import Graphics from "./pages/Graphics";
+import { store } from "./Store";
+import Graphics from "./pages/Graphics";
+import ThemeProvider from "./uikit/ThemeProvider";
 
-// ReactDOM.render(<Graphics />, document.querySelector("#app-container"));
+ReactDOM.render(
+  <Provider store={store}>
+    <ThemeProvider>
+      <Graphics />
+    </ThemeProvider>
+  </Provider>,
+  document.querySelector("#app-container"),
+);

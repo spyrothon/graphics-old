@@ -2,9 +2,10 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
-    "watch": "webpack --watch --mode development",
-    "serve": "webpack-dev-server",
+    "build:admin": "webpack --mode production --config webpack.admin.config.js",
+    "serve:admin": "webpack-dev-server --config webpack.admin.config.js",
+    "build:graphics": "webpack --mode production --config webpack.graphics.config.js",
+    "serve:graphics": "webpack-dev-server --config webpack.graphics.config.js",
     "analyze": "webpack --profile --json > webpack-stats.json",
     "dev:socket-server": "cd ./socket-server && yarn start",
     "fix:eslint": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix",
