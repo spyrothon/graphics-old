@@ -46,6 +46,7 @@ export interface InitialScheduleEntry {
 export interface Run {
   id: string;
   gameName?: string;
+  gameNameFormatted?: string;
   categoryName?: string;
   estimateSeconds: number;
   platform?: string;

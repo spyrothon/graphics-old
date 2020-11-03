@@ -1,0 +1,25 @@
+.timerBox {
+  background: radial-gradient(closest-side, var(--primary-bg) 50%, #000 250%);
+  padding: 8px 16px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.timer {
+  font-family: var(--font-sans);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--text-inverted);
+  text-align: center;
+  text-shadow: 0 0 8px #000;
+}
+
+.estimate {
+  margin-top: 4px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text-inverted);
+  text-align: center;
+  text-shadow: 0 0 8px #000;
+}

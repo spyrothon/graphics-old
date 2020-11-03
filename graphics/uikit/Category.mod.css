@@ -1,6 +1,6 @@
 .container {
-  background: radial-gradient(circle, var(--primary-bg-200) 0%, var(--primary-bg-100) 80%);
-  padding: 8px 16px;
+  background: radial-gradient(circle, var(--primary-bg-200) 0%, var(--primary-bg-300) 100%);
+  padding: 6px 16px;
   border-top: 2px solid var(--primary-bg);
   border-bottom: 2px solid var(--primary-bg);
 }
@@ -9,6 +9,7 @@
   text-transform: uppercase;
   text-align: center;
   font-weight: 900;
+  font-size: 16px;
   color: var(--primary-bg);
   text-shadow: 0 0 2px var(--primary-bg-100);
 }

@@ -10,7 +10,7 @@ const InputWrapperSizes = {
   LARGE: styles.sizeLarge,
 };
 
-type InputWrapperProps = {
+interface InputWrapperProps {
   size?: typeof InputWrapperSizes[keyof typeof InputWrapperSizes];
   label?: React.ReactNode;
   name?: React.ReactNode;
@@ -21,7 +21,7 @@ type InputWrapperProps = {
   marginless?: boolean;
   className?: string;
   children: React.ReactNode;
-};
+}
 
 export type InputWrapperPassthroughProps = Omit<InputWrapperProps, "children">;
 
