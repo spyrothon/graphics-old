@@ -6,26 +6,31 @@
   height: 842px;
 }
 
+.webcam {
+  position: absolute;
+  top: 250px;
+  left: -2px;
+  width: 475px;
+  height: 267px;
+}
+
 .gameName {
   position: absolute;
-  box-sizing: border-box;
   top: 0;
   left: 0;
   width: 475px;
-  height: 180px;
+  height: max-content;
   margin: 0;
   padding: 16px;
 }
 
 .categoryName {
   position: absolute;
-  box-sizing: border-box;
-  top: 250px;
+  top: 170px;
   left: 0;
   width: 475px;
-  height: 180px;
+  height: max-content;
   margin: 0;
-  padding: 16px;
 }
 
 .omnibar {

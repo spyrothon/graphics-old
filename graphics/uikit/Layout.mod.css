@@ -1,8 +1,15 @@
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .layout {
   position: relative;
   width: 1600px;
   height: 900px;
-  border: 1px solid #000;
   overflow: hidden;
 }
 

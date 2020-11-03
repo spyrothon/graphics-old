@@ -20,8 +20,17 @@ export default function FittedText(props: FittedTextProps) {
     const inner = innerRef.current;
     if (outer == null || inner == null) return;
 
-    const outerWidth = outer.clientWidth;
-    const innerWidth = inner.clientWidth;
+    const outerStyle = window.getComputedStyle(outer);
+    const innerStyle = window.getComputedStyle(inner);
+
+    const outerWidth =
+      parseFloat(outerStyle.width) -
+      parseFloat(outerStyle.paddingLeft) -
+      parseFloat(outerStyle.paddingRight);
+    const innerWidth =
+      parseFloat(innerStyle.width) -
+      parseFloat(innerStyle.paddingLeft) -
+      parseFloat(innerStyle.paddingRight);
     const currentFontSize = parseInt(inner.style.getPropertyValue("font-size"));
 
     setFontSize(Math.min(maxSize, (outerWidth / innerWidth) * currentFontSize));
