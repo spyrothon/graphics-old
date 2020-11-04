@@ -3,6 +3,7 @@ import { Router, Route, Switch } from "react-router-dom";
 
 import { Routes, MAIN_SCHEDULE_ID } from "./Constants";
 import useSafeDispatch from "./hooks/useDispatch";
+import DS1 from "./layouts/DS1";
 import FiveFour1 from "./layouts/FiveFour1";
 import GBA1 from "./layouts/GBA1";
 import HD1 from "./layouts/hd/HD1";
@@ -41,6 +42,7 @@ export default function App() {
         <Route path={Routes.HD_2} component={HD2} />
 
         <Route path={Routes.GBA_1} component={GBA1} />
+        <Route path={Routes.DS_1} component={DS1} />
 
         <Route path={Routes.FIVEFOUR_1} component={FiveFour1} />
       </Switch>
