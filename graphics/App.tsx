@@ -5,6 +5,7 @@ import { Routes, MAIN_SCHEDULE_ID } from "./Constants";
 import useSafeDispatch from "./hooks/useDispatch";
 import FiveFour1 from "./layouts/FiveFour1";
 import GBA1 from "./layouts/GBA1";
+import HD1 from "./layouts/hd/HD1";
 import HD2 from "./layouts/hd/HD2";
 import Standard1 from "./layouts/standard/Standard1";
 import Standard2 from "./layouts/standard/Standard2";
@@ -34,6 +35,7 @@ export default function App() {
         <Route path={Routes.STANDARD_1} component={Standard1} />
         <Route path={Routes.STANDARD_2} component={Standard2} />
 
+        <Route path={Routes.HD_1} component={HD1} />
         <Route path={Routes.HD_2} component={HD2} />
 
         <Route path={Routes.GBA_1} component={GBA1} />
