@@ -2,8 +2,8 @@
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 56px;
   width: 473px;
-  height: 100%;
 }
 
 .gameName {
@@ -57,11 +57,35 @@
   height: 266px;
 }
 
-.timer {
+.participantsTimer {
   position: absolute;
-  top: 580px;
+  top: 510px;
   left: 0;
-  width: 100%;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+.runners {
+  flex: 1 1 auto;
+}
+
+.timer {
+  flex: 0 0 auto;
+  justify-self: start;
+  margin: 0 -2px;
+  width: calc(100% + 4px);
+}
+
+.commentaryArea {
+  flex: 1 1 auto;
+}
+
+.commentators {
+  height: 100%;
 }
 
 .game1 {

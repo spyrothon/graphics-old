@@ -11,6 +11,7 @@ import Layout from "../../uikit/Layout";
 import Timer from "../../uikit/Timer";
 
 import styles from "./Standard1.mod.css";
+import NameplateGroup from "../../uikit/NameplateGroup";
 
 export default function Standard1() {
   const currentRun = useSafeSelector((state) => {
@@ -19,31 +20,49 @@ export default function Standard1() {
     return RunStore.getRun(state, { runId: entry.runId });
   });
 
+  const {
+    gameNameFormatted,
+    categoryName,
+    releaseYear,
+    platform,
+    estimateSeconds,
+    runners = [],
+    commentators = [],
+  } = currentRun ?? {};
+
   return (
     <Layout>
       <div className={styles.sidebar}>
-        <GameName className={styles.gameName} name={currentRun?.gameNameFormatted} />
-        <Category className={styles.categoryName}>{currentRun?.categoryName}</Category>
+        <GameName className={styles.gameName} name={gameNameFormatted} />
+        <Category className={styles.categoryName}>{categoryName}</Category>
         <div className={styles.runInfo}>
           <div className={styles.releaseYear}>
-            <span className={styles.descriptor}>RELEASED:</span> {currentRun?.releaseYear}
+            <span className={styles.descriptor}>RELEASED:</span> {releaseYear}
           </div>
           <div className={styles.platform}>
-            <span className={styles.descriptor}>PLAYED ON:</span> {currentRun?.platform}
+            <span className={styles.descriptor}>PLAYED ON:</span> {platform}
           </div>
-          {currentRun?.estimateSeconds != null ? (
+          {estimateSeconds != null ? (
             <div className={styles.estimate}>
               <span className={styles.descriptor}>ESTIMATE:</span>{" "}
-              {DurationUtils.toString(currentRun?.estimateSeconds)}
+              {DurationUtils.toString(estimateSeconds)}
             </div>
           ) : null}
         </div>
         <FeedArea className={styles.webcam} />
-        <Timer
-          className={styles.timer}
-          elapsedSeconds={2523}
-          estimate={currentRun?.estimateSeconds}
-        />
+        <div className={styles.participantsTimer}>
+          <NameplateGroup className={styles.runners} participants={runners ?? []} title="Runners" />
+          <Timer className={styles.timer} elapsedSeconds={2523} />
+          <div className={styles.commentaryArea}>
+            {commentators.length > 0 ? (
+              <NameplateGroup
+                className={styles.commentators}
+                participants={commentators ?? []}
+                title="Commentary"
+              />
+            ) : null}
+          </div>
+        </div>
       </div>
       <FeedArea className={styles.game1} />
       <div className={styles.omnibar} />
