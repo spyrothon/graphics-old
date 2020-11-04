@@ -26,7 +26,7 @@ export default function GameInfo(props: GameInfoProps) {
           <span className={styles.descriptor}>RELEASED:</span> {releaseYear}
         </div>
         <div className={styles.platform}>
-          <span className={styles.descriptor}>PLAYED ON:</span> {platform}
+          <span className={styles.descriptor}>PLATFORM:</span> {platform}
         </div>
         {estimateSeconds != null ? (
           <div className={styles.estimate}>

@@ -2,6 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 
 import { useSafeSelector } from "../../Store";
+import BingoBoard from "../../modules/bingo/BingoBoard";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
@@ -11,9 +12,9 @@ import Nameplate from "../../uikit/Nameplate";
 import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
-import styles from "./Standard4.mod.css";
+import styles from "./BingoStandard2v2.mod.css";
 
-export default function Standard4() {
+export default function BingoStandard2v2() {
   const currentRun = useSafeSelector((state) => {
     const entry = ScheduleStore.getCurrentEntry(state);
     if (entry == null) return undefined;
@@ -52,6 +53,7 @@ export default function Standard4() {
           />
         ) : null}
         <Timer className={styles.timer} elapsedSeconds={2533} />
+        <BingoBoard className={styles.bingoBoard} />
         {bottomRight != null ? (
           <Nameplate
             className={classNames(styles.nameplate, styles.nameplateBottomRight)}

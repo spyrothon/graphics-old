@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
+import BingoBoard from "../../modules/bingo/BingoBoard";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
@@ -11,7 +12,6 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./BingoStandard1v1.mod.css";
-import BingoBoard from "../../modules/bingo/BingoBoard";
 
 export default function BingoStandard1v1() {
   const currentRun = useSafeSelector((state) => {
