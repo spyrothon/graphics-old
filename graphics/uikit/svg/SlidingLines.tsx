@@ -120,7 +120,7 @@ export default function SlidingLines(props: SlidingLinesProps) {
     let currentX = lineWidth / 2;
     let index = 0;
     const stacks: JSX.Element[] = [];
-    while (currentX < width && index < maxStacks) {
+    while (currentX < width + lineWidth && index < maxStacks) {
       stacks.push(
         <LineStack
           x={currentX}

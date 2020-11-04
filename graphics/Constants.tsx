@@ -25,8 +25,8 @@ export const Routes = {
   FIVEFOUR_1: "/fivefour-1",
 
   // Standard 4:3 screens with a Bingo board
-  STANDARD_BINGO_1V1: "/standard-bingo-1v1",
-  STANDARD_BINGO_2V2: "/standard-bingo-2v2",
+  STANDARD_BINGO_1V1: "/bingo-standard-1v1",
+  STANDARD_BINGO_2V2: "/bingo-standard-2v2",
 };
 
 export const MAIN_SCHEDULE_ID = "1";
