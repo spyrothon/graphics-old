@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
+import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import FeedArea from "../../uikit/FeedArea";
@@ -10,7 +11,6 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./HD2.mod.css";
-import GameInfo from "../../modules/game-info/GameInfo";
 
 export default function HD2() {
   const currentRun = useSafeSelector((state) => {

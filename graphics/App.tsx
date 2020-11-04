@@ -9,6 +9,7 @@ import HD1 from "./layouts/hd/HD1";
 import HD2 from "./layouts/hd/HD2";
 import Standard1 from "./layouts/standard/Standard1";
 import Standard2 from "./layouts/standard/Standard2";
+import Standard4 from "./layouts/standard/Standard4";
 import { history } from "./modules/router/RouterUtils";
 import { fetchSchedule } from "./modules/schedules/ScheduleActions";
 // import RemoteActionReceiverManager from "./modules/remote/RemoteActionReceiverManager";
@@ -34,6 +35,7 @@ export default function App() {
       <Switch>
         <Route path={Routes.STANDARD_1} component={Standard1} />
         <Route path={Routes.STANDARD_2} component={Standard2} />
+        <Route path={Routes.STANDARD_4} component={Standard4} />
 
         <Route path={Routes.HD_1} component={HD1} />
         <Route path={Routes.HD_2} component={HD2} />
