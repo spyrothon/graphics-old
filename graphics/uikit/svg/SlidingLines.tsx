@@ -66,7 +66,7 @@ function LineStack(props: LineStackProps) {
   });
 
   const [delay] = React.useState(() => Math.random() * 2500 - 700);
-  const [time] = React.useState(() => Math.random() * 5 + 7);
+  const [time] = React.useState(() => Math.random() * 5 + 13);
   const [direction] = React.useState(() =>
     Math.floor(Math.random() * 1001) % 2 === 0 ? "alternate" : "alernate-reverse",
   );
@@ -112,7 +112,7 @@ export default function SlidingLines(props: SlidingLinesProps) {
   const [width, height] = size;
   const renderedHeight = height * 4;
 
-  const maxStacks = 20;
+  const maxStacks = 30;
 
   const [stacks, setStacks] = React.useState<JSX.Element[]>([]);
 

@@ -1,19 +1,19 @@
 import * as React from "react";
 
-import { useSafeSelector } from "../../Store";
-import RunStore from "../../modules/runs/RunStore";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import * as DurationUtils from "../../modules/time/DurationUtils";
-import Category from "../../uikit/Category";
-import FeedArea from "../../uikit/FeedArea";
-import GameName from "../../uikit/GameName";
-import Layout from "../../uikit/Layout";
-import NameplateGroup from "../../uikit/NameplateGroup";
-import Timer from "../../uikit/Timer";
+import { useSafeSelector } from "../Store";
+import RunStore from "../modules/runs/RunStore";
+import ScheduleStore from "../modules/schedules/ScheduleStore";
+import * as DurationUtils from "../modules/time/DurationUtils";
+import Category from "../uikit/Category";
+import FeedArea from "../uikit/FeedArea";
+import GameName from "../uikit/GameName";
+import Layout from "../uikit/Layout";
+import NameplateGroup from "../uikit/NameplateGroup";
+import Timer from "../uikit/Timer";
 
-import styles from "./Standard1.mod.css";
+import styles from "./GBA1.mod.css";
 
-export default function Standard1() {
+export default function GBA1() {
   const currentRun = useSafeSelector((state) => {
     const entry = ScheduleStore.getCurrentEntry(state);
     if (entry == null) return undefined;

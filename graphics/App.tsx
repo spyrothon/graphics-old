@@ -3,6 +3,8 @@ import { Router, Route, Switch } from "react-router-dom";
 
 import { Routes, MAIN_SCHEDULE_ID } from "./Constants";
 import useSafeDispatch from "./hooks/useDispatch";
+import FiveFour1 from "./layouts/FiveFour1";
+import GBA1 from "./layouts/GBA1";
 import Standard1 from "./layouts/standard/Standard1";
 import Standard2 from "./layouts/standard/Standard2";
 import { history } from "./modules/router/RouterUtils";
@@ -30,6 +32,8 @@ export default function App() {
       <Switch>
         <Route path={Routes.STANDARD_1} component={Standard1} />
         <Route path={Routes.STANDARD_2} component={Standard2} />
+        <Route path={Routes.GBA_1} component={GBA1} />
+        <Route path={Routes.FIVEFOUR_1} component={FiveFour1} />
       </Switch>
     </Router>
   );
