@@ -1,41 +1,41 @@
 .game1 {
   position: absolute;
-  top: -2px;
+  top: 61px;
   left: -2px;
   width: 799px;
-  height: 599px;
+  height: 449px;
 }
+
 .game2 {
   position: absolute;
-  top: -2px;
+  top: 61px;
   right: -2px;
   width: 799px;
-  height: 599px;
+  height: 449px;
 }
 
 .gameInfo {
   position: absolute;
-  top: 640px;
+  top: 515px;
   left: 0;
-  width: 586px;
+  width: 538px;
   bottom: 56px;
-  padding-bottom: 4px;
 }
 
-.centerStack {
+.topStack {
   position: absolute;
-  top: 599px;
-  height: 247px;
+  top: -2px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: -1;
 }
 
 .participantsTimer {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: flex-end;
   margin: auto;
   height: 65px;
 }
@@ -43,29 +43,32 @@
 .nameplateLeft,
 .nameplateRight {
   position: relative;
-  top: 2px;
+  bottom: 2px;
   width: 360px;
 }
 
 .timer {
   width: 428px;
-  height: 65px;
+  height: 100%;
   z-index: 2;
 }
 
 .webcam {
-  flex: 1 1 auto;
-  position: relative;
-  margin-top: -2px;
-  width: 424px;
+  position: absolute;
+  top: 512px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 520px;
+  height: 330px;
 }
 
 .commentaryArea {
   position: absolute;
-  top: 640px;
+  top: 515px;
   right: 0;
   bottom: 56px;
-  width: 586px;
+  width: 538px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +77,7 @@
 
 .commentators {
   width: 380px;
-  min-height: 50%;
+  min-height: 40%;
 }
 
 .omnibar {

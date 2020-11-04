@@ -9,10 +9,10 @@ import Nameplate from "../../uikit/Nameplate";
 import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
-import styles from "./Standard2.mod.css";
+import styles from "./HD2.mod.css";
 import GameInfo from "../../modules/game-info/GameInfo";
 
-export default function Standard2() {
+export default function HD2() {
   const currentRun = useSafeSelector((state) => {
     const entry = ScheduleStore.getCurrentEntry(state);
     if (entry == null) return undefined;
@@ -26,9 +26,7 @@ export default function Standard2() {
       <FeedArea className={styles.game1} />
       <FeedArea className={styles.game2} />
 
-      {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
-
-      <div className={styles.centerStack}>
+      <div className={styles.topStack}>
         <div className={styles.participantsTimer}>
           {left != null ? <Nameplate className={styles.nameplateLeft} participant={left} /> : null}
           <Timer className={styles.timer} elapsedSeconds={2523} />
@@ -36,8 +34,11 @@ export default function Standard2() {
             <Nameplate className={styles.nameplateRight} participant={right} />
           ) : null}
         </div>
-        <FeedArea className={styles.webcam} />
       </div>
+
+      {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
+
+      <FeedArea className={styles.webcam} />
 
       <div className={styles.commentaryArea}>
         {commentators.length > 0 ? (
