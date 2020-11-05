@@ -1,6 +1,8 @@
 import SyncSocket from "../../../api/socket/SyncSocket";
 import { SyncSocketMessage } from "../../../api/socket/SyncSocketTypes";
 import { store } from "../../Store";
+import { loadInterview } from "../interviews/InterviewActions";
+import { loadRun } from "../runs/RunActions";
 import { loadSchedule } from "../schedules/ScheduleActions";
 
 class SyncSocketManager {
@@ -21,8 +23,12 @@ class SyncSocketManager {
       case "load_schedule":
         store.dispatch(loadSchedule(message.schedule));
         return;
-      // case "refresh_runs":
-      // store.dispatch(fetchRuns());
+      case "load_run":
+        store.dispatch(loadRun(message.run));
+        return;
+      case "load_interview":
+        store.dispatch(loadInterview(message.interview));
+        return;
     }
   };
 }

@@ -19,6 +19,10 @@ export function fetchRuns() {
   };
 }
 
+export function loadRun(run: Run): RunAction {
+  return { type: RunActionType.RUNS_FETCH_RUNS_SUCCESS, runs: [run] };
+}
+
 export function fetchRunsSuccess(runs: Run[]): RunAction {
   return { type: RunActionType.RUNS_FETCH_RUNS_SUCCESS, runs };
 }

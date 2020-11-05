@@ -19,6 +19,10 @@ export function fetchInterviews() {
   };
 }
 
+export function loadInterview(interview: Interview): InterviewAction {
+  return { type: InterviewActionType.INTERVIEWS_FETCH_INTERVIEWS_SUCCESS, interviews: [interview] };
+}
+
 export function fetchInterviewsSuccess(interviews: Interview[]): InterviewAction {
   return { type: InterviewActionType.INTERVIEWS_FETCH_INTERVIEWS_SUCCESS, interviews };
 }

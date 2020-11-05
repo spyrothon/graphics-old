@@ -35,9 +35,7 @@ export default class SyncSocket {
   handleError = (_event: Event) => {};
 
   handleMessage = (event: MessageEvent) => {
-    console.log(event);
     const data = camelizeJSON<SyncSocketMessage>(JSON.parse(event.data));
-    console.log(data.type);
     this.onMessage(data);
   };
 }
