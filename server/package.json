@@ -2,7 +2,8 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start:admin": "node index.js admin",
+    "start:graphics": "node index.js graphics"
   },
   "dependencies": {
     "cors": "^2.8.5",
