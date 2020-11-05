@@ -62,7 +62,7 @@ export default function OmnibarUpNext(props: OmnibarUpNextProps) {
   const { className } = props;
 
   const upcomingEntries = useSafeSelector((state) => ScheduleStore.getUpcomingEntries(state));
-  const upcomingToShow = upcomingEntries.slice(1, 5);
+  const upcomingToShow = upcomingEntries.slice(0, 4);
 
   return (
     <div className={classNames(styles.container, className)}>

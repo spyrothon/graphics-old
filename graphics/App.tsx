@@ -8,6 +8,8 @@ import FiveFour1 from "./layouts/FiveFour1";
 import GBA1 from "./layouts/GBA1";
 import BingoStandard1v1 from "./layouts/bingo/BingoStandard1v1";
 import BingoStandard2v2 from "./layouts/bingo/BingoStandard2v2";
+import BreakLeft from "./layouts/breaks/BreakLeft";
+import BreakRight from "./layouts/breaks/BreakRight";
 import HD1 from "./layouts/hd/HD1";
 import HD2 from "./layouts/hd/HD2";
 import Standard1 from "./layouts/standard/Standard1";
@@ -50,6 +52,9 @@ export default function App() {
 
         <Route path={Routes.STANDARD_BINGO_1V1} component={BingoStandard1v1} />
         <Route path={Routes.STANDARD_BINGO_2V2} component={BingoStandard2v2} />
+
+        <Route path={Routes.BREAK_LEFT} component={BreakLeft} />
+        <Route path={Routes.BREAK_RIGHT} component={BreakRight} />
       </Switch>
     </Router>
   );

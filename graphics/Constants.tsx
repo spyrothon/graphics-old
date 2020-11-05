@@ -27,6 +27,10 @@ export const Routes = {
   // Standard 4:3 screens with a Bingo board
   STANDARD_BINGO_1V1: "/bingo-standard-1v1",
   STANDARD_BINGO_2V2: "/bingo-standard-2v2",
+
+  // Break Screens
+  BREAK_LEFT: "/break-left",
+  BREAK_RIGHT: "/break-right",
 };
 
 export const MAIN_SCHEDULE_ID = "1";
