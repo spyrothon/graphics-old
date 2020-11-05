@@ -79,6 +79,15 @@ const getEntriesWithStartTimes = createSelector(
   },
 );
 
+const getUpcomingEntries = createSelector(
+  [getEntriesWithStartTimes, getCurrentEntryId],
+  (entries, currentEntryId) => {
+    const currentIndex = entries.findIndex((entry) => entry.id === currentEntryId);
+
+    return entries.slice(currentIndex);
+  },
+);
+
 export default {
   isFetchingSchedule,
   getScheduleStartTime,
@@ -89,4 +98,5 @@ export default {
   getSelectedEntryId,
   getSelectedEntry,
   getEntriesWithStartTimes,
+  getUpcomingEntries,
 };

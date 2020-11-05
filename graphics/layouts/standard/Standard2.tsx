@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
 import GameInfo from "../../modules/game-info/GameInfo";
+import Omnibar from "../../modules/omnibar/Omnibar";
 import RunStore from "../../modules/runs/RunStore";
 import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
@@ -50,7 +51,7 @@ export default function Standard2() {
           />
         ) : null}
       </div>
-      <div className={styles.omnibar} />
+      <Omnibar className={styles.omnibar} />
     </Layout>
   );
 }

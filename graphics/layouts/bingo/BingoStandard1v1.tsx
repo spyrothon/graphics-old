@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
 import BingoBoard from "../../modules/bingo/BingoBoard";
+import Omnibar from "../../modules/omnibar/Omnibar";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
 import RunUtils from "../../modules/runs/RunUtils";
@@ -50,7 +51,7 @@ export default function BingoStandard1v1() {
           />
         ) : null}
       </div>
-      <div className={styles.omnibar} />
+      <Omnibar className={styles.omnibar} />
     </Layout>
   );
 }

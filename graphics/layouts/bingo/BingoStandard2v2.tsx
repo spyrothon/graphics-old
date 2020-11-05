@@ -3,6 +3,7 @@ import classNames from "classnames";
 
 import { useSafeSelector } from "../../Store";
 import BingoBoard from "../../modules/bingo/BingoBoard";
+import Omnibar from "../../modules/omnibar/Omnibar";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
 import RunUtils from "../../modules/runs/RunUtils";
@@ -62,7 +63,7 @@ export default function BingoStandard2v2() {
         ) : null}
       </div>
 
-      <div className={styles.omnibar} />
+      <Omnibar className={styles.omnibar} />
     </Layout>
   );
 }
