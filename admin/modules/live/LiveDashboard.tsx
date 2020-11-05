@@ -15,6 +15,7 @@ import LiveRunActuals from "./LiveRunActuals";
 import LiveRunInfo from "./LiveRunInfo";
 
 import styles from "./LiveDashboard.mod.css";
+import LiveOnNow from "./LiveOnNow";
 
 export default function LiveDashboard() {
   const dispatch = useSafeDispatch();
@@ -66,19 +67,7 @@ export default function LiveDashboard() {
   return (
     <Dashboard
       fullPage
-      renderSidebar={() => (
-        <div className={styles.sidebar}>
-          <Header>On Now</Header>
-          {currentEntry != null ? (
-            <ScheduleListEntry
-              interactive={false}
-              scheduleEntry={currentEntry}
-              selected={false}
-              onReorder={() => null}
-            />
-          ) : null}
-        </div>
-      )}
+      renderSidebar={() => <LiveOnNow className={styles.sidebar} />}
       renderMain={renderMain}
     />
   );
