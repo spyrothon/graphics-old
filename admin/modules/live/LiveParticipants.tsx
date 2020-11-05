@@ -28,12 +28,28 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
     return runnerVisibilities;
   });
 
+  const [runnerWebcams, setRunnerWebcams] = React.useState(() => {
+    const runnerWebcams: { [name: string]: boolean } = {};
+    for (const runner of run.runners) {
+      runnerWebcams[runner.displayName] = runner.hasWebcam;
+    }
+    return runnerWebcams;
+  });
+
   const [commentatorVisibilities, setCommentatorVisibilities] = React.useState(() => {
     const commentatorVisibilities: { [name: string]: boolean } = {};
     for (const commentator of run.commentators) {
       commentatorVisibilities[commentator.displayName] = commentator.visible;
     }
     return commentatorVisibilities;
+  });
+
+  const [commentatorWebcams, setCommentatorWebcams] = React.useState(() => {
+    const commentatorWebcams: { [name: string]: boolean } = {};
+    for (const commentator of run.commentators) {
+      commentatorWebcams[commentator.displayName] = commentator.hasWebcam;
+    }
+    return commentatorWebcams;
   });
 
   function setRunnerVisible(displayName: string, visible: boolean) {
@@ -44,6 +60,14 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
     setCommentatorVisibilities((state) => ({ ...state, [displayName]: visible }));
   }
 
+  function setRunnerWebcam(displayName: string, hasWebcam: boolean) {
+    setRunnerWebcams((state) => ({ ...state, [displayName]: hasWebcam }));
+  }
+
+  function setCommentatorWebcam(displayName: string, hasWebcam: boolean) {
+    setCommentatorWebcams((state) => ({ ...state, [displayName]: hasWebcam }));
+  }
+
   function handleSave() {
     dispatch(
       persistRun({
@@ -51,10 +75,12 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
         runners: run.runners.map((runner) => ({
           ...runner,
           visible: runnerVisibilities[runner.displayName] ?? runner.visible,
+          hasWebcam: runnerWebcams[runner.displayName] ?? runner.hasWebcam,
         })),
         commentators: run.commentators.map((commentator) => ({
           ...commentator,
           visible: commentatorVisibilities[commentator.displayName] ?? commentator.visible,
+          hasWebcam: commentatorWebcams[commentator.displayName] ?? commentator.hasWebcam,
         })),
       }),
     );
@@ -68,15 +94,28 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
         <div className={styles.checkboxes}>
           {run.runners.map((runner) => (
             <div key={runner.displayName} className={styles.row}>
-              <label>
-                <input
-                  type="checkbox"
-                  className={styles.checkbox}
-                  onChange={(event) => setRunnerVisible(runner.displayName, event.target.checked)}
-                  checked={runnerVisibilities[runner.displayName] ?? runner.visible}
-                />
-                {runner.displayName}
-              </label>
+              <div className={styles.participantVisibility}>
+                <label>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    onChange={(event) => setRunnerVisible(runner.displayName, event.target.checked)}
+                    checked={runnerVisibilities[runner.displayName] ?? runner.visible}
+                  />
+                  {runner.displayName}
+                </label>
+              </div>
+              <div className={styles.participantWebcam}>
+                <label>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    onChange={(event) => setRunnerWebcam(runner.displayName, event.target.checked)}
+                    checked={runnerWebcams[runner.displayName] ?? runner.hasWebcam}
+                  />
+                  Has Webcam
+                </label>
+              </div>
             </div>
           ))}
         </div>
@@ -84,17 +123,34 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
         <div className={styles.checkboxes}>
           {run.commentators.map((commentator) => (
             <div key={commentator.displayName} className={styles.row}>
-              <label>
-                <input
-                  type="checkbox"
-                  className={styles.checkbox}
-                  onChange={(event) =>
-                    setCommentatorVisible(commentator.displayName, event.target.checked)
-                  }
-                  checked={commentatorVisibilities[commentator.displayName] ?? commentator.visible}
-                />
-                {commentator.displayName}
-              </label>
+              <div className={styles.participantVisibility}>
+                <label>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    onChange={(event) =>
+                      setCommentatorVisible(commentator.displayName, event.target.checked)
+                    }
+                    checked={
+                      commentatorVisibilities[commentator.displayName] ?? commentator.visible
+                    }
+                  />
+                  {commentator.displayName}
+                </label>
+              </div>
+              <div className={styles.participantWebcam}>
+                <label>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    onChange={(event) =>
+                      setCommentatorWebcam(commentator.displayName, event.target.checked)
+                    }
+                    checked={commentatorWebcams[commentator.displayName] ?? commentator.hasWebcam}
+                  />
+                  Has Webcam
+                </label>
+              </div>
             </div>
           ))}
         </div>

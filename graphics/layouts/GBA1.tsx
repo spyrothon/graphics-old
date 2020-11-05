@@ -21,12 +21,13 @@ export default function GBA1() {
   });
 
   const { runners = [], commentators = [] } = currentRun ?? {};
+  const showWebcam = RunUtils.hasAnyWebcam(currentRun);
 
   return (
     <Layout>
       <div className={styles.sidebar}>
         {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
-        <FeedArea className={styles.webcam} />
+        {showWebcam ? <FeedArea className={styles.webcam} /> : null}
         <div className={styles.participantsTimer}>
           <NameplateGroup
             className={styles.runners}

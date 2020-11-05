@@ -22,6 +22,7 @@ export default function Standard2() {
   });
 
   const { runners = [], commentators = [] } = currentRun ?? {};
+  const showWebcam = RunUtils.hasAnyWebcam(currentRun);
   const [left, right] = RunUtils.getVisibleParticipants(runners);
 
   return (
@@ -39,7 +40,7 @@ export default function Standard2() {
             <Nameplate className={styles.nameplateRight} participant={right} />
           ) : null}
         </div>
-        <FeedArea className={styles.webcam} />
+        {showWebcam ? <FeedArea className={styles.webcam} /> : null}
       </div>
 
       <div className={styles.commentaryArea}>

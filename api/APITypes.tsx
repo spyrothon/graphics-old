@@ -74,5 +74,6 @@ export interface RunParticipant {
   twitchName?: string;
   twitterName?: string;
   actualSeconds?: number;
+  hasWebcam: boolean;
   visible: boolean;
 }

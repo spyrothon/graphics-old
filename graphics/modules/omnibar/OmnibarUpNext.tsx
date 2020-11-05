@@ -68,8 +68,15 @@ export default function OmnibarUpNext(props: OmnibarUpNextProps) {
     <div className={classNames(styles.container, className)}>
       <div className={styles.sectionTitle}>Up Next</div>
       {upcomingToShow.map((entry) => {
-        if (entry.runId != null) return <OmnibarRun runId={entry.runId} />;
-        if (entry.interviewId != null) return <OmnibarInterview interviewId={entry.interviewId} />;
+        if (entry.runId != null)
+          return <OmnibarRun key={`run-${entry.runId}`} runId={entry.runId} />;
+        if (entry.interviewId != null)
+          return (
+            <OmnibarInterview
+              key={`interview-${entry.interviewId}`}
+              interviewId={entry.interviewId}
+            />
+          );
         return null;
       })}
     </div>

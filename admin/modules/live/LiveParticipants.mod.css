@@ -18,3 +18,13 @@
 .checkbox {
   margin-right: 8px;
 }
+
+.participantVisibility {
+  font-weight: 700;
+}
+
+.participantWebcam {
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 32px;
+}

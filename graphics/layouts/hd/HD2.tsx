@@ -22,6 +22,7 @@ export default function HD2() {
   });
 
   const { runners = [], commentators = [] } = currentRun ?? {};
+  const showWebcam = RunUtils.hasAnyWebcam(currentRun);
   const [left, right] = RunUtils.getVisibleParticipants(runners);
 
   return (
@@ -40,8 +41,7 @@ export default function HD2() {
       </div>
 
       {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
-
-      <FeedArea className={styles.webcam} />
+      {showWebcam ? <FeedArea className={styles.webcam} /> : null}
 
       <div className={styles.commentaryArea}>
         {commentators.length > 0 ? (
