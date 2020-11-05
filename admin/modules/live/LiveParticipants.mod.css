@@ -1,0 +1,20 @@
+.columns {
+  display: flex;
+}
+
+.checkboxes {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 16px;
+}
+
+.row {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.checkbox {
+  margin-right: 8px;
+}

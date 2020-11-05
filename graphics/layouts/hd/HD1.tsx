@@ -3,6 +3,7 @@ import * as React from "react";
 import { useSafeSelector } from "../../Store";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
+import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
@@ -30,12 +31,16 @@ export default function HD1() {
         <div className={styles.timerArea}>
           <Timer className={styles.timer} elapsedSeconds={2523} />
         </div>
-        <NameplateGroup className={styles.runners} participants={runners ?? []} title="Runners" />
+        <NameplateGroup
+          className={styles.runners}
+          participants={RunUtils.getVisibleParticipants(runners)}
+          title="Runners"
+        />
         {commentators.length > 0 ? (
           <div className={styles.commentaryArea}>
             <NameplateGroup
               className={styles.commentators}
-              participants={commentators ?? []}
+              participants={RunUtils.getVisibleParticipants(commentators)}
               title="Commentary"
             />
           </div>

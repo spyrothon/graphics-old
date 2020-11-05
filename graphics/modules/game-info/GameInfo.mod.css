@@ -32,8 +32,13 @@
   font-weight: 900;
   font-size: 14px;
   text-shadow: 0 0 8px #000;
+  margin: 0 8px;
 
   & .descriptor {
     font-weight: 400;
+  }
+
+  & .value {
+    display: inline-block;
   }
 }

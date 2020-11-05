@@ -5,6 +5,7 @@ import { ScheduleEntryWithDependants } from "./ScheduleTypes";
 
 type ScheduleEntrySelectorProps = {
   label?: React.ReactNode;
+  note?: React.ReactNode;
   selectedEntryId?: string;
   entries: ScheduleEntryWithDependants[];
   className?: string;
@@ -12,7 +13,7 @@ type ScheduleEntrySelectorProps = {
 };
 
 export default function ScheduleEntrySelector(props: ScheduleEntrySelectorProps) {
-  const { label, selectedEntryId, entries, className, onChange } = props;
+  const { label, note, selectedEntryId, entries, className, onChange } = props;
   const selectedEntry = React.useMemo(() => entries.find((entry) => entry.id === selectedEntryId), [
     selectedEntryId,
     entries,
@@ -41,6 +42,7 @@ export default function ScheduleEntrySelector(props: ScheduleEntrySelectorProps)
   return (
     <SelectInput
       label={label}
+      note={note}
       className={className}
       items={entries}
       itemToString={(entry) => getOptionName(entry)}

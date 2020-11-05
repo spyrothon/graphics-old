@@ -5,6 +5,7 @@ import { useSafeSelector } from "../../Store";
 import BingoBoard from "../../modules/bingo/BingoBoard";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
+import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
@@ -20,7 +21,8 @@ export default function BingoStandard2v2() {
     return RunStore.getRun(state, { runId: entry.runId });
   });
 
-  const { runners: [topLeft, topRight, bottomLeft, bottomRight] = [] } = currentRun ?? {};
+  const { runners = [] } = currentRun ?? {};
+  const [topLeft, topRight, bottomLeft, bottomRight] = RunUtils.getVisibleParticipants(runners);
 
   return (
     <Layout>

@@ -3,6 +3,7 @@ import * as React from "react";
 import { useSafeSelector } from "../Store";
 import GameInfo from "../modules/game-info/GameInfo";
 import RunStore from "../modules/runs/RunStore";
+import RunUtils from "../modules/runs/RunUtils";
 import ScheduleStore from "../modules/schedules/ScheduleStore";
 import FeedArea from "../uikit/FeedArea";
 import Layout from "../uikit/Layout";
@@ -18,7 +19,7 @@ export default function DS1() {
     return RunStore.getRun(state, { runId: entry.runId });
   });
 
-  const { runners = [], commentators = [] } = currentRun ?? {};
+  const { runners = [] } = currentRun ?? {};
 
   return (
     <Layout>
@@ -27,7 +28,11 @@ export default function DS1() {
         <FeedArea className={styles.webcam} />
         <div className={styles.participantsTimer}>
           <Timer className={styles.timer} elapsedSeconds={2523} />
-          <NameplateGroup className={styles.runners} participants={runners ?? []} title="Runners" />
+          <NameplateGroup
+            className={styles.runners}
+            participants={RunUtils.getVisibleParticipants(runners)}
+            title="Runners"
+          />
         </div>
       </div>
       <FeedArea className={styles.game1} />

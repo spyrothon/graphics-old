@@ -23,15 +23,17 @@ export default function GameInfo(props: GameInfoProps) {
       <Category className={styles.categoryName}>{categoryName}</Category>
       <div className={styles.runInfo}>
         <div className={styles.releaseYear}>
-          <span className={styles.descriptor}>RELEASED:</span> {releaseYear}
+          <span className={styles.descriptor}>RELEASED: </span>
+          <span className={styles.value}>{releaseYear}</span>
         </div>
         <div className={styles.platform}>
-          <span className={styles.descriptor}>PLATFORM:</span> {platform}
+          <span className={styles.descriptor}>PLATFORM: </span>
+          <span className={styles.value}>{platform}</span>
         </div>
         {estimateSeconds != null ? (
           <div className={styles.estimate}>
-            <span className={styles.descriptor}>ESTIMATE:</span>{" "}
-            {DurationUtils.toString(estimateSeconds)}
+            <span className={styles.descriptor}>ESTIMATE: </span>
+            <span className={styles.value}>{DurationUtils.toString(estimateSeconds)}</span>
           </div>
         ) : null}
       </div>

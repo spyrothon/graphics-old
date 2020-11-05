@@ -13,14 +13,11 @@
   text-shadow: 0 0 4px var(--primary-bg-100);
 }
 
-.twitch {
-  font-weight: 400;
-  font-size: 12px;
-  text-shadow: 0 0 8px #000;
-  color: var(--text-inverted);
-
-  & strong {
-    font-family: var(--font-brand);
-    font-size: 14px;
-  }
+.time {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--primary);
+  text-shadow: 0 0 3px var(--primary-bg-100);
 }

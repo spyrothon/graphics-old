@@ -1,0 +1,13 @@
+.inputs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.overall {
+  flex: 1 1 auto;
+}
+
+.participants {
+  flex: 1 1 auto;
+}

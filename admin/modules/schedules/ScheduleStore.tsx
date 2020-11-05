@@ -42,6 +42,11 @@ export const getCurrentEntry = createSelector(
   (entries, entryId) => entries.find((entry) => entry.id === entryId),
 );
 
+export const getCurrentEntryWithDependants = createSelector(
+  [getScheduleEntriesWithDependants, getCurrentEntryId],
+  (entries, entryId) => entries.find((entry) => entry.id === entryId),
+);
+
 export const getSelectedEntryId = createSelector(
   [getSchedulesState],
   (state) => state.selectedEntryId,

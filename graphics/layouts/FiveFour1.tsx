@@ -3,6 +3,7 @@ import * as React from "react";
 import { useSafeSelector } from "../Store";
 import GameInfo from "../modules/game-info/GameInfo";
 import RunStore from "../modules/runs/RunStore";
+import RunUtils from "../modules/runs/RunUtils";
 import ScheduleStore from "../modules/schedules/ScheduleStore";
 import FeedArea from "../uikit/FeedArea";
 import Layout from "../uikit/Layout";
@@ -26,13 +27,17 @@ export default function FiveFour1() {
         {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
         <FeedArea className={styles.webcam} />
         <div className={styles.participantsTimer}>
-          <NameplateGroup className={styles.runners} participants={runners ?? []} title="Runners" />
+          <NameplateGroup
+            className={styles.runners}
+            participants={RunUtils.getVisibleParticipants(runners)}
+            title="Runners"
+          />
           <Timer className={styles.timer} elapsedSeconds={2523} />
           <div className={styles.commentaryArea}>
             {commentators.length > 0 ? (
               <NameplateGroup
                 className={styles.commentators}
-                participants={commentators ?? []}
+                participants={RunUtils.getVisibleParticipants(commentators)}
                 title="Commentary"
               />
             ) : null}

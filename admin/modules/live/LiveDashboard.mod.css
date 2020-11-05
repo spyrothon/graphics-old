@@ -11,3 +11,28 @@
   overflow: scroll;
   padding: 16px;
 }
+
+.entrySelector {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.setCurrentButton {
+  flex: 1 1 200px;
+}
+
+.panels {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 16px;
+
+  & > div {
+    flex: 1 1 auto;
+    min-width: min-content;
+    border: var(--border-primary);
+    border-radius: 4px;
+    padding: 16px;
+  }
+}

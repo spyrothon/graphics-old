@@ -3,6 +3,7 @@ import * as React from "react";
 import { useSafeSelector } from "../../Store";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
+import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
@@ -19,7 +20,8 @@ export default function Standard2() {
     return RunStore.getRun(state, { runId: entry.runId });
   });
 
-  const { runners: [left, right] = [], commentators = [] } = currentRun ?? {};
+  const { runners = [], commentators = [] } = currentRun ?? {};
+  const [left, right] = RunUtils.getVisibleParticipants(runners);
 
   return (
     <Layout>
@@ -43,7 +45,7 @@ export default function Standard2() {
         {commentators.length > 0 ? (
           <NameplateGroup
             className={styles.commentators}
-            participants={commentators ?? []}
+            participants={RunUtils.getVisibleParticipants(commentators)}
             title="Commentary"
           />
         ) : null}

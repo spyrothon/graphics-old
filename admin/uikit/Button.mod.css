@@ -4,7 +4,7 @@
   background: none;
   border: none;
   display: block;
-  line-height: 1;
+  line-height: 1.2;
   margin: 0;
 
   /* common style */
@@ -33,7 +33,7 @@
 /* Colors */
 .colorPrimary {
   --_button-primary: var(--primary);
-  --_button-hover: var(--background-primary);
+  --_button-hover: var(--primary);
   --_button-secondary: var(--text-inverted);
 }
 
@@ -48,6 +48,10 @@
   background-color: var(--_button-primary);
   border: 1px solid var(--_button-primary);
   color: var(--_button-secondary);
+
+  &:not([disabled]):hover {
+    background-color: var(--_button-hover);
+  }
 }
 
 .lookOutlined {

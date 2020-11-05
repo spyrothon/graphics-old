@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { useSafeSelector } from "../../Store";
 import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
+import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
@@ -20,8 +21,8 @@ export default function Standard4() {
     return RunStore.getRun(state, { runId: entry.runId });
   });
 
-  const { runners: [topLeft, topRight, bottomLeft, bottomRight] = [], commentators = [] } =
-    currentRun ?? {};
+  const { runners = [], commentators = [] } = currentRun ?? {};
+  const [topLeft, topRight, bottomLeft, bottomRight] = RunUtils.getVisibleParticipants(runners);
 
   return (
     <Layout>
@@ -62,7 +63,7 @@ export default function Standard4() {
           <div className={styles.commentaryArea}>
             <NameplateGroup
               className={styles.commentators}
-              participants={commentators ?? []}
+              participants={RunUtils.getVisibleParticipants(commentators)}
               title="Commentary"
             />
           </div>

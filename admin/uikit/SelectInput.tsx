@@ -9,6 +9,7 @@ export type SelectInputProps<T> = {
   items: T[];
   itemToString: (item?: T) => string;
   renderItem: (item: T) => React.ReactNode;
+  includeEmpty?: boolean;
   onChange: (item?: T) => unknown;
 } & InputWrapperPassthroughProps;
 
@@ -23,6 +24,7 @@ export default function SelectInput<T>(props: SelectInputProps<T>) {
     value,
     items,
     itemToString,
+    includeEmpty = true,
     ...comboboxProps
   } = props;
 
@@ -34,6 +36,11 @@ export default function SelectInput<T>(props: SelectInputProps<T>) {
   return (
     <InputWrapper name={name} label={label} note={note} className={className} {...comboboxProps}>
       <select className={styles.input} value={itemToString(value)} onChange={handleChange}>
+        {includeEmpty ? (
+          <option value="" disabled>
+            Select an Option
+          </option>
+        ) : null}
         {items.map((item) => {
           const string = itemToString(item);
           return (

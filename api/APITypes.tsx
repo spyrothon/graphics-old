@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 export interface Interview {
   id: string;
   topic: string;
@@ -73,8 +71,8 @@ export interface InitialRun {
 
 export interface RunParticipant {
   displayName: string;
-  twitchName: string;
+  twitchName?: string;
   twitterName?: string;
+  actualSeconds?: number;
+  visible: boolean;
 }
-
-/* eslint-enable camelcase */

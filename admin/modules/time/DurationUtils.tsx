@@ -49,3 +49,8 @@ export function fromString(value: string) {
       return 0;
   }
 }
+
+export default {
+  toString,
+  fromString,
+};

@@ -94,7 +94,8 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  min-height: 100px;
+  min-height: 120px;
+  max-height: 170px;
   padding-bottom: 8px;
   display: flex;
   flex-direction: column;
@@ -107,6 +108,7 @@
 .commentators {
   width: 380px;
   min-height: 50%;
+  padding: 16px 0;
 }
 
 .omnibar {
