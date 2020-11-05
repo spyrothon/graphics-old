@@ -9,7 +9,6 @@ import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
 import Nameplate from "../../uikit/Nameplate";
-import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./BingoStandard2v2.mod.css";
@@ -21,8 +20,7 @@ export default function BingoStandard2v2() {
     return RunStore.getRun(state, { runId: entry.runId });
   });
 
-  const { runners: [topLeft, topRight, bottomLeft, bottomRight] = [], commentators = [] } =
-    currentRun ?? {};
+  const { runners: [topLeft, topRight, bottomLeft, bottomRight] = [] } = currentRun ?? {};
 
   return (
     <Layout>
@@ -59,15 +57,6 @@ export default function BingoStandard2v2() {
             className={classNames(styles.nameplate, styles.nameplateBottomRight)}
             participant={bottomRight}
           />
-        ) : null}
-        {commentators.length > 0 ? (
-          <div className={styles.commentaryArea}>
-            <NameplateGroup
-              className={styles.commentators}
-              participants={commentators ?? []}
-              title="Commentary"
-            />
-          </div>
         ) : null}
       </div>
 

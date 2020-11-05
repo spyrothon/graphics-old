@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import { useDrag, useDrop } from "react-dnd";
 
-import { RunParticipant, ScheduleEntry, Schedule } from "../../../api/APITypes";
+import { RunParticipant, ScheduleEntry } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
@@ -80,6 +80,7 @@ function InterviewEntry(props: InterviewEntryProps) {
 type ScheduleListEntryProps = {
   scheduleEntry: ScheduleEntry;
   selected: boolean;
+  interactive: boolean;
   onReorder: (entryId: string, newIndex: number) => unknown;
 };
 
@@ -90,7 +91,7 @@ type DragItem = {
 };
 
 export default function ScheduleListEntry(props: ScheduleListEntryProps) {
-  const { scheduleEntry, selected, onReorder } = props;
+  const { scheduleEntry, selected, interactive = true, onReorder } = props;
   const { id: entryId, runId, interviewId, position, setupSeconds } = scheduleEntry;
   const dispatch = useSafeDispatch();
 
@@ -111,7 +112,7 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
       draggedHeight: monitor.getItem()?.entry.id === entryId ? 0 : monitor.getItem()?.height,
     }),
   });
-  drag(drop(entryRef));
+  if (interactive) drag(drop(entryRef));
 
   function handleSelect() {
     dispatch(selectScheduleEntry(scheduleEntry.id));
@@ -146,6 +147,7 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
       ref={entryRef}
       className={classNames(styles.entry, {
         [styles.selected]: selected,
+        [styles.interactive]: interactive,
         [styles.dropOver]: isDropOver,
         [styles.dragging]: isDragging,
       })}
@@ -159,9 +161,11 @@ export default function ScheduleListEntry(props: ScheduleListEntryProps) {
           {position + 1}
         </Text>
         {content}
-        <div className={styles.removeAction} onClick={handleDelete}>
-          &times;
-        </div>
+        {interactive ? (
+          <div className={styles.removeAction} onClick={handleDelete}>
+            &times;
+          </div>
+        ) : null}
       </div>
     </div>
   );

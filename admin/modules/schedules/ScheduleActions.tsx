@@ -12,6 +12,13 @@ export function selectScheduleEntry(entryId?: string): ScheduleAction {
   };
 }
 
+export function updateSchedule(schedule: Schedule) {
+  return async (dispatch: SafeDispatch) => {
+    const updatedSchedule = await APIClient.updateSchedule(schedule.id, schedule);
+    dispatch(loadSchedule(updatedSchedule));
+  };
+}
+
 export function addRunToSchedule(scheduleId: string) {
   return async (dispatch: SafeDispatch) => {
     const run = await APIClient.createRun({ gameName: "New Run" });

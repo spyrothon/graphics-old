@@ -4,9 +4,10 @@ import { createSelector } from "reselect";
 import { StoreState } from "../../Store";
 import { getInterviewsById } from "../interviews/InterviewStore";
 import { getRunsById } from "../runs/RunStore";
-import type { ScheduleEntryWithTimes } from "./ScheduleTypes";
+import type { ScheduleEntryWithDependants, ScheduleEntryWithTimes } from "./ScheduleTypes";
 
 const getSchedulesState = (globalState: StoreState) => globalState.schedules;
+export const getSchedule = (state: StoreState) => getSchedulesState(state).schedule;
 
 export const isFetchingSchedule = createSelector([getSchedulesState], (state) => state.fetching);
 
@@ -14,16 +15,28 @@ export const getScheduleStartTime = createSelector([], () =>
   DateTime.fromISO("2020-11-06T23:30:00Z"),
 );
 
-export const getSchedule = createSelector([getSchedulesState], (state) => state.schedule);
 export const getScheduleEntries = createSelector(
   [getSchedulesState],
   (state) => state.schedule?.scheduleEntries ?? [],
 );
 
-export const getCurrentEntryId = createSelector(
-  [getSchedulesState],
-  (state) => state.schedule?.currentEntryId,
+export const getScheduleEntriesWithDependants = createSelector(
+  [getScheduleEntries, getRunsById, getInterviewsById],
+  (entries, runs, interviews) => {
+    return entries.map(
+      (entry): ScheduleEntryWithDependants => {
+        return {
+          ...entry,
+          run: entry.runId != null ? runs[entry.runId] : undefined,
+          interview: entry.interviewId != null ? interviews[entry.interviewId] : undefined,
+        };
+      },
+    );
+  },
 );
+
+export const getCurrentEntryId = (state: StoreState) => getSchedule(state)?.currentEntryId;
+
 export const getCurrentEntry = createSelector(
   [getScheduleEntries, getCurrentEntryId],
   (entries, entryId) => entries.find((entry) => entry.id === entryId),

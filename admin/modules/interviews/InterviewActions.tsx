@@ -10,7 +10,7 @@ export function updateInterview(interview: Interview): InterviewAction {
   };
 }
 
-export function fetchRuns() {
+export function fetchInterviews() {
   return async (dispatch: SafeDispatch) => {
     dispatch({ type: InterviewActionType.INTERVIEWS_FETCH_INTERVIEWS_STARTED });
     const interviews = await APIClient.fetchInterviews();

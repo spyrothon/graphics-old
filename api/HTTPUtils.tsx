@@ -1,8 +1,8 @@
 import queryString from "query-string";
-import camelcaseKeys from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys";
 
 import { API_ENDPOINT } from "./Config";
+import { camelizeJSON } from "./JSONUtils";
 
 export enum HTTPVerb {
   GET = "GET",
@@ -28,10 +28,6 @@ function checkStatus(response: Response) {
   } else {
     throw response;
   }
-}
-
-function parseJSON<T>(json: object): T {
-  return (camelcaseKeys(json, { deep: true }) as unknown) as T;
 }
 
 function skipsCSRF(method: string) {
@@ -126,7 +122,7 @@ export async function send<T>(
 
   try {
     const json = await response.json();
-    const parsed = parseJSON<T>(json);
+    const parsed = camelizeJSON<T>(json);
 
     if (response.status === 422) {
       return Promise.reject(parsed);

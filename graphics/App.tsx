@@ -15,16 +15,16 @@ import Standard2 from "./layouts/standard/Standard2";
 import Standard4 from "./layouts/standard/Standard4";
 import { history } from "./modules/router/RouterUtils";
 import { fetchSchedule } from "./modules/schedules/ScheduleActions";
-// import RemoteActionReceiverManager from "./modules/remote/RemoteActionReceiverManager";
+import SyncSocketManager from "./modules/sync/SyncSocketManager";
 import SVGLibrary from "./uikit/svg/SVGLibrary";
 
 export default function App() {
-  // React.useEffect(() => {
-  //   RemoteActionReceiverManager.init();
-  //   return () => {
-  //     RemoteActionReceiverManager.stop();
-  //   };
-  // }, []);
+  React.useEffect(() => {
+    SyncSocketManager.init();
+    return () => {
+      SyncSocketManager.stop();
+    };
+  }, []);
 
   const dispatch = useSafeDispatch();
 

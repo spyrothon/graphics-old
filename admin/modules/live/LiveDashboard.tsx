@@ -1,26 +1,58 @@
 import * as React from "react";
-import Dashboard from "../dashboards/Dashboard";
+
+import { useSafeSelector } from "../../Store";
+import useSafeDispatch from "../../hooks/useDispatch";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
-import { useSafeSelector } from "../../Store";
+import Dashboard from "../dashboards/Dashboard";
 import * as ScheduleStore from "../schedules/ScheduleStore";
 import ScheduleListEntry from "../schedules/ScheduleListEntry";
+import { updateSchedule } from "../schedules/ScheduleActions";
+import ScheduleEntrySelector from "../schedules/ScheduleEntrySelector";
+import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
+
+import styles from "./LiveDashboard.mod.css";
 
 export default function LiveDashboard() {
-  const { entries, currentEntry } = useSafeSelector((state) => ({
-    entries: ScheduleStore.getScheduleEntries(state),
+  const dispatch = useSafeDispatch();
+  const { schedule, entries, currentEntry } = useSafeSelector((state) => ({
+    schedule: ScheduleStore.getSchedule(state),
+    entries: ScheduleStore.getScheduleEntriesWithDependants(state),
     currentEntry: ScheduleStore.getCurrentEntry(state),
   }));
 
-  console.log(currentEntry);
+  function handleSetCurrentEntry(entry?: ScheduleEntryWithDependants) {
+    if (schedule == null || entry == null) return;
+
+    dispatch(updateSchedule({ ...schedule, currentEntryId: entry.id }));
+  }
 
   return (
-    <Dashboard>
-      <Header>Live Dashboard</Header>
-      <Text>On Now</Text>
-      {currentEntry != null ? (
-        <ScheduleListEntry scheduleEntry={currentEntry} selected={false} onReorder={() => null} />
-      ) : null}
-    </Dashboard>
+    <Dashboard
+      fullPage
+      renderSidebar={() => (
+        <div className={styles.sidebar}>
+          <Header>On Now</Header>
+          {currentEntry != null ? (
+            <ScheduleListEntry
+              interactive={false}
+              scheduleEntry={currentEntry}
+              selected={false}
+              onReorder={() => null}
+            />
+          ) : null}
+        </div>
+      )}
+      renderMain={() => (
+        <div className={styles.main}>
+          <ScheduleEntrySelector
+            label="Current Schedule Entry"
+            entries={entries}
+            selectedEntryId={currentEntry?.id}
+            onChange={handleSetCurrentEntry}
+          />
+        </div>
+      )}
+    />
   );
 }

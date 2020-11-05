@@ -10,16 +10,16 @@
 .entry {
   border-bottom: var(--border-secondary);
 
-  &:hover {
+  &.interactive:hover {
     background-color: var(--background-hover);
     cursor: pointer;
   }
 
-  &:active {
+  &.interactive:active {
     background-color: var(--background-active);
   }
 
-  &.selected {
+  &.interactive.selected {
     border-left: 8px solid var(--primary);
     background-color: var(--background-secondary);
   }

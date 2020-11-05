@@ -19,8 +19,8 @@ function Line(props: LineProps) {
       x2={x}
       y2={y + height}
       stroke={color}
-      stroke-width={width}
-      stroke-linecap="round"
+      strokeWidth={width}
+      strokeLinecap="round"
     />
   );
 }
@@ -50,6 +50,7 @@ function LineStack(props: LineStackProps) {
       const nextHeight = Math.floor(Math.random() * (maxHeight - minHeight) + minHeight);
       lines.push(
         <Line
+          key={currentHeight}
           x={x}
           y={currentHeight}
           height={nextHeight}
@@ -123,6 +124,7 @@ export default function SlidingLines(props: SlidingLinesProps) {
     while (currentX < width + lineWidth && index < maxStacks) {
       stacks.push(
         <LineStack
+          key={currentX}
           x={currentX}
           y={-height * 2}
           totalHeight={renderedHeight}

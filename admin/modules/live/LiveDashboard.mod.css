@@ -1,0 +1,13 @@
+.sidebar {
+  height: 100%;
+  width: clamp(280px, 28vw, 360px);
+  padding: 16px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.main {
+  height: 100%;
+  overflow: scroll;
+  padding: 16px;
+}

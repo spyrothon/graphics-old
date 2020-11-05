@@ -12,16 +12,13 @@ const isFetchingSchedule = createSelector([getSchedulesState], (state) => state.
 
 const getScheduleStartTime = createSelector([], () => DateTime.fromISO("2020-11-06T23:30:00Z"));
 
-const getSchedule = createSelector([getSchedulesState], (state) => state.schedule);
+const getSchedule = (state: StoreState) => getSchedulesState(state).schedule;
 const getScheduleEntries = createSelector(
   [getSchedulesState],
   (state) => state.schedule?.scheduleEntries ?? [],
 );
 
-const getCurrentEntryId = createSelector(
-  [getSchedulesState],
-  (state) => state.schedule?.currentEntryId,
-);
+const getCurrentEntryId = (state: StoreState) => getSchedule(state)?.currentEntryId;
 const getCurrentEntry = createSelector(
   [getScheduleEntries, getCurrentEntryId],
   (entries, entryId) => entries.find((entry) => entry.id === entryId),
