@@ -158,7 +158,7 @@ export default function RunEditor(props: RunEditorProps) {
         </div>
         <div className={styles.entryFields}>
           <DurationInput
-            label="Setup Time"
+            label="Estimated Setup Time"
             value={editedEntry.setupSeconds}
             marginless
             onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}

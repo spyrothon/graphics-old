@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
+import Button from "../../uikit/Button";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import Dashboard from "../dashboards/Dashboard";
@@ -12,6 +13,7 @@ import ScheduleEntrySelector from "../schedules/ScheduleEntrySelector";
 import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
 
 import styles from "./LiveDashboard.mod.css";
+import DurationInput from "../../uikit/DurationInput";
 
 export default function LiveDashboard() {
   const dispatch = useSafeDispatch();
@@ -21,10 +23,46 @@ export default function LiveDashboard() {
     currentEntry: ScheduleStore.getCurrentEntry(state),
   }));
 
-  function handleSetCurrentEntry(entry?: ScheduleEntryWithDependants) {
-    if (schedule == null || entry == null) return;
+  const [selectedEntry, setSelectedEntry] = React.useState<ScheduleEntryWithDependants | undefined>(
+    currentEntry,
+  );
 
-    dispatch(updateSchedule({ ...schedule, currentEntryId: entry.id }));
+  function handleSetCurrentEntry() {
+    if (schedule == null || selectedEntry == null) return;
+
+    dispatch(updateSchedule({ ...schedule, currentEntryId: selectedEntry.id }));
+  }
+
+  function renderMain() {
+    return (
+      <div className={styles.main}>
+        <ScheduleEntrySelector
+          label="Current Schedule Entry"
+          entries={entries}
+          selectedEntryId={selectedEntry?.id}
+          onChange={setSelectedEntry}
+        />
+        <Button onClick={handleSetCurrentEntry}>Make this the Current Entry</Button>
+        <DurationInput
+          label="Actual Setup Time"
+          value={selectedEntry?.setupSeconds}
+          onChange={(value) =>
+            selectedEntry != null
+              ? setSelectedEntry({ ...selectedEntry, setupSeconds: value })
+              : undefined
+          }
+        />
+        <DurationInput
+          label="Actual Run Time"
+          value={selectedEntry?.setupSeconds}
+          onChange={(value) =>
+            selectedEntry != null
+              ? setSelectedEntry({ ...selectedEntry, setupSeconds: value })
+              : undefined
+          }
+        />
+      </div>
+    );
   }
 
   return (
@@ -43,16 +81,7 @@ export default function LiveDashboard() {
           ) : null}
         </div>
       )}
-      renderMain={() => (
-        <div className={styles.main}>
-          <ScheduleEntrySelector
-            label="Current Schedule Entry"
-            entries={entries}
-            selectedEntryId={currentEntry?.id}
-            onChange={handleSetCurrentEntry}
-          />
-        </div>
-      )}
+      renderMain={renderMain}
     />
   );
 }

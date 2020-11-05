@@ -52,7 +52,7 @@ export interface Run {
   platform?: string;
   releaseYear?: string;
   notes?: string;
-  actualTime?: number;
+  actualSeconds?: number;
   finished: boolean;
   runners: RunParticipant[];
   commentators: RunParticipant[];

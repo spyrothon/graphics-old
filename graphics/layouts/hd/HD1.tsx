@@ -31,15 +31,15 @@ export default function HD1() {
           <Timer className={styles.timer} elapsedSeconds={2523} />
         </div>
         <NameplateGroup className={styles.runners} participants={runners ?? []} title="Runners" />
-        <div className={styles.commentaryArea}>
-          {commentators.length > 0 ? (
+        {commentators.length > 0 ? (
+          <div className={styles.commentaryArea}>
             <NameplateGroup
               className={styles.commentators}
               participants={commentators ?? []}
               title="Commentary"
             />
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </div>
       <FeedArea className={styles.game1} />
       <div className={styles.omnibar} />
