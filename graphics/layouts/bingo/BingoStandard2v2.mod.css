@@ -68,12 +68,12 @@
 
 .nameplateTopRight {
   right: 0;
-  top: 230px;
+  top: 232px;
 }
 
 .nameplateBottomLeft {
   left: 0;
-  top: 701px;
+  top: 699px;
 }
 
 .nameplateBottomRight {
@@ -97,7 +97,7 @@
   bottom: -2px;
   margin: 0 -2px;
   width: calc(100% + 4px);
-  height: 60px;
+  height: 64px;
   z-index: 2;
 }
 
