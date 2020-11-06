@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import Omnibar from "../../modules/omnibar/Omnibar";
 import Layout from "../../uikit/Layout";
 
 import styles from "./Break.mod.css";
@@ -21,7 +20,6 @@ export default function BreakCountdown() {
           <LiveTimer startTime={START_TIME} className={styles.backHeader} />
         </div>
       </div>
-      <Omnibar className={styles.omnibar} />
     </Layout>
   );
 }
