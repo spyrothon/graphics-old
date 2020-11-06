@@ -6,6 +6,7 @@
   border: 2px solid #000;
   background-color: var(--primary-bg);
   height: 100%;
+  min-height: 65px;
 }
 
 .background {
