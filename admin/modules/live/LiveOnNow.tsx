@@ -3,13 +3,16 @@ import * as React from "react";
 import { RunParticipant } from "../../../api/APITypes";
 
 import { useSafeSelector } from "../../Store";
+import useSafeDispatch from "../../hooks/useDispatch";
 import * as ScheduleStore from "../../modules/schedules/ScheduleStore";
+import Button from "../../uikit/Button";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
+import { updateSchedule } from "../schedules/ScheduleActions";
 import ScheduleListEntry from "../schedules/ScheduleListEntry";
+import DurationUtils from "../time/DurationUtils";
 
 import styles from "./LiveOnNow.mod.css";
-import DurationUtils from "../time/DurationUtils";
 
 type ParticipantListProps = {
   name: string;
@@ -46,14 +49,26 @@ type LiveOnNowProps = {
 
 export default function LiveOnNow(props: LiveOnNowProps) {
   const { className } = props;
-  const currentEntry = useSafeSelector((state) =>
-    ScheduleStore.getCurrentEntryWithDependants(state),
-  );
+  const dispatch = useSafeDispatch();
+
+  const { currentEntry, schedule } = useSafeSelector((state) => ({
+    schedule: ScheduleStore.getSchedule(state),
+    currentEntry: ScheduleStore.getCurrentEntryWithDependants(state),
+  }));
 
   if (currentEntry == null) return null;
 
+  function handleToggleDebug() {
+    if (schedule == null) return;
+
+    dispatch(updateSchedule({ ...schedule, debug: !schedule.debug }));
+  }
+
   return (
     <div className={className}>
+      <Button color={Button.Colors.DEFAULT} fullwidth onClick={handleToggleDebug}>
+        {!schedule?.debug ? "Enable Debug Mode" : "Disable Debug Mode"}
+      </Button>
       <Header size={Header.Sizes.H4}>On Now</Header>
       <div className={styles.currentEntry}>
         <ScheduleListEntry

@@ -10,6 +10,7 @@ const getSchedulesState = (globalState: StoreState) => globalState.schedules;
 export const getSchedule = (state: StoreState) => getSchedulesState(state).schedule;
 
 export const isFetchingSchedule = createSelector([getSchedulesState], (state) => state.fetching);
+export const isDebug = createSelector([getSchedule], (schedule) => schedule?.debug);
 
 export const getScheduleStartTime = createSelector([], () =>
   DateTime.fromISO("2020-11-06T23:30:00Z"),

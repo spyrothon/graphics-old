@@ -1,7 +1,10 @@
 import * as React from "react";
 import classNames from "classnames";
 
+import { useSafeSelector } from "../Store";
+
 import styles from "./FeedArea.mod.css";
+import ScheduleStore from "../modules/schedules/ScheduleStore";
 
 type GameFeedAreaProps = {
   className: string;
@@ -9,6 +12,8 @@ type GameFeedAreaProps = {
 
 export default function FeedArea(props: GameFeedAreaProps) {
   const areaRef = React.useRef<HTMLDivElement>(null);
+
+  const debug = useSafeSelector((state) => ScheduleStore.getSchedule(state)?.debug ?? true);
 
   const [size, setSize] = React.useState([0, 0]);
   const [position, setPosition] = React.useState({ top: 0, right: 0, bottom: 0, left: 0 });
@@ -50,21 +55,25 @@ export default function FeedArea(props: GameFeedAreaProps) {
 
   return (
     <div ref={areaRef} className={classNames(styles.feed, props.className)}>
-      <div className={styles.topLeft}>
-        ({left}, {top})
-      </div>
-      <div className={styles.topRight}>
-        ({right}, {top})
-      </div>
-      <div className={styles.sizeText}>
-        {width} x {height}
-      </div>
-      <div className={styles.bottomLeft}>
-        ({left}, {bottom})
-      </div>
-      <div className={styles.bottomRight}>
-        ({right}, {bottom})
-      </div>
+      {debug ? (
+        <>
+          <div className={styles.topLeft}>
+            ({left}, {top})
+          </div>
+          <div className={styles.topRight}>
+            ({right}, {top})
+          </div>
+          <div className={styles.sizeText}>
+            {width} x {height}
+          </div>
+          <div className={styles.bottomLeft}>
+            ({left}, {bottom})
+          </div>
+          <div className={styles.bottomRight}>
+            ({right}, {bottom})
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

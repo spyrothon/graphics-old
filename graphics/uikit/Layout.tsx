@@ -12,12 +12,12 @@ type LayoutProps = {
 };
 
 export default function Layout(props: LayoutProps) {
-  const { showBackground = false, className, children } = props;
+  const { showBackground = true, className, children } = props;
 
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
   React.useLayoutEffect(() => {
     if (videoRef.current == null) return;
-    videoRef.current.playbackRate = 0.7;
+    videoRef.current.playbackRate = 0.4;
   }, []);
 
   return (
@@ -29,6 +29,7 @@ export default function Layout(props: LayoutProps) {
           preload="auto"
           muted
           playsInline
+          autoPlay
           loop
           controls={false}>
           <source src={backgroundVideo} type="video/mp4" />

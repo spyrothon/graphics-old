@@ -11,7 +11,7 @@ import logo from "../../res/spyrothon_6_logo.png";
 
 export default function BreakLeft() {
   return (
-    <Layout>
+    <Layout showBackground={false}>
       <div className={styles.breakLeft}>
         <img className={styles.logo} src={logo} />
         <BreakUpNext className={styles.upcoming} />

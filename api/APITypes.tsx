@@ -18,6 +18,7 @@ export interface Schedule {
   id: string;
   currentEntryId?: string;
   scheduleEntries: ScheduleEntry[];
+  debug: boolean;
 }
 
 export interface ScheduleResponse extends Schedule {
