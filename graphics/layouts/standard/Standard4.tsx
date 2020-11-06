@@ -40,7 +40,7 @@ export default function Standard4() {
             participant={topLeft}
           />
         ) : null}
-        <Timer className={styles.timer} elapsedSeconds={2523} />
+        <Timer className={styles.timer} />
         {topRight != null ? (
           <Nameplate
             className={classNames(styles.nameplate, styles.nameplateTopRight)}

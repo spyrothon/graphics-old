@@ -36,7 +36,7 @@ export default function Standard1() {
             participants={RunUtils.getVisibleParticipants(runners)}
             title="Runners"
           />
-          <Timer className={styles.timer} elapsedSeconds={2523} />
+          <Timer className={styles.timer} />
           {visibleCommentators.length > 0 ? (
             <div className={styles.commentaryArea}>
               <NameplateGroup

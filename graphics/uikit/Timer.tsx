@@ -18,7 +18,9 @@ export default function Timer(props: TimerProps) {
     <div className={classNames(styles.container, className)}>
       <div className={styles.timerBox}>
         <SlidingLines className={styles.background} />
-        <div className={styles.timer}>{DurationUtils.toString(elapsedSeconds ?? 0)}</div>
+        {elapsedSeconds != null ? (
+          <div className={styles.timer}>{DurationUtils.toString(elapsedSeconds ?? 0)}</div>
+        ) : null}
       </div>
     </div>
   );

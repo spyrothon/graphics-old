@@ -35,7 +35,7 @@ export default function HD2() {
       <div className={styles.topStack}>
         <div className={styles.participantsTimer}>
           {left != null ? <Nameplate className={styles.nameplateLeft} participant={left} /> : null}
-          <Timer className={styles.timer} elapsedSeconds={2523} />
+          <Timer className={styles.timer} />
           {right != null ? (
             <Nameplate className={styles.nameplateRight} participant={right} />
           ) : null}

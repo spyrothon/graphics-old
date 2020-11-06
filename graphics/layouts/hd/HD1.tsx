@@ -43,7 +43,7 @@ export default function HD1() {
       </div>
       <div className={styles.bottomBar}>
         <div className={styles.timerArea}>
-          <Timer className={styles.timer} elapsedSeconds={2523} />
+          <Timer className={styles.timer} />
         </div>
         <NameplateGroup
           className={styles.runners}

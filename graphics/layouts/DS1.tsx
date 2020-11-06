@@ -28,7 +28,7 @@ export default function DS1() {
         {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
         <FeedArea className={styles.webcam} />
         <div className={styles.participantsTimer}>
-          <Timer className={styles.timer} elapsedSeconds={2523} />
+          <Timer className={styles.timer} />
           <NameplateGroup
             className={styles.runners}
             participants={RunUtils.getVisibleParticipants(runners)}
