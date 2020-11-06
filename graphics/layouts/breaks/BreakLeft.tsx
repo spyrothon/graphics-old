@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import ArtRotation from "../../modules/art/ArtRotation";
 import Omnibar from "../../modules/omnibar/Omnibar";
 import Layout from "../../uikit/Layout";
 import BreakUpNext from "./BreakUpNext";
@@ -19,6 +20,7 @@ export default function BreakLeft() {
           <div className={styles.backSub}>We'll be right back</div>
         </div>
       </div>
+      <ArtRotation className={styles.artRotation} />
       <Omnibar className={styles.omnibar} />
     </Layout>
   );
