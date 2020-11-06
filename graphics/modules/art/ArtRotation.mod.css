@@ -24,6 +24,7 @@
   background-size: contain;
   background-position: center;
   margin-bottom: 16px;
+  filter: drop-shadow(0 0 16px #000);
 }
 
 .character {
