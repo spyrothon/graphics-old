@@ -5,6 +5,7 @@
   box-sizing: initial;
   border: 2px solid #000;
   background-color: #00ff00;
+  z-index: 999;
 }
 
 .sizeText {
