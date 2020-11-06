@@ -2,7 +2,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 24px;
   height: 100%;
   width: 200%;
 }
@@ -11,6 +10,7 @@
   flex: 0 1 auto;
   color: var(--text-inverted);
   text-shadow: 0 0 4px #000;
+  margin: 0 12px;
 }
 
 .entryName {
@@ -33,6 +33,7 @@
   min-width: 140px;
   background: radial-gradient(circle, var(--primary-bg-200) 0%, var(--primary-bg-300) 100%);
   padding: 6px 16px;
+  margin-right: 12px;
   font-size: 14px;
   font-weight: 700;
   color: var(--primary-bg);

@@ -8,6 +8,7 @@ import FiveFour1 from "./layouts/FiveFour1";
 import GBA1 from "./layouts/GBA1";
 import BingoStandard1v1 from "./layouts/bingo/BingoStandard1v1";
 import BingoStandard2v2 from "./layouts/bingo/BingoStandard2v2";
+import BreakCountdown from "./layouts/breaks/BreakCountdown";
 import BreakLeft from "./layouts/breaks/BreakLeft";
 import BreakRight from "./layouts/breaks/BreakRight";
 import HD1 from "./layouts/hd/HD1";
@@ -55,6 +56,7 @@ export default function App() {
 
         <Route path={Routes.BREAK_LEFT} component={BreakLeft} />
         <Route path={Routes.BREAK_RIGHT} component={BreakRight} />
+        <Route path={Routes.BREAK_COUNTDOWN} component={BreakCountdown} />
       </Switch>
     </Router>
   );

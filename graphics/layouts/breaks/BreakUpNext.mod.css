@@ -3,7 +3,6 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  gap: 4px;
 }
 
 .sectionTitle {
@@ -25,6 +24,7 @@
   align-items: flex-start;
   width: 100%;
   padding: 8px;
+  margin: 2px 0;
   border-radius: 4px;
   color: var(--text-inverted);
   text-shadow: 0 1px 6px #000;
@@ -40,7 +40,7 @@
   width: 40%;
   min-width: 520px;
   padding: 8px;
-  margin: 4px 0;
+  margin: 8px 0;
   border-radius: 4px;
   color: var(--text-inverted);
   text-shadow: 0 1px 6px #000;

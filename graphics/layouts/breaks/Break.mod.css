@@ -51,6 +51,26 @@
   }
 }
 
+.breakCountdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  background: radial-gradient(circle at 75% 40%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 120%);
+
+  & .logo {
+    top: 72px;
+    left: 72px;
+  }
+
+  & .backSoon {
+    left: 128px;
+    bottom: 128px;
+    text-align: left;
+  }
+}
+
 .artRotation {
   position: absolute;
   top: 50px;

@@ -7,15 +7,19 @@ export function toString(rawSeconds: string | number, stringifyNull = false) {
 
   if (isNaN(rawSeconds)) return stringifyNull ? "00:00:00" : undefined;
 
+  const isNegative = rawSeconds < 0;
+  rawSeconds = Math.abs(rawSeconds);
+
   const hours = Math.floor(rawSeconds / 3600);
   const minutes = Math.floor(rawSeconds / 60) % 60;
   const seconds = rawSeconds % 60;
 
+  const negativeStr = isNegative ? "-" : "";
   const hoursStr = hours.toString().padStart(2, "0");
   const minutesStr = minutes.toString().padStart(2, "0");
   const secondsStr = seconds.toString().padStart(2, "0");
 
-  return `${hoursStr}:${minutesStr}:${secondsStr}`;
+  return `${negativeStr}${hoursStr}:${minutesStr}:${secondsStr}`;
 }
 
 // Converts from 00:00:00 to seconds
