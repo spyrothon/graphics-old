@@ -53,7 +53,6 @@ export default function Standard4() {
             participant={bottomLeft}
           />
         ) : null}
-        <Timer className={styles.timer} elapsedSeconds={2533} />
         {bottomRight != null ? (
           <Nameplate
             className={classNames(styles.nameplate, styles.nameplateBottomRight)}

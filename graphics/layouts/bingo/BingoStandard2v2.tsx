@@ -53,7 +53,7 @@ export default function BingoStandard2v2() {
             participant={bottomLeft}
           />
         ) : null}
-        <Timer className={styles.timer} elapsedSeconds={2533} />
+        <Timer className={styles.timer} />
         <BingoBoard className={styles.bingoBoard} />
         {bottomRight != null ? (
           <Nameplate
