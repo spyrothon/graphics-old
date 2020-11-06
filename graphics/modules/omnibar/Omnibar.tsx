@@ -69,6 +69,19 @@ export default function Omnibar(props: OmnibarProps) {
         />
       ),
     },
+    {
+      id: "art",
+      content: () => (
+        <OmnibarPlainText
+          text={
+            <>
+              Check out the Spyro 3 Art Collab{" "}
+              <span className={styles.textEmphasis}>@Spyro3_collab</span>
+            </>
+          }
+        />
+      ),
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = React.useState(0);

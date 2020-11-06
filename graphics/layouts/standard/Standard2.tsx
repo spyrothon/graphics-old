@@ -13,6 +13,7 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./Standard2.mod.css";
+import ArtRotation from "../../modules/art/ArtRotation";
 
 export default function Standard2() {
   const currentRun = useSafeSelector((state) => {
@@ -24,6 +25,7 @@ export default function Standard2() {
   const { runners = [], commentators = [] } = currentRun ?? {};
   const showWebcam = RunUtils.hasAnyWebcam(currentRun);
   const [left, right] = RunUtils.getVisibleParticipants(runners);
+  const visibleCommentators = RunUtils.getVisibleParticipants(commentators);
 
   return (
     <Layout>
@@ -40,18 +42,20 @@ export default function Standard2() {
             <Nameplate className={styles.nameplateRight} participant={right} />
           ) : null}
         </div>
-        {showWebcam ? <FeedArea className={styles.webcam} /> : null}
-      </div>
-
-      <div className={styles.commentaryArea}>
-        {commentators.length > 0 ? (
-          <NameplateGroup
-            className={styles.commentators}
-            participants={RunUtils.getVisibleParticipants(commentators)}
-            title="Commentary"
-          />
+        {showWebcam ? (
+          <FeedArea className={styles.webcam} />
+        ) : visibleCommentators.length > 0 ? (
+          <div className={styles.commentaryArea}>
+            <NameplateGroup
+              className={styles.commentators}
+              participants={visibleCommentators}
+              title="Commentary"
+            />
+          </div>
         ) : null}
       </div>
+
+      <ArtRotation className={styles.artRotation} />
       <Omnibar className={styles.omnibar} />
     </Layout>
   );

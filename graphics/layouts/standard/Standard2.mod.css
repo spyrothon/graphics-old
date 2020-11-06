@@ -30,6 +30,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .participantsTimer {
@@ -62,15 +63,28 @@
 }
 
 .commentaryArea {
+  position: relative;
+  margin-top: 0px;
+  width: 428px;
+  height: 182px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #000;
+  border-top: none;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+.artRotation {
+  flex: 1 0 266px;
+  width: 100%;
+  margin: 8px 0;
   position: absolute;
   top: 640px;
   right: 0;
   bottom: 56px;
   width: 586px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .commentators {

@@ -12,6 +12,7 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./HD1.mod.css";
+import ArtRotation from "../../modules/art/ArtRotation";
 
 export default function HD1() {
   const currentRun = useSafeSelector((state) => {
@@ -22,12 +23,23 @@ export default function HD1() {
 
   const { runners = [], commentators = [] } = currentRun ?? {};
   const showWebcam = RunUtils.hasAnyWebcam(currentRun);
+  const visibleCommentators = RunUtils.getVisibleParticipants(commentators);
 
   return (
     <Layout>
       <div className={styles.sidebar}>
         {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
         {showWebcam ? <FeedArea className={styles.webcam} /> : null}
+        <ArtRotation className={styles.artRotation} />
+        {!showWebcam && visibleCommentators.length > 0 ? (
+          <div className={styles.commentaryAreaLeft}>
+            <NameplateGroup
+              className={styles.commentators}
+              participants={visibleCommentators}
+              title="Commentary"
+            />
+          </div>
+        ) : null}
       </div>
       <div className={styles.bottomBar}>
         <div className={styles.timerArea}>
@@ -38,11 +50,11 @@ export default function HD1() {
           participants={RunUtils.getVisibleParticipants(runners)}
           title="Runners"
         />
-        {commentators.length > 0 ? (
+        {showWebcam && visibleCommentators.length > 0 ? (
           <div className={styles.commentaryArea}>
             <NameplateGroup
               className={styles.commentators}
-              participants={RunUtils.getVisibleParticipants(commentators)}
+              participants={visibleCommentators}
               title="Commentary"
             />
           </div>

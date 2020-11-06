@@ -13,6 +13,7 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./HD2.mod.css";
+import ArtRotation from "../../modules/art/ArtRotation";
 
 export default function HD2() {
   const currentRun = useSafeSelector((state) => {
@@ -24,6 +25,7 @@ export default function HD2() {
   const { runners = [], commentators = [] } = currentRun ?? {};
   const showWebcam = RunUtils.hasAnyWebcam(currentRun);
   const [left, right] = RunUtils.getVisibleParticipants(runners);
+  const visibleCommentators = RunUtils.getVisibleParticipants(commentators);
 
   return (
     <Layout>
@@ -40,18 +42,31 @@ export default function HD2() {
         </div>
       </div>
 
-      {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
-      {showWebcam ? <FeedArea className={styles.webcam} /> : null}
-
-      <div className={styles.commentaryArea}>
-        {commentators.length > 0 ? (
-          <NameplateGroup
-            className={styles.commentators}
-            participants={RunUtils.getVisibleParticipants(commentators)}
-            title="Commentary"
-          />
+      <div className={styles.infoLeft}>
+        {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
+        {showWebcam && visibleCommentators.length > 0 ? (
+          <div className={styles.commentaryAreaLeft}>
+            <NameplateGroup
+              className={styles.commentators}
+              participants={visibleCommentators}
+              title="Commentary"
+            />
+          </div>
         ) : null}
       </div>
+      {showWebcam ? <FeedArea className={styles.webcam} /> : null}
+      {!showWebcam && visibleCommentators.length > 0 ? (
+        <div className={styles.commentaryAreaMiddle}>
+          <NameplateGroup
+            className={styles.commentators}
+            participants={visibleCommentators}
+            title="Commentary"
+          />
+        </div>
+      ) : null}
+
+      <ArtRotation className={styles.artRotation} />
+
       <Omnibar className={styles.omnibar} />
     </Layout>
   );

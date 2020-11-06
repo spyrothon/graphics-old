@@ -8,9 +8,12 @@ import backgroundVideo from "../res/BT1.mp4";
 type LayoutProps = {
   className?: string;
   children: React.ReactNode;
+  showBackground?: boolean;
 };
 
 export default function Layout(props: LayoutProps) {
+  const { showBackground = false, className, children } = props;
+
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
   React.useLayoutEffect(() => {
     if (videoRef.current == null) return;
@@ -18,18 +21,20 @@ export default function Layout(props: LayoutProps) {
   }, []);
 
   return (
-    <div className={classNames(styles.layout, props.className)}>
-      <video
-        ref={videoRef}
-        className={styles.background}
-        preload="auto"
-        muted
-        playsInline
-        loop
-        controls={false}>
-        <source src={backgroundVideo} type="video/mp4" />
-      </video>
-      <div className={styles.content}>{props.children}</div>
+    <div className={classNames(styles.layout, className)}>
+      {showBackground ? (
+        <video
+          ref={videoRef}
+          className={styles.background}
+          preload="auto"
+          muted
+          playsInline
+          loop
+          controls={false}>
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
+      ) : null}
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }

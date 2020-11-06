@@ -12,6 +12,7 @@ import NameplateGroup from "../uikit/NameplateGroup";
 import Timer from "../uikit/Timer";
 
 import styles from "./FiveFour1.mod.css";
+import ArtRotation from "../modules/art/ArtRotation";
 
 export default function FiveFour1() {
   const currentRun = useSafeSelector((state) => {
@@ -22,6 +23,7 @@ export default function FiveFour1() {
 
   const { runners = [], commentators = [] } = currentRun ?? {};
   const showWebcam = RunUtils.hasAnyWebcam(currentRun);
+  const visibleCommentators = RunUtils.getVisibleParticipants(commentators);
 
   return (
     <Layout>
@@ -35,15 +37,18 @@ export default function FiveFour1() {
             title="Runners"
           />
           <Timer className={styles.timer} elapsedSeconds={2523} />
-          <div className={styles.commentaryArea}>
-            {commentators.length > 0 ? (
+          {visibleCommentators.length > 0 ? (
+            <div className={styles.commentaryArea}>
               <NameplateGroup
                 className={styles.commentators}
-                participants={RunUtils.getVisibleParticipants(commentators)}
+                participants={visibleCommentators}
                 title="Commentary"
               />
-            ) : null}
-          </div>
+            </div>
+          ) : showWebcam ? (
+            <div className={styles.spacer} />
+          ) : null}
+          {!showWebcam ? <ArtRotation className={styles.artRotation} /> : null}
         </div>
       </div>
       <FeedArea className={styles.game1} />

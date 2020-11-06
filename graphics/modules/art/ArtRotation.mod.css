@@ -40,6 +40,7 @@
   text-transform: uppercase;
   text-align: center;
   box-shadow: 0 0 4px #000;
+  z-index: 1;
 }
 
 .credit {

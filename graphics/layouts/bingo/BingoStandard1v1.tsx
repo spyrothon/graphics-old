@@ -14,6 +14,7 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./BingoStandard1v1.mod.css";
+import ArtRotation from "../../modules/art/ArtRotation";
 
 export default function BingoStandard1v1() {
   const currentRun = useSafeSelector((state) => {
@@ -24,6 +25,7 @@ export default function BingoStandard1v1() {
 
   const { runners = [], commentators = [] } = currentRun ?? {};
   const [left, right] = RunUtils.getVisibleParticipants(runners);
+  const visibleCommentators = RunUtils.getVisibleParticipants(commentators);
 
   return (
     <Layout>
@@ -40,16 +42,19 @@ export default function BingoStandard1v1() {
           ) : null}
         </div>
       </div>
-      {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
 
-      <div className={styles.commentaryArea}>
-        {commentators.length > 0 ? (
-          <NameplateGroup
-            className={styles.commentators}
-            participants={RunUtils.getVisibleParticipants(commentators)}
-            title="Commentary"
-          />
+      <div className={styles.infoRow}>
+        {currentRun != null ? <GameInfo className={styles.gameInfo} run={currentRun} /> : null}
+        {visibleCommentators.length > 0 ? (
+          <div className={styles.commentaryArea}>
+            <NameplateGroup
+              className={styles.commentators}
+              participants={visibleCommentators}
+              title="Commentary"
+            />
+          </div>
         ) : null}
+        <ArtRotation className={styles.artRotation} />
       </div>
       <Omnibar className={styles.omnibar} />
     </Layout>

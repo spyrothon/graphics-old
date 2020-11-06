@@ -12,6 +12,7 @@ import NameplateGroup from "../../uikit/NameplateGroup";
 import Timer from "../../uikit/Timer";
 
 import styles from "./Standard1.mod.css";
+import ArtRotation from "../../modules/art/ArtRotation";
 
 export default function Standard1() {
   const currentRun = useSafeSelector((state) => {
@@ -21,6 +22,7 @@ export default function Standard1() {
   });
 
   const { runners = [], commentators = [] } = currentRun ?? {};
+  const visibleCommentators = RunUtils.getVisibleParticipants(commentators);
   const showWebcam = RunUtils.hasAnyWebcam(currentRun);
 
   return (
@@ -35,16 +37,19 @@ export default function Standard1() {
             title="Runners"
           />
           <Timer className={styles.timer} elapsedSeconds={2523} />
-          <div className={styles.commentaryArea}>
-            {commentators.length > 0 ? (
+          {visibleCommentators.length > 0 ? (
+            <div className={styles.commentaryArea}>
               <NameplateGroup
                 className={styles.commentators}
-                participants={RunUtils.getVisibleParticipants(commentators)}
+                participants={visibleCommentators}
                 title="Commentary"
               />
-            ) : null}
-          </div>
+            </div>
+          ) : showWebcam ? (
+            <div className={styles.spacer} />
+          ) : null}
         </div>
+        {!showWebcam ? <ArtRotation className={styles.artRotation} /> : null}
       </div>
       <FeedArea className={styles.game1} />
       <Omnibar className={styles.omnibar} />
