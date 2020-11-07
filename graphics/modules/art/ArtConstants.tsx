@@ -280,7 +280,7 @@ export const ART_ENTRIES = [
   },
   {
     character: "Sunny Villa Lion",
-    source: "https://spyrothon-assets.sfo2.cdn.digitaloceanspaces.com/lion.png",
+    source: "https://spyrothon-assets.sfo2.cdn.digitaloceanspaces.com/lion.jpg",
     artistName: "Dohnut",
     artistTwitter: "DohnutDoodles",
   },
