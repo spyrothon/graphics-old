@@ -17,6 +17,7 @@ import InterviewOpen from "./layouts/interview/InterviewOpen";
 import QuizCorner from "./layouts/interview/QuizCorner";
 import Standard1 from "./layouts/standard/Standard1";
 import Standard2 from "./layouts/standard/Standard2";
+import Standard3 from "./layouts/standard/Standard3";
 import Standard4 from "./layouts/standard/Standard4";
 import { history } from "./modules/router/RouterUtils";
 import { fetchSchedule } from "./modules/schedules/ScheduleActions";
@@ -43,6 +44,7 @@ export default function App() {
       <Switch>
         <Route path={Routes.STANDARD_1} component={Standard1} />
         <Route path={Routes.STANDARD_2} component={Standard2} />
+        <Route path={Routes.STANDARD_3} component={Standard3} />
         <Route path={Routes.STANDARD_4} component={Standard4} />
 
         <Route path={Routes.HD_1} component={HD1} />

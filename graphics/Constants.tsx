@@ -5,7 +5,7 @@ export const Routes = {
   // Standard 4:3 (PS1, some PS2, Gamecube, etc.)
   STANDARD_1: "/standard-1",
   STANDARD_2: "/standard-2",
-  // STANDARD_3: "/standard-3",
+  STANDARD_3: "/standard-3",
   STANDARD_4: "/standard-4",
 
   // HD 16:9 (PC, Xbox 360, PS4, etc.)
