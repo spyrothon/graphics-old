@@ -89,6 +89,7 @@ export default function LiveRunActuals(props: LiveActualsProps) {
           <Header size={Header.Sizes.H5}>Runner Times</Header>
           {run.runners.map((runner) => (
             <DurationInput
+              key={runner.displayName}
               label={runner.displayName}
               value={runnerActuals[runner.displayName]}
               onChange={(time) => setParticipantActual(runner.displayName, time)}

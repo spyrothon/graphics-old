@@ -17,6 +17,7 @@ import * as InterviewStore from "./InterviewStore";
 import useInterviewEditorState from "./useInterviewEditorState";
 
 import styles from "./InterviewEditor.mod.css";
+import NumberInput from "../../uikit/NumberInput";
 
 type InterviewEditorProps = {
   scheduleEntry: ScheduleEntry;
@@ -52,7 +53,7 @@ export default function InterviewEditor(props: InterviewEditorProps) {
     setSaving(true);
     setSaveFailed(false);
     Promise.all([
-      editor.hasChanges() ? dispatch(persistInterview(interview)) : undefined,
+      editor.hasChanges() ? dispatch(persistInterview(interview.id, interview)) : undefined,
       hasEntryChanges ? dispatch(updateScheduleEntry(editedEntry)) : undefined,
     ])
       .then(() => {
@@ -145,6 +146,62 @@ export default function InterviewEditor(props: InterviewEditorProps) {
     );
   }
 
+  function renderQuestionFields(index: number) {
+    return (
+      <div className={styles.question}>
+        <TextInput
+          className={styles.participantInput}
+          label="Question"
+          value={editor.getQuestionField(index, "question")}
+          onChange={(event) => editor.updateQuestionField(index, "question", event.target.value)}
+        />
+        <div className={styles.inputRow}>
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label="Category"
+            value={editor.getQuestionField(index, "category")}
+            onChange={(event) => editor.updateQuestionField(index, "category", event.target.value)}
+          />
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label="Hint"
+            value={editor.getQuestionField(index, "hint")}
+            onChange={(event) => editor.updateQuestionField(index, "hint", event.target.value)}
+          />
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label="Image"
+            value={editor.getQuestionField(index, "image")}
+            onChange={(event) => editor.updateQuestionField(index, "image", event.target.value)}
+          />
+        </div>
+
+        <div className={styles.inputRow}>
+          <TextInput
+            marginless
+            className={styles.participantInput}
+            label="Answer"
+            value={editor.getQuestionField(index, "answer")}
+            onChange={(event) => editor.updateQuestionField(index, "answer", event.target.value)}
+          />
+          <NumberInput
+            marginless
+            className={styles.participantInput}
+            label="Score"
+            pattern="\d+"
+            value={editor.getQuestionField(index, "score")}
+            onChange={(event) =>
+              editor.updateQuestionField(index, "score", parseInt(event.target.value))
+            }
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.actions}>
@@ -187,6 +244,13 @@ export default function InterviewEditor(props: InterviewEditorProps) {
             onChange={(event) => editor.updateField("notes", event.target.value)}
             multiline
           />
+          <Header className={styles.header}>Questions</Header>
+          {renderQuestionFields(0)}
+          {renderQuestionFields(1)}
+          {renderQuestionFields(2)}
+          {renderQuestionFields(3)}
+          {renderQuestionFields(4)}
+          {renderQuestionFields(5)}
         </div>
         <div className={styles.participants}>
           <Header className={styles.header}>Interviewer</Header>

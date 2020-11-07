@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Interview, RunParticipant } from "../../../api/APITypes";
+import { Interview, RunParticipant, InterviewQuestion } from "../../../api/APITypes";
 
 type InterviewEditorState = {
   base?: Interview;
@@ -46,6 +46,15 @@ export type InterviewEditorStateValue = {
     index: number,
     field: F,
   ) => RunParticipant[F] | undefined;
+  updateQuestionField: <F extends keyof InterviewQuestion>(
+    index: number,
+    field: F,
+    value: InterviewQuestion[F],
+  ) => unknown;
+  getQuestionField: <F extends keyof InterviewQuestion>(
+    index: number,
+    field: F,
+  ) => InterviewQuestion[F] | undefined;
   getEditedInterview: () => Interview;
   hasChanges: () => boolean;
 };
@@ -75,6 +84,8 @@ export default function useInterviewEditorState(): InterviewEditorStateValue {
         displayName: "",
         twitchName: "",
         twitterName: "",
+        hasWebcam: false,
+        visible: true,
       };
     }
     list[index][field] = value;
@@ -86,6 +97,28 @@ export default function useInterviewEditorState(): InterviewEditorStateValue {
     field: F,
   ): RunParticipant[F] | undefined {
     const runner = getField(type)?.[index];
+    return runner?.[field];
+  }
+  function updateQuestionField<F extends keyof InterviewQuestion>(
+    index: number,
+    field: F,
+    value: InterviewQuestion[F],
+  ) {
+    const list = Array.from(getField("questions") ?? []);
+
+    if (list[index] == null) {
+      list[index] = {
+        question: "",
+      };
+    }
+    list[index][field] = value;
+    dispatch({ type: "updateField", field: "questions", value: list });
+  }
+  function getQuestionField<F extends keyof InterviewQuestion>(
+    index: number,
+    field: F,
+  ): InterviewQuestion[F] | undefined {
+    const runner = getField("questions")?.[index];
     return runner?.[field];
   }
   function getEditedInterview(): Interview {
@@ -103,6 +136,8 @@ export default function useInterviewEditorState(): InterviewEditorStateValue {
     getField,
     updateParticipantField,
     getParticipantField,
+    updateQuestionField,
+    getQuestionField,
     getEditedInterview,
     hasChanges,
   };

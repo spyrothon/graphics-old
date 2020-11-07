@@ -5,6 +5,8 @@ export interface Interview {
   estimateSeconds: number;
   interviewees: RunParticipant[];
   interviewers: RunParticipant[];
+  questions: InterviewQuestion[];
+  currentQuestion?: string;
 }
 
 export interface InitialInterview {
@@ -12,6 +14,18 @@ export interface InitialInterview {
   notes?: string;
   interviewees?: RunParticipant[];
   interviewers?: RunParticipant[];
+}
+
+export interface InterviewQuestion {
+  question: string;
+  answer?: string;
+  category?: string;
+  image?: string;
+  hint?: string;
+  score?: number;
+  showQuestion: boolean;
+  showHint: boolean;
+  showAnswer: boolean;
 }
 
 export interface Schedule {
@@ -74,7 +88,10 @@ export interface RunParticipant {
   displayName: string;
   twitchName?: string;
   twitterName?: string;
-  actualSeconds?: number;
   hasWebcam: boolean;
   visible: boolean;
+  // Run fields
+  actualSeconds?: number;
+  // Interview fields
+  score?: number;
 }

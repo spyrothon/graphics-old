@@ -35,6 +35,7 @@ export const Routes = {
 
   // Interviews
   INTERVIEW: "/interview",
+  QUIZ_CORNER: "/quiz-corner",
 };
 
 export const MAIN_SCHEDULE_ID = "1";

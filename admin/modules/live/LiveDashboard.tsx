@@ -3,19 +3,18 @@ import * as React from "react";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
 import Dashboard from "../dashboards/Dashboard";
 import * as ScheduleStore from "../schedules/ScheduleStore";
-import ScheduleListEntry from "../schedules/ScheduleListEntry";
 import { updateSchedule } from "../schedules/ScheduleActions";
 import ScheduleEntrySelector from "../schedules/ScheduleEntrySelector";
 import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
+import LiveInterviewInfo from "./LiveInterviewInfo";
 import LiveParticipants from "./LiveParticipants";
 import LiveRunActuals from "./LiveRunActuals";
 import LiveRunInfo from "./LiveRunInfo";
+import LiveOnNow from "./LiveOnNow";
 
 import styles from "./LiveDashboard.mod.css";
-import LiveOnNow from "./LiveOnNow";
 
 export default function LiveDashboard() {
   const dispatch = useSafeDispatch();
@@ -58,6 +57,12 @@ export default function LiveDashboard() {
               run={selectedEntry.run}
             />
             <LiveParticipants run={selectedEntry.run} />
+          </div>
+        ) : null}
+
+        {selectedEntry?.interviewId != null ? (
+          <div className={styles.panels}>
+            <LiveInterviewInfo interviewId={selectedEntry.interviewId} />
           </div>
         ) : null}
       </div>

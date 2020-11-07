@@ -28,13 +28,13 @@ function ParticipantList(props: ParticipantListProps) {
     <div className={styles.participantList}>
       <Header size={Header.Sizes.H5}>{name}</Header>
       <ul>
-        {sortedParticipants.map((participant) => (
-          <li>
+        {sortedParticipants.map((participant, index) => (
+          <li key={index}>
             <Text color={participant.visible ? Text.Colors.NORMAL : Text.Colors.MUTED}>
               {participant.displayName} {participant.visible ? null : `(hidden)`}
               {participant.actualSeconds
                 ? ` - Done ${DurationUtils.toString(participant.actualSeconds)}`
-                : null}{" "}
+                : null}
             </Text>
           </li>
         ))}

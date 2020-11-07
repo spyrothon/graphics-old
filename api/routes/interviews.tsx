@@ -15,7 +15,7 @@ export async function createInterview(interview: InitialInterview) {
   return await HTTPUtils.post<Interview>(Endpoints.INTERVIEWS, interview);
 }
 
-export async function updateInterview(interviewId: string, interview: Interview) {
+export async function updateInterview(interviewId: string, interview: Partial<Interview>) {
   return await HTTPUtils.put<Interview>(Endpoints.INTERVIEW(interviewId), interview);
 }
 
