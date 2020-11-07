@@ -16,7 +16,7 @@ export default function ArtRotation(props: ArtRotationProps) {
     Math.floor(Math.random() * ART_ENTRIES.length),
   );
   React.useEffect(() => {
-    setInterval(() => setCurrentIndex((currentIndex) => currentIndex + 1), 13027);
+    setInterval(() => setCurrentIndex((currentIndex) => currentIndex + 1), 1200); //13027);
   }, []);
   const currentSection = ART_ENTRIES[currentIndex % ART_ENTRIES.length];
 
