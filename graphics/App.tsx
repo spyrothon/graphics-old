@@ -13,6 +13,7 @@ import BreakLeft from "./layouts/breaks/BreakLeft";
 import BreakRight from "./layouts/breaks/BreakRight";
 import HD1 from "./layouts/hd/HD1";
 import HD2 from "./layouts/hd/HD2";
+import InterviewOpen from "./layouts/interview/InterviewOpen";
 import Standard1 from "./layouts/standard/Standard1";
 import Standard2 from "./layouts/standard/Standard2";
 import Standard4 from "./layouts/standard/Standard4";
@@ -57,6 +58,8 @@ export default function App() {
         <Route path={Routes.BREAK_LEFT} component={BreakLeft} />
         <Route path={Routes.BREAK_RIGHT} component={BreakRight} />
         <Route path={Routes.BREAK_COUNTDOWN} component={BreakCountdown} />
+
+        <Route path={Routes.INTERVIEW} component={InterviewOpen} />
       </Switch>
     </Router>
   );

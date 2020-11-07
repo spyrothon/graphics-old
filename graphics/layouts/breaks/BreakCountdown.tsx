@@ -1,12 +1,12 @@
 import * as React from "react";
+import { DateTime } from "luxon";
 
 import Layout from "../../uikit/Layout";
+import LiveTimer from "../../uikit/LiveTimer";
 
 import styles from "./Break.mod.css";
 
 import logo from "../../res/spyrothon_6_logo.png";
-import LiveTimer from "../../uikit/LiveTimer";
-import { DateTime } from "luxon";
 
 const START_TIME = DateTime.fromISO("2020-11-06T24:00:00Z");
 

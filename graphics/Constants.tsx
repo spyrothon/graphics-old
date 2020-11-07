@@ -32,6 +32,9 @@ export const Routes = {
   BREAK_LEFT: "/break-left",
   BREAK_RIGHT: "/break-right",
   BREAK_COUNTDOWN: "/break-countdown",
+
+  // Interviews
+  INTERVIEW: "/interview",
 };
 
 export const MAIN_SCHEDULE_ID = "1";
