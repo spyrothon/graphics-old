@@ -7,7 +7,7 @@ import styles from "./InterviewOpen.mod.css";
 
 export default function InterviewOpen() {
   return (
-    <Layout showBackground={false}>
+    <Layout>
       <Omnibar className={styles.omnibar} />
     </Layout>
   );
