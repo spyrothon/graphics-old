@@ -26,12 +26,7 @@ export default function LiveRunInfo(props: LiveRunInfoProps) {
   }, [run]);
 
   function handleSave() {
-    dispatch(
-      persistRun({
-        ...run,
-        gameNameFormatted,
-      }),
-    );
+    dispatch(persistRun(run.id, { gameNameFormatted }));
   }
 
   return (

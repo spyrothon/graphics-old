@@ -70,8 +70,7 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
 
   function handleSave() {
     dispatch(
-      persistRun({
-        ...run,
+      persistRun(run.id, {
         runners: run.runners.map((runner) => ({
           ...runner,
           visible: runnerVisibilities[runner.displayName] ?? runner.visible,

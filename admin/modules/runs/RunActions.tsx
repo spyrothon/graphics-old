@@ -27,14 +27,18 @@ export function fetchRunsSuccess(runs: Run[]): RunAction {
   return { type: RunActionType.RUNS_FETCH_RUNS_SUCCESS, runs };
 }
 
-export function persistRun(run: Run) {
+export function persistRun(runId: string, changes: Partial<Run>) {
   return async (dispatch: SafeDispatch) => {
-    const filteredRun = {
-      ...run,
-      runners: run.runners.filter((entry) => entry?.displayName !== ""),
-      commentators: run.commentators.filter((entry) => entry?.displayName !== ""),
-    };
-    const updatedRun = await APIClient.updateRun(run.id, filteredRun);
+    const filteredChanges = { ...changes };
+    if (changes.runners != null) {
+      filteredChanges.runners = changes.runners.filter((entry) => entry?.displayName !== "");
+    }
+    if (changes.commentators != null) {
+      filteredChanges.commentators = changes.commentators.filter(
+        (entry) => entry?.displayName !== "",
+      );
+    }
+    const updatedRun = await APIClient.updateRun(runId, filteredChanges);
     dispatch({
       type: RunActionType.RUNS_UPDATE_RUN,
       run: updatedRun,

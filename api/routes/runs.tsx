@@ -15,7 +15,7 @@ export async function createRun(runData: InitialRun) {
   return await HTTPUtils.post<Run>(Endpoints.RUNS, runData);
 }
 
-export async function updateRun(runId: string, runData: Run) {
+export async function updateRun(runId: string, runData: Partial<Run>) {
   return await HTTPUtils.put<Run>(Endpoints.RUN(runId), runData);
 }
 

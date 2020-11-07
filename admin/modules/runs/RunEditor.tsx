@@ -52,7 +52,7 @@ export default function RunEditor(props: RunEditorProps) {
     setSaving(true);
     setSaveFailed(false);
     Promise.all([
-      editor.hasChanges() ? dispatch(persistRun(run)) : undefined,
+      editor.hasChanges() ? dispatch(persistRun(run.id, run)) : undefined,
       hasEntryChanges ? dispatch(updateScheduleEntry(editedEntry)) : undefined,
     ])
       .then(() => {

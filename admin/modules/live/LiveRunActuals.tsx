@@ -46,8 +46,7 @@ export default function LiveRunActuals(props: LiveActualsProps) {
   function handleSave() {
     dispatch(updateScheduleEntry({ ...entry, setupSeconds: actualSetup }));
     dispatch(
-      persistRun({
-        ...run,
+      persistRun(run.id, {
         actualSeconds: actualTime,
         runners: run.runners.map((runner) => ({
           ...runner,
