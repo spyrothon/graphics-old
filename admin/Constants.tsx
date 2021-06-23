@@ -10,4 +10,4 @@ export const Routes = {
   LIVE_DASHBOARD: "/admin/live",
 };
 
-export const MAIN_SCHEDULE_ID = "1";
+export const MAIN_SCHEDULE_ID = "2";

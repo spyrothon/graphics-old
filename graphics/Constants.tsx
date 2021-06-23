@@ -38,4 +38,4 @@ export const Routes = {
   QUIZ_CORNER: "/quiz-corner",
 };
 
-export const MAIN_SCHEDULE_ID = "1";
+export const MAIN_SCHEDULE_ID = "2";
