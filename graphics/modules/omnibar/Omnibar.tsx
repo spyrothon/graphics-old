@@ -7,7 +7,7 @@ import OmnibarUpNext from "./OmnibarUpNext";
 
 import styles from "./Omnibar.mod.css";
 
-import logo from "../../res/spyrothon_6_logo.png";
+import logo from "../../res/spyrothon_logo.png";
 
 type OmnibarProps = {
   className?: string;

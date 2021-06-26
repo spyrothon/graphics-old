@@ -13,7 +13,7 @@ import PublicHelmet from "./PublicHelmet";
 
 import styles from "./Schedule.mod.css";
 
-import logo from "../res/spyrothon_6_logo.png";
+import logo from "../res/spyrothon_logo.png";
 import backgroundVideo from "../res/schedule_background.webm";
 import backgroundPoster from "../res/schedule_background.png";
 
@@ -114,7 +114,11 @@ export default function Schedule() {
 
       if (isNewDay) {
         if (dayEntries.length > 0) {
-          groups.push(<div className={styles.dayGroup}>{dayEntries}</div>);
+          groups.push(
+            <div key={`group-${index}`} className={styles.dayGroup}>
+              {dayEntries}
+            </div>,
+          );
         }
         dayEntries = [<DayMarker key="day-first" time={start} />];
       }
@@ -126,7 +130,11 @@ export default function Schedule() {
       );
     });
 
-    groups.push(<div className={styles.dayGroup}>{dayEntries}</div>);
+    groups.push(
+      <div key={`group-last`} className={styles.dayGroup}>
+        {dayEntries}
+      </div>,
+    );
     return groups;
   }
 
@@ -139,7 +147,7 @@ export default function Schedule() {
       <div className={styles.schedule}>
         <div className={styles.eventInfo}>
           <img className={styles.logo} src={logo} />
-          <div className={styles.dates}>November 6-8, 2020</div>
+          <div className={styles.dates}>June 26th, 2021</div>
           <div className={styles.timezone}>
             All times are shown in <strong>{scheduleStartTime.offsetNameShort}</strong>.
           </div>

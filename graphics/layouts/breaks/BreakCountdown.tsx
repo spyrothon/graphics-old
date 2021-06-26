@@ -6,7 +6,7 @@ import LiveTimer from "../../uikit/LiveTimer";
 
 import styles from "./Break.mod.css";
 
-import logo from "../../res/spyrothon_6_logo.png";
+import logo from "../../res/spyrothon_logo.png";
 
 const START_TIME = DateTime.fromISO("2020-11-06T24:00:00Z");
 

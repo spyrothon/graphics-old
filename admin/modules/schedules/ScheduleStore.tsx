@@ -13,7 +13,7 @@ export const isFetchingSchedule = createSelector([getSchedulesState], (state) =>
 export const isDebug = createSelector([getSchedule], (schedule) => schedule?.debug);
 
 export const getScheduleStartTime = createSelector([], () =>
-  DateTime.fromISO("2020-11-06T23:30:00Z"),
+  DateTime.fromISO("2021-06-26T14:45:00Z"),
 );
 
 export const getScheduleEntries = createSelector(

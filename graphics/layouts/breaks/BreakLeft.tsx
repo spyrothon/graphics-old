@@ -7,7 +7,7 @@ import BreakUpNext from "./BreakUpNext";
 
 import styles from "./Break.mod.css";
 
-import logo from "../../res/spyrothon_6_logo.png";
+import logo from "../../res/spyrothon_logo.png";
 
 export default function BreakLeft() {
   return (
