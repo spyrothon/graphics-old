@@ -63,7 +63,8 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              <span className={styles.textEmphasis}>Spyrothon 6</span> is November 6-8, 2020
+              <span className={styles.textEmphasis}>Spyrothon Miscellaneous Showcase</span> is June
+              26th, 2021
             </>
           }
         />
