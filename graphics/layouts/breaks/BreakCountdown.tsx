@@ -8,7 +8,7 @@ import styles from "./Break.mod.css";
 
 import logo from "../../res/spyrothon_logo.png";
 
-const START_TIME = DateTime.fromISO("2020-11-06T24:00:00Z");
+const START_TIME = DateTime.fromISO("2021-06-26T15:00:00Z");
 
 export default function BreakCountdown() {
   return (
