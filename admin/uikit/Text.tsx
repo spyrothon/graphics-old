@@ -4,6 +4,7 @@ import classNames from "classnames";
 import styles from "./Text.mod.css";
 
 const TextSizes = {
+  SIZE_32: styles.size32,
   SIZE_24: styles.size24,
   SIZE_20: styles.size20,
   SIZE_16: styles.size16,

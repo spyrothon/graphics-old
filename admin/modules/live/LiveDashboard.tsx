@@ -11,6 +11,7 @@ import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
 import LiveInterviewInfo from "./LiveInterviewInfo";
 import LiveParticipants from "./LiveParticipants";
 import LiveRunActuals from "./LiveRunActuals";
+import LiveRunTimers from "./LiveRunTimers";
 import LiveRunInfo from "./LiveRunInfo";
 import LiveOnNow from "./LiveOnNow";
 
@@ -27,6 +28,14 @@ export default function LiveDashboard() {
   const [selectedEntry, setSelectedEntry] = React.useState<ScheduleEntryWithDependants | undefined>(
     currentEntry,
   );
+
+  React.useEffect(() => {
+    if (currentEntry == null) return;
+    // If we're editing a different run and the current run changes, don't overwrite it
+    if (selectedEntry != null && currentEntry.id !== selectedEntry.id) return;
+
+    setSelectedEntry(currentEntry);
+  }, [schedule, currentEntry]);
 
   function handleSetCurrentEntry() {
     if (schedule == null || selectedEntry == null) return;
@@ -51,7 +60,7 @@ export default function LiveDashboard() {
         {selectedEntry?.run != null ? (
           <div className={styles.panels}>
             <LiveRunInfo run={selectedEntry.run} />
-            <LiveRunActuals
+            <LiveRunTimers
               className={styles.actuals}
               entry={selectedEntry}
               run={selectedEntry.run}
