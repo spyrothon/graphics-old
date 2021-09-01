@@ -30,6 +30,9 @@ export interface InterviewQuestion {
 
 export interface Schedule {
   id: string;
+  runTitleTemplate?: string;
+  interviewTitleTemplate?: string;
+  breakTitleTemplate?: string;
   currentEntryId?: string;
   scheduleEntries: ScheduleEntry[];
   debug: boolean;

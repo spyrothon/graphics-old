@@ -8,6 +8,7 @@ export const Routes = {
   LOGOUT: "/admin/logout",
   SCHEDULE_EDITOR: "/admin/schedule-editor",
   LIVE_DASHBOARD: "/admin/live",
+  CONFIG_DASHBOARD: "/admin/config",
 };
 
 export const MAIN_SCHEDULE_ID = "2";

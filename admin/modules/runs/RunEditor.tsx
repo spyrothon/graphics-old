@@ -86,15 +86,15 @@ export default function RunEditor(props: RunEditorProps) {
     );
   }
 
-  function getNote<F extends keyof Run>(field: F) {
-    let originalValue: any = run?.[field];
+  function getNote<F extends keyof Run>(field: F, additional: string) {
+    const originalValue: any = run?.[field];
     const newValue = editor.getField(field);
-    if (run == null || originalValue == null || originalValue == newValue) return null;
+    if (run == null || originalValue == null || originalValue === newValue) return additional;
 
     const renderValue = () => {
       switch (field) {
         case "estimateSeconds":
-          return DurationUtils.toString(run["estimateSeconds"]);
+          return DurationUtils.toString(run.estimateSeconds);
         case "notes":
           return "original";
         default:
@@ -103,9 +103,12 @@ export default function RunEditor(props: RunEditorProps) {
     };
 
     return (
-      <Anchor onClick={() => originalValue != null && editor.updateField(field, originalValue)}>
-        Reset to {renderValue()}.
-      </Anchor>
+      <>
+        {additional}{" "}
+        <Anchor onClick={() => originalValue != null && editor.updateField(field, originalValue)}>
+          Reset to {renderValue()}.
+        </Anchor>
+      </>
     );
   }
 
@@ -171,7 +174,7 @@ export default function RunEditor(props: RunEditorProps) {
           <TextInput
             label="Game Name"
             value={editor.getField("gameName")}
-            note={getNote("gameName")}
+            note={getNote("gameName", "This must exactly match the game's name on Twitch.")}
             onChange={(event) => editor.updateField("gameName", event.target.value)}
           />
           <TextInput
