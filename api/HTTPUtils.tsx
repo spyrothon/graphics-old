@@ -8,6 +8,7 @@ export enum HTTPVerb {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
+  PATCH = "PATCH",
   DELETE = "DELETE",
 }
 
@@ -87,6 +88,18 @@ export async function put<T>(url: string, data: object, opts: PostOptions = {}) 
   });
 }
 
+export async function patch<T>(url: string, data?: object, opts: PostOptions = {}) {
+  const { headers, encoder = Encoders.JSON } = opts;
+
+  return send<T>(HTTPVerb.PATCH, url, {
+    headers: {
+      "Content-Type": encoder.contentType,
+      ...headers,
+    },
+    body: data ? encoder.module.stringify(data) : undefined,
+  });
+}
+
 type DeleteOptions = CommonOptions;
 
 export async function del(url: string, opts: DeleteOptions = {}) {
@@ -142,6 +155,7 @@ export default {
   get,
   post,
   put,
+  patch,
   delete: del,
   send,
   Encoders,

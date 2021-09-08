@@ -68,8 +68,12 @@ export interface Run {
   platform?: string;
   releaseYear?: string;
   notes?: string;
-  actualSeconds?: number;
+  startedAt?: Date;
+  finishedAt?: Date;
+  pausedAt?: Date;
   finished: boolean;
+  actualSeconds?: number;
+  pauseSeconds?: number;
   runners: RunParticipant[];
   commentators: RunParticipant[];
 }
@@ -88,12 +92,14 @@ export interface InitialRun {
 }
 
 export interface RunParticipant {
+  id: string;
   displayName: string;
   twitchName?: string;
   twitterName?: string;
   hasWebcam: boolean;
   visible: boolean;
   // Run fields
+  finishedAt?: Date;
   actualSeconds?: number;
   // Interview fields
   score?: number;

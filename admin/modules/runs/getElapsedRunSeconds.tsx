@@ -1,11 +1,7 @@
 import type { Run } from "../../../api/APITypes";
 
-export default function getElapsedRunSeconds(
-  run: Run,
-  runnerId?: string,
-  asOf?: Date = new Date(),
-) {
-  const { actualSeconds, finished, startedAt, finishedAt, pausedAt, pauseSeconds, runners } = run;
+export default function getElapsedRunSeconds(run: Run, runnerId?: string, asOf: Date = new Date()) {
+  const { actualSeconds, startedAt, pausedAt, pauseSeconds = 0, runners } = run;
   const runner = runners.find((runner) => runner.id === runnerId);
 
   // Individual runner has already finished, no calculation needed.
@@ -14,9 +10,10 @@ export default function getElapsedRunSeconds(
   // Run is fully completed, no calculation needed.
   if (actualSeconds) return actualSeconds;
   // Run is paused, calculate relative to the most recent pause time.
-  if (pausedAt != null) return (pausedAt - startedAt) / 1000 - pauseSeconds;
+  if (pausedAt != null && startedAt != null)
+    return (pausedAt.getTime() - startedAt.getTime()) / 1000 - pauseSeconds;
   // Run is in progress.
-  if (startedAt != null) return (asOf - startedAt) / 1000 - pauseSeconds;
+  if (startedAt != null) return (asOf.getTime() - startedAt.getTime()) / 1000 - pauseSeconds;
 
   // Run is not started.
   return 0;

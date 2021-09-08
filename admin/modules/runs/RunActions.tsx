@@ -45,3 +45,42 @@ export function persistRun(runId: string, changes: Partial<Run>) {
     });
   };
 }
+
+function _runTimingAction(runId: string, action: (runId: string) => Promise<Run>) {
+  return async (dispatch: SafeDispatch) => {
+    const run = await action(runId);
+
+    dispatch({
+      type: RunActionType.RUNS_UPDATE_RUN,
+      run: run,
+    });
+  };
+}
+
+export const startRun = (runId: string) => _runTimingAction(runId, APIClient.startRun);
+export const finishRun = (runId: string) => _runTimingAction(runId, APIClient.finishRun);
+export const pauseRun = (runId: string) => _runTimingAction(runId, APIClient.pauseRun);
+export const resumeRun = (runId: string) => _runTimingAction(runId, APIClient.resumeRun);
+export const resetRun = (runId: string) => _runTimingAction(runId, APIClient.resetRun);
+
+export function finishRunParticipant(runId: string, participantId: string) {
+  return async (dispatch: SafeDispatch) => {
+    const run = await APIClient.finishParticipant(runId, participantId);
+
+    dispatch({
+      type: RunActionType.RUNS_UPDATE_RUN,
+      run: run,
+    });
+  };
+}
+
+export function resumeRunParticipant(runId: string, participantId: string) {
+  return async (dispatch: SafeDispatch) => {
+    const run = await APIClient.resumeParticipant(runId, participantId);
+
+    dispatch({
+      type: RunActionType.RUNS_UPDATE_RUN,
+      run: run,
+    });
+  };
+}
