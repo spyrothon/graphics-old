@@ -1,7 +1,13 @@
 import HTTPUtils from "../HTTPUtils";
 import Endpoints from "../Endpoints";
 
-import type { Schedule, ScheduleResponse, InitialScheduleEntry, ScheduleEntry } from "../APITypes";
+import type {
+  Schedule,
+  ScheduleResponse,
+  InitialScheduleEntry,
+  ScheduleEntry,
+  OBSWebsocketConfig,
+} from "../APITypes";
 
 export async function fetchSchedule(scheduleId: string) {
   return await HTTPUtils.get<ScheduleResponse>(Endpoints.SCHEDULE(scheduleId));
@@ -29,4 +35,15 @@ export async function addScheduleEntry(scheduleId: string, entry: InitialSchedul
 
 export async function removeScheduleEntry(scheduleId: string, entryId: string) {
   return await HTTPUtils.delete(Endpoints.SCHEDULE_ENTRY(scheduleId, entryId));
+}
+
+export async function fetchScheduleOBSConfig(scheduleId: string) {
+  return await HTTPUtils.get<OBSWebsocketConfig>(Endpoints.SCHEDULE_OBS_CONFIG(scheduleId));
+}
+
+export async function updateScheduleOBSConfig(scheduleId: string, config: OBSWebsocketConfig) {
+  return await HTTPUtils.post<OBSWebsocketConfig>(
+    Endpoints.SCHEDULE_OBS_CONFIG(scheduleId),
+    config,
+  );
 }

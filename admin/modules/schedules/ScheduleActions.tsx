@@ -1,5 +1,5 @@
 import APIClient from "../../../api/APIClient";
-import { Schedule, ScheduleEntry } from "../../../api/APITypes";
+import { Schedule, ScheduleEntry, OBSWebsocketConfig } from "../../../api/APITypes";
 import { SafeDispatch } from "../../hooks/useDispatch";
 import { fetchRunsSuccess } from "../runs/RunActions";
 import { ScheduleActionType, ScheduleAction } from "./ScheduleTypes";
@@ -84,4 +84,22 @@ export function fetchSchedule(scheduleId: string) {
 
 export function loadSchedule(schedule: Schedule): ScheduleAction {
   return { type: ScheduleActionType.SCHEDULES_FETCH_SCHEDULE_SUCCESS, schedule };
+}
+
+export function fetchScheduleOBSConfig(scheduleId: string) {
+  return async (dispatch: SafeDispatch) => {
+    const config = await APIClient.fetchScheduleOBSConfig(scheduleId);
+    dispatch(loadOBSConfig(config));
+  };
+}
+
+export function updateScheduleOBSConfig(scheduleId: string, config: OBSWebsocketConfig) {
+  return async (dispatch: SafeDispatch) => {
+    const savedConfig = await APIClient.updateScheduleOBSConfig(scheduleId, config);
+    dispatch(loadOBSConfig(savedConfig));
+  };
+}
+
+export function loadOBSConfig(config: OBSWebsocketConfig): ScheduleAction {
+  return { type: ScheduleActionType.SCHEDULES_FETCH_OBS_SUCCESS, config };
 }

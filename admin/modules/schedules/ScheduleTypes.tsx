@@ -1,6 +1,6 @@
 import type { DateTime } from "luxon";
 
-import { Schedule, ScheduleEntry, Run, Interview } from "../../../api/APITypes";
+import { Schedule, ScheduleEntry, Run, Interview, OBSWebsocketConfig } from "../../../api/APITypes";
 
 export enum ScheduleActionType {
   SCHEDULES_ENTRY_SELECTED = "SCHEDULES_ENTRY_SELECTED",
@@ -8,6 +8,8 @@ export enum ScheduleActionType {
   SCHEDULES_ENTRY_UPDATED = "SCHEDULES_ENTRY_UPDATED",
   SCHEDULES_FETCH_SCHEDULE_STARTED = "SCHEDULES_FETCH_SCHEDULE_STARTED",
   SCHEDULES_FETCH_SCHEDULE_SUCCESS = "SCHEDULES_FETCH_SCHEDULE_SUCCESS",
+  SCHEDULES_FETCH_OBS_STARTED = "SCHEDULES_FETCH_OBS_STARTED",
+  SCHEDULES_FETCH_OBS_SUCCESS = "SCHEDULES_FETCH_OBS_SUCCESS",
 }
 
 export type ScheduleAction =
@@ -18,7 +20,9 @@ export type ScheduleAction =
   | {
       type: ScheduleActionType.SCHEDULES_FETCH_SCHEDULE_SUCCESS;
       schedule: Schedule;
-    };
+    }
+  | { type: ScheduleActionType.SCHEDULES_FETCH_OBS_STARTED }
+  | { type: ScheduleActionType.SCHEDULES_FETCH_OBS_SUCCESS; config: OBSWebsocketConfig };
 
 export interface ScheduleEntryWithTimes extends ScheduleEntry {
   estimatedStartTime: DateTime;

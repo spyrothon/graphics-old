@@ -23,6 +23,7 @@
     "humanize-duration": "^3.23.1",
     "js-cookie": "^2.2.1",
     "luxon": "^1.25.0",
+    "obs-websocket-js": "^4.0.3",
     "postcss-import": "^12.0.1",
     "postcss-modules": "^1.4.1",
     "postcss-nested": "^4.1.2",
@@ -44,7 +45,8 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "snakecase-keys": "^3.2.0",
-    "sturdy-websocket": "^0.2.0"
+    "sturdy-websocket": "^0.2.0",
+    "zustand": "^3.5.10"
   },
   "devDependencies": {
     "@babel/core": "^@7.11.6",

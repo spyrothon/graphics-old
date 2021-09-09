@@ -6,9 +6,11 @@ import StatusDot from "../../uikit/StatusDot";
 import Header from "../../uikit/Header";
 
 import styles from "./RemoteConnectionStatus.mod.css";
+import { useOBSConnected } from "../obs/OBSStore";
 
 export default function RemoteConnectionStatus() {
   const isConnected = useSafeSelector(RemoteStore.isRemoteConnected);
+  const [obsConnected] = useOBSConnected();
 
   return (
     <div className={styles.container}>
@@ -23,11 +25,11 @@ export default function RemoteConnectionStatus() {
       </div>
       <div className={styles.item}>
         <Header size={Header.Sizes.H5} marginless>
-          API Socket
+          OBS Socket
         </Header>
         <div>
-          <StatusDot boolean={isConnected} />
-          <span style={{ marginLeft: 8 }}>{isConnected ? "Connected" : "Not Connected"}</span>
+          <StatusDot boolean={obsConnected} />
+          <span style={{ marginLeft: 8 }}>{obsConnected ? "Connected" : "Not Connected"}</span>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Schedule } from "../../../api/APITypes";
+import { Schedule, OBSWebsocketConfig } from "../../../api/APITypes";
 import { ActionFor, Action } from "../../Actions";
 import { ScheduleActionType } from "./ScheduleTypes";
 
@@ -6,6 +6,7 @@ type ScheduleReducerState = {
   fetching: boolean;
   schedule?: Schedule;
   selectedEntryId?: string;
+  obsConfig?: OBSWebsocketConfig;
 };
 
 function handleFetchScheduleStarted(
@@ -81,10 +82,22 @@ function handleEntryUpdated(
   return newState;
 }
 
+function handleFetchOBSSuccess(
+  state: ScheduleReducerState,
+  action: ActionFor<ScheduleActionType.SCHEDULES_FETCH_OBS_SUCCESS>,
+) {
+  const { config } = action;
+  return {
+    ...state,
+    obsConfig: config,
+  };
+}
+
 const defaultState: ScheduleReducerState = {
   fetching: false,
   schedule: undefined,
   selectedEntryId: undefined,
+  obsConfig: undefined,
 };
 
 export default function schedulesReducer(
@@ -102,6 +115,8 @@ export default function schedulesReducer(
       return handleEntryDeleted(state, action);
     case ScheduleActionType.SCHEDULES_ENTRY_UPDATED:
       return handleEntryUpdated(state, action);
+    case ScheduleActionType.SCHEDULES_FETCH_OBS_SUCCESS:
+      return handleFetchOBSSuccess(state, action);
   }
 
   return state;

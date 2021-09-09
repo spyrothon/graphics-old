@@ -104,3 +104,11 @@ export interface RunParticipant {
   // Interview fields
   score?: number;
 }
+
+export interface OBSWebsocketConfig {
+  id: string;
+  name: string;
+  host: string;
+  port: number;
+  password: string;
+}

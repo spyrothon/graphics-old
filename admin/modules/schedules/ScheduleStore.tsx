@@ -8,6 +8,7 @@ import type { ScheduleEntryWithDependants, ScheduleEntryWithTimes } from "./Sche
 
 const getSchedulesState = (globalState: StoreState) => globalState.schedules;
 export const getSchedule = (state: StoreState) => getSchedulesState(state).schedule;
+export const getOBSConfig = (state: StoreState) => getSchedulesState(state).obsConfig;
 
 export const isFetchingSchedule = createSelector([getSchedulesState], (state) => state.fetching);
 export const isDebug = createSelector([getSchedule], (schedule) => schedule?.debug);
@@ -67,8 +68,8 @@ export const getEntriesWithStartTimes = createSelector(
 
     return entries.map(
       (entry): ScheduleEntryWithTimes => {
-        let nextActualStartTime = lastActualStartTime.plus({ seconds: entry.setupSeconds ?? 0 });
-        let nextEstimatedStartTime = lastEstimatedStartTime.plus({
+        const nextActualStartTime = lastActualStartTime.plus({ seconds: entry.setupSeconds ?? 0 });
+        const nextEstimatedStartTime = lastEstimatedStartTime.plus({
           seconds: entry.setupSeconds ?? 0,
         });
 
@@ -76,7 +77,7 @@ export const getEntriesWithStartTimes = createSelector(
           const run = runs[entry.runId];
           if (run != null) {
             lastActualStartTime = nextActualStartTime.plus({
-              seconds: run.actualTime ?? run.estimateSeconds,
+              seconds: run.actualSeconds ?? run.estimateSeconds,
             });
             lastEstimatedStartTime = nextEstimatedStartTime.plus({ seconds: run.estimateSeconds });
           }

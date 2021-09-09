@@ -9,10 +9,11 @@ import AuthLogin from "./modules/auth/AuthLogin";
 import AuthLogout from "./modules/auth/AuthLogout";
 import BlankPage from "./modules/router/BlankPage";
 import { history } from "./modules/router/RouterUtils";
-import { fetchSchedule } from "./modules/schedules/ScheduleActions";
+import { fetchSchedule, fetchScheduleOBSConfig } from "./modules/schedules/ScheduleActions";
 import Schedule from "./public/Schedule";
 import Dashboards from "./Dashboards";
 import { useSafeSelector } from "./Store";
+import OBSManager from "./modules/obs/OBSManager";
 
 export default function App() {
   const isLoggedIn = useSafeSelector((state) => AuthStore.isLoggedIn(state));
@@ -20,7 +21,13 @@ export default function App() {
 
   React.useEffect(() => {
     dispatch(fetchSchedule(MAIN_SCHEDULE_ID));
+    dispatch(fetchScheduleOBSConfig(MAIN_SCHEDULE_ID));
     dispatch(loadSession());
+
+    OBSManager.init();
+    return () => {
+      OBSManager.destroy();
+    };
   }, []);
 
   return (

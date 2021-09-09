@@ -71,7 +71,7 @@ export default function LiveRunTimers(props: LiveTimerProps) {
           icon
           disabled={playAction == null}
           onClick={() => playAction != null && dispatch(playAction)}>
-          <Play size={16} />
+          <Play size={16} strokeWidth="3" />
         </Button>
         <Button
           icon

@@ -18,6 +18,7 @@ const Endpoints = {
   SCHEDULE_ENTRY: (scheduleId: string, entryId: string) =>
     `/schedules/${scheduleId}/entries/${entryId}`,
   SCHEDULE_SET_CURRENT_ENTRY: (id: string) => `/schedules/${id}/set-current-entry`,
+  SCHEDULE_OBS_CONFIG: (id: string) => `/schedules/${id}/obs`,
 };
 
 export default Endpoints;

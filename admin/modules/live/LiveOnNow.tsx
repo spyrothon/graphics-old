@@ -8,7 +8,7 @@ import * as ScheduleStore from "../../modules/schedules/ScheduleStore";
 import Button from "../../uikit/Button";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
-import { updateSchedule } from "../schedules/ScheduleActions";
+import { updateSchedule, fetchScheduleOBSConfig } from "../schedules/ScheduleActions";
 import ScheduleListEntry from "../schedules/ScheduleListEntry";
 import DurationUtils from "../time/DurationUtils";
 
