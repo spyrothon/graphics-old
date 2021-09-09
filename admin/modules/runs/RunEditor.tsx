@@ -10,6 +10,7 @@ import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
+import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "../schedules/ScheduleActions";
 import * as DurationUtils from "../time/DurationUtils";
 import { persistRun } from "./RunActions";
@@ -31,7 +32,9 @@ export default function RunEditor(props: RunEditorProps) {
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
   const editor = useRunEditorState();
   const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
-  const hasEntryChanges = scheduleEntry.setupSeconds !== editedEntry.setupSeconds;
+  const hasEntryChanges =
+    scheduleEntry.setupSeconds !== editedEntry.setupSeconds ||
+    scheduleEntry.obsSceneName !== editedEntry.obsSceneName;
 
   React.useEffect(() => {
     setEditedEntry(scheduleEntry);
@@ -86,7 +89,7 @@ export default function RunEditor(props: RunEditorProps) {
     );
   }
 
-  function getNote<F extends keyof Run>(field: F, additional: string) {
+  function getNote<F extends keyof Run>(field: F, additional?: string) {
     const originalValue: any = run?.[field];
     const newValue = editor.getField(field);
     if (run == null || originalValue == null || originalValue === newValue) return additional;
@@ -163,8 +166,14 @@ export default function RunEditor(props: RunEditorProps) {
           <DurationInput
             label="Estimated Setup Time"
             value={editedEntry.setupSeconds}
-            marginless
             onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
+            marginless
+          />
+          <OBSSceneSelector
+            selectedSceneName={editedEntry.obsSceneName}
+            note="Name of the scene to use for this run in OBS."
+            onChange={(scene) => setEditedEntry({ ...scheduleEntry, obsSceneName: scene?.name })}
+            marginless
           />
         </div>
       </div>

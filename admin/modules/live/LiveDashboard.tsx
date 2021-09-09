@@ -10,7 +10,6 @@ import ScheduleEntrySelector from "../schedules/ScheduleEntrySelector";
 import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
 import LiveInterviewInfo from "./LiveInterviewInfo";
 import LiveParticipants from "./LiveParticipants";
-import LiveRunActuals from "./LiveRunActuals";
 import LiveRunTimers from "./LiveRunTimers";
 import LiveRunInfo from "./LiveRunInfo";
 import LiveOnNow from "./LiveOnNow";
@@ -59,7 +58,7 @@ export default function LiveDashboard() {
         </div>
         {selectedEntry?.run != null ? (
           <div className={styles.panels}>
-            <LiveRunInfo run={selectedEntry.run} />
+            <LiveRunInfo entry={selectedEntry} run={selectedEntry.run} />
             <LiveRunTimers
               className={styles.actuals}
               entry={selectedEntry}

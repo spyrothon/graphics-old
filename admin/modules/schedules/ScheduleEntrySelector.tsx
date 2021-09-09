@@ -29,16 +29,6 @@ export default function ScheduleEntrySelector(props: ScheduleEntrySelectorProps)
     return entry.id;
   }
 
-  function renderEntry(entry: ScheduleEntryWithDependants) {
-    if (entry == null) return "";
-    const { run, interview } = entry;
-
-    if (run != null) return `${run.gameName} - ${run.categoryName}`;
-    if (interview != null) return `INTERVIEW: ${interview.topic}`;
-
-    return entry.id;
-  }
-
   return (
     <SelectInput
       label={label}

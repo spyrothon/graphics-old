@@ -1,13 +1,17 @@
 import create from "zustand";
 
+import type { Scene } from "obs-websocket-js";
+
 interface OBSStoreState {
   connected: boolean;
   failed: boolean;
+  sceneList: Scene[];
 }
 
 export const useOBSStore = create<OBSStoreState>((_set) => ({
   connected: false,
   failed: false,
+  sceneList: [],
 }));
 
 export function setOBSConnected(connected: boolean) {
@@ -20,4 +24,8 @@ export function setOBSFailed() {
 
 export function useOBSConnected() {
   return useOBSStore((state) => [state.connected, state.failed]);
+}
+
+export function setSceneList(sceneList: Scene[]) {
+  useOBSStore.setState({ sceneList });
 }

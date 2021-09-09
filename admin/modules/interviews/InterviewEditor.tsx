@@ -18,6 +18,7 @@ import useInterviewEditorState from "./useInterviewEditorState";
 
 import styles from "./InterviewEditor.mod.css";
 import NumberInput from "../../uikit/NumberInput";
+import OBSSceneSelector from "../obs/OBSSceneSelector";
 
 type InterviewEditorProps = {
   scheduleEntry: ScheduleEntry;
@@ -32,7 +33,9 @@ export default function InterviewEditor(props: InterviewEditorProps) {
   const interview = useSafeSelector((state) => InterviewStore.getInterview(state, { interviewId }));
   const editor = useInterviewEditorState();
   const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
-  const hasEntryChanges = scheduleEntry.setupSeconds !== editedEntry.setupSeconds;
+  const hasEntryChanges =
+    scheduleEntry.setupSeconds !== editedEntry.setupSeconds ||
+    scheduleEntry.obsSceneName !== editedEntry.obsSceneName;
 
   React.useEffect(() => {
     setEditedEntry(scheduleEntry);
@@ -217,8 +220,14 @@ export default function InterviewEditor(props: InterviewEditorProps) {
           <DurationInput
             label="Setup Time"
             value={editedEntry.setupSeconds}
-            marginless
             onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
+            marginless
+          />
+          <OBSSceneSelector
+            selectedSceneName={editedEntry.obsSceneName}
+            note="Name of the scene to use for this run in OBS."
+            onChange={(scene) => setEditedEntry({ ...scheduleEntry, obsSceneName: scene?.name })}
+            marginless
           />
         </div>
       </div>

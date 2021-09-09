@@ -50,6 +50,7 @@ export interface ScheduleEntry {
   setupSeconds?: number;
   runId?: string;
   interviewId?: string;
+  obsSceneName?: string;
 }
 
 export interface InitialScheduleEntry {
