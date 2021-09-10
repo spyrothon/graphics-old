@@ -1,5 +1,4 @@
 import * as React from "react";
-import deepEqual from "deep-equal";
 import { v4 as uuid } from "uuid";
 
 import { ScheduleEntry, InitialTransition, InitialScheduleEntry } from "../../../api/APITypes";
@@ -35,7 +34,6 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
     dispatch(updateScheduleEntry(editedEntry as ScheduleEntry)),
   );
 
-  console.log(saveState, hasChanges, JSON.stringify(editedEntry), JSON.stringify(scheduleEntry));
   function updateTransition(
     kind: "enterTransitions" | "exitTransitions",
     newTransition: InitialTransition,
@@ -60,6 +58,24 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
 
   function runEnterTransition() {
     OBS.executeTransitionSet(scheduleEntry.enterTransitions);
+  }
+
+  function reorderTransitions(
+    kind: "enterTransitions" | "exitTransitions",
+    direction: "up" | "down",
+    index: number,
+  ) {
+    const transitions = Array.from(editedEntry[kind] ?? []);
+    const [item] = transitions.splice(index, 1);
+    switch (direction) {
+      case "up":
+        transitions.splice(index - 1, 0, item);
+        break;
+      case "down":
+        transitions.splice(index + 1, 0, item);
+        break;
+    }
+    setEditedEntry({ ...editedEntry, [kind]: transitions });
   }
 
   return (
@@ -100,6 +116,8 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
           {editedEntry.enterTransitions?.map((transition, index) => (
             <TransitionEditor
               key={transition.id}
+              onMoveUp={() => reorderTransitions("enterTransitions", "up", index)}
+              onMoveDown={() => reorderTransitions("enterTransitions", "down", index)}
               transition={transition}
               onChange={(transition) => updateTransition("enterTransitions", transition, index)}
               onRemove={() => removeTransition("enterTransitions", index)}
@@ -116,6 +134,8 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
           {editedEntry.exitTransitions?.map((transition, index) => (
             <TransitionEditor
               key={transition.id}
+              onMoveUp={() => reorderTransitions("exitTransitions", "up", index)}
+              onMoveDown={() => reorderTransitions("exitTransitions", "down", index)}
               transition={transition}
               onChange={(transition) => updateTransition("exitTransitions", transition, index)}
               onRemove={() => removeTransition("exitTransitions", index)}

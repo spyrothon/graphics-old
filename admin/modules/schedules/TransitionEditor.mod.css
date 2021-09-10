@@ -15,16 +15,17 @@
   flex: 0 0 24px;
   align-self: center;
   visibility: hidden;
-  cursor: pointer;
-  padding: 4px;
   border-radius: 2px;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
 
   & > * {
     display: block;
+    padding: 4px;
+    margin: 8px 0;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .container:hover & {

@@ -14,10 +14,12 @@ interface TransitionEditorProps {
   transition: InitialTransition;
   onChange: (transition: InitialTransition) => void;
   onRemove: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
 }
 
 export default function TransitionEditor(props: TransitionEditorProps) {
-  const { transition, onChange, onRemove } = props;
+  const { transition, onChange, onRemove, onMoveUp, onMoveDown } = props;
   const {
     sceneDuration,
     obsTransitionInName,
@@ -35,8 +37,8 @@ export default function TransitionEditor(props: TransitionEditorProps) {
   return (
     <div className={styles.container}>
       <div className={styles.drag}>
-        <ChevronsUp size={14} strokeWidth="2" />
-        <ChevronsDown size={14} strokeWidth="2" />
+        <ChevronsUp size={24} strokeWidth="2" onClick={onMoveUp} />
+        <ChevronsDown size={24} strokeWidth="2" onClick={onMoveDown} />
       </div>
       <div className={styles.content}>
         <div className={styles.transitionToScene}>
