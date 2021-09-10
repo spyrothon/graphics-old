@@ -51,9 +51,6 @@ export default function ScheduleEditor() {
             <ScheduleEntryEditor scheduleEntry={selectedScheduleEntry} />
           </Tab>
         ) : undefined}
-        <Tab id="transitions" label="Transitions">
-          Transition Editor
-        </Tab>
       </Tabs>
     );
   }
