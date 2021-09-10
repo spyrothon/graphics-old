@@ -12,6 +12,7 @@ import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "./ScheduleActions";
 
 import styles from "./ScheduleEntryEditor.mod.css";
+import OBSButton from "../obs/OBSButton";
 
 interface ScheduleEntryEditorProps {
   scheduleEntry: ScheduleEntry;
@@ -34,8 +35,14 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
 
   function transition() {
     OBS.executeTransitionSet([
-      { id: "first", obsSceneName: "First Playthrough Fullscreen", obsTransitionInName: "Fade" },
-      { id: "second", obsSceneName: "break", obsTransitionInName: "Cut" },
+      {
+        id: "first",
+        obsSceneName: "Scene 2",
+        obsTransitionInName: "Fade",
+        obsMediaSourceName: "Media Source",
+      },
+      { id: "second", obsSceneName: "break", obsTransitionInName: "Fade", sceneDuration: 3000 },
+      { id: "third", obsSceneName: "First Playthrough Fullscreen", obsTransitionInName: "Cut" },
     ]);
   }
 
@@ -47,7 +54,7 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
         disabled={saveState === SaveState.SAVING || !hasChanges}>
         {getSaveText()}
       </Button>
-      <Button onClick={transition}>Test</Button>
+      <OBSButton onClick={transition}>Test</OBSButton>
       <div className={styles.editor}>
         <div>
           <Header className={styles.className}>Timing</Header>

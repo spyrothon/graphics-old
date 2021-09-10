@@ -1,18 +1,23 @@
 import create from "zustand";
 
 import type { Scene } from "obs-websocket-js";
-import type { Transition } from "./OBSTypes";
+import type { OBSTransition } from "./OBSTypes";
 
 interface OBSStoreState {
   connected: boolean;
   failed: boolean;
   sceneList: Scene[];
-  transitionList: Transition[];
+  transitionList: OBSTransition[];
+  busy: {
+    busy: boolean;
+    originator?: string;
+  };
 }
 
 export const useOBSStore = create<OBSStoreState>((_set) => ({
   connected: false,
   failed: false,
+  busy: { busy: false },
   sceneList: [],
   transitionList: [],
 }));
@@ -25,14 +30,22 @@ export function setOBSFailed() {
   useOBSStore.setState({ connected: false, failed: true });
 }
 
+export function setOBSBusy(busy: boolean, originator?: string) {
+  useOBSStore.setState({ busy: { busy, originator } });
+}
+
 export function useOBSConnected() {
   return useOBSStore((state) => [state.connected, state.failed]);
+}
+
+export function useOBSBusy() {
+  return useOBSStore((state) => state.busy);
 }
 
 export function setSceneList(sceneList: Scene[]) {
   useOBSStore.setState({ sceneList });
 }
 
-export function setTransitionList(transitionList: Transition[]) {
+export function setTransitionList(transitionList: OBSTransition[]) {
   useOBSStore.setState({ transitionList });
 }

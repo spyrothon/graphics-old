@@ -3,7 +3,7 @@ import * as React from "react";
 import SelectInput from "../../uikit/SelectInput";
 import { useOBSStore } from "./OBSStore";
 
-import type { Transition } from "./OBSTypes";
+import type { OBSTransition } from "./OBSTypes";
 
 type OBSTransitionSelectorProps = {
   label?: React.ReactNode;
@@ -11,7 +11,7 @@ type OBSTransitionSelectorProps = {
   selectedTransitionName?: string;
   marginless?: boolean;
   className?: string;
-  onChange: (entry?: Transition) => unknown;
+  onChange: (entry?: OBSTransition) => unknown;
 };
 
 export default function OBSTransitionSelector(props: OBSTransitionSelectorProps) {

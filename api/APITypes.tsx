@@ -62,8 +62,10 @@ export enum ScheduleEntryType {
 
 export interface Transition {
   id: string;
-  obsTransitionInName?: string;
+  obsTransitionInName: string;
   obsSceneName: string;
+  obsMediaSourceName?: string;
+  sceneDuration?: number;
 }
 
 export interface InitialScheduleEntry {

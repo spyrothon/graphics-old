@@ -12,3 +12,7 @@
 .bad {
   background-color: var(--red);
 }
+
+.busy {
+  background-color: var(--orange);
+}
