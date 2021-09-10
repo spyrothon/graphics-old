@@ -7,6 +7,7 @@ import useSaveable, { SaveState } from "../../hooks/useSaveable";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
+import OBS from "../obs/OBS";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "./ScheduleActions";
 
@@ -31,6 +32,13 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
     dispatch(updateScheduleEntry(editedEntry)),
   );
 
+  function transition() {
+    OBS.executeTransitionSet([
+      { id: "first", obsSceneName: "First Playthrough Fullscreen", obsTransitionInName: "Fade" },
+      { id: "second", obsSceneName: "break", obsTransitionInName: "Cut" },
+    ]);
+  }
+
   return (
     <div className={styles.container}>
       <Button
@@ -39,6 +47,7 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
         disabled={saveState === SaveState.SAVING || !hasChanges}>
         {getSaveText()}
       </Button>
+      <Button onClick={transition}>Test</Button>
       <div className={styles.editor}>
         <div>
           <Header className={styles.className}>Timing</Header>

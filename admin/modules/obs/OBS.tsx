@@ -1,22 +1,31 @@
 import OBSWebSocket from "obs-websocket-js";
 
-import { OBSWebsocketConfig } from "../../../api/APITypes";
+import { OBSWebsocketConfig, Transition } from "../../../api/APITypes";
+import OBSEventQueue from "./OBSEventQueue";
 import { setOBSConnected, setOBSFailed, setSceneList, setTransitionList } from "./OBSStore";
 
 const obs = new OBSWebSocket();
 
-obs.on("ConnectionOpened", () => setOBSConnected(true));
-obs.on("ConnectionClosed", () => setOBSConnected(false));
-obs.on("error", console.error);
-
 class OBS {
+  private eventQueue: OBSEventQueue;
+
+  constructor() {
+    this.eventQueue = new OBSEventQueue(obs);
+
+    obs.on("ConnectionOpened", () => setOBSConnected(true));
+    obs.on("ConnectionClosed", () => setOBSConnected(false));
+    obs.on("error", console.error);
+  }
+
   async connect(config: OBSWebsocketConfig) {
     await obs
       .connect({
         address: `${config.host}:${config.port}`,
         password: config.password,
       })
-      .then(() => this._preload())
+      .then(() => {
+        this._preload();
+      })
       .catch(() => setOBSFailed());
 
     return this;
@@ -42,6 +51,22 @@ class OBS {
 
   getTransitions() {
     return obs.send("GetTransitionList");
+  }
+
+  async executeTransition(transition: Transition) {
+    return new Promise((resolve) => {
+      obs.send("SetPreviewScene", { "scene-name": transition.obsSceneName });
+      this.eventQueue.onNext("TransitionEnd").then(resolve);
+      obs.send("TransitionToProgram", {
+        "with-transition": { name: transition.obsTransitionInName },
+      });
+    });
+  }
+
+  async executeTransitionSet(transitions: Transition[]) {
+    for (const transition of transitions) {
+      await this.executeTransition(transition);
+    }
   }
 }
 
