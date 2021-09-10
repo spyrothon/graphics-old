@@ -2,6 +2,12 @@ export interface OBSTransition {
   name: string;
 }
 
+export interface OBSMediaSource {
+  sourceName: string;
+  sourceKind: string;
+  mediaState: string;
+}
+
 export enum OBSCustomEventTypes {
   TRANSITION_SEQUENCE_STARTED = "transition_sequence_started",
   TRANSITION_SEQUENCE_ENDED = "transition_sequence_ended",

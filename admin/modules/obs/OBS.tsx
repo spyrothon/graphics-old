@@ -8,6 +8,7 @@ import {
   setSceneList,
   setTransitionList,
   setOBSBusy,
+  setMediaSourceList,
 } from "./OBSStore";
 import { OBSCustomEvent, OBSCustomEventTypes } from "./OBSTypes";
 
@@ -54,6 +55,7 @@ class OBS {
   _preload() {
     this.getScenes().then((response) => setSceneList(response.scenes));
     this.getTransitions().then((response) => setTransitionList(response.transitions));
+    this.getMediaSources().then((response) => setMediaSourceList(response.mediaSources));
   }
 
   async disconnect() {
@@ -69,12 +71,22 @@ class OBS {
     return obs.send("SetPreviewScene", { "scene-name": sceneName });
   }
 
+  getMediaSources() {
+    return obs.send("GetMediaSourcesList");
+  }
+
   getTransitions() {
     return obs.send("GetTransitionList");
   }
 
   async executeTransition(transition: Transition) {
-    const { sceneDuration, obsMediaSourceName, obsSceneName, obsTransitionInName } = transition;
+    const {
+      sceneDuration,
+      obsMediaSourceName,
+      obsSceneName,
+      obsTransitionInName,
+      transitionDuration,
+    } = transition;
     let waitTime = sceneDuration ?? 0;
     if (waitTime === 0 && obsMediaSourceName != null) {
       const { mediaDuration } = await obs.send("GetMediaDuration", {
@@ -87,7 +99,7 @@ class OBS {
     return new Promise((resolve) => {
       this.eventQueue.onNext("TransitionEnd").then(() => setTimeout(resolve, waitTime));
       obs.send("TransitionToProgram", {
-        "with-transition": { name: obsTransitionInName },
+        "with-transition": { name: obsTransitionInName, duration: transitionDuration },
       });
     });
   }

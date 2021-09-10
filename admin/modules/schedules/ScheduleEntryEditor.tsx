@@ -1,18 +1,20 @@
 import * as React from "react";
 import deepEqual from "deep-equal";
+import { v4 as uuid } from "uuid";
 
-import { ScheduleEntry } from "../../../api/APITypes";
+import { ScheduleEntry, InitialTransition, InitialScheduleEntry } from "../../../api/APITypes";
 import useSafeDispatch from "../../hooks/useDispatch";
 import useSaveable, { SaveState } from "../../hooks/useSaveable";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
 import OBS from "../obs/OBS";
+import OBSButton from "../obs/OBSButton";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "./ScheduleActions";
+import TransitionEditor from "./TransitionEditor";
 
 import styles from "./ScheduleEntryEditor.mod.css";
-import OBSButton from "../obs/OBSButton";
 
 interface ScheduleEntryEditorProps {
   scheduleEntry: ScheduleEntry;
@@ -22,28 +24,42 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
   const { scheduleEntry } = props;
 
   const dispatch = useSafeDispatch();
-  const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
-  const hasChanges = !deepEqual(scheduleEntry, editedEntry);
+  const [editedEntry, setEditedEntry] = React.useState<InitialScheduleEntry>(scheduleEntry);
+  const hasChanges = JSON.stringify(editedEntry) !== JSON.stringify(scheduleEntry);
 
   React.useEffect(() => {
     setEditedEntry(scheduleEntry);
   }, [scheduleEntry]);
 
   const [handleSave, getSaveText, saveState] = useSaveable(async () =>
-    dispatch(updateScheduleEntry(editedEntry)),
+    dispatch(updateScheduleEntry(editedEntry as ScheduleEntry)),
   );
 
-  function transition() {
-    OBS.executeTransitionSet([
-      {
-        id: "first",
-        obsSceneName: "Scene 2",
-        obsTransitionInName: "Fade",
-        obsMediaSourceName: "Media Source",
-      },
-      { id: "second", obsSceneName: "break", obsTransitionInName: "Fade", sceneDuration: 3000 },
-      { id: "third", obsSceneName: "First Playthrough Fullscreen", obsTransitionInName: "Cut" },
-    ]);
+  console.log(saveState, hasChanges, JSON.stringify(editedEntry), JSON.stringify(scheduleEntry));
+  function updateTransition(
+    kind: "enterTransitions" | "exitTransitions",
+    newTransition: InitialTransition,
+    index: number,
+  ) {
+    const transitions = Array.from(editedEntry[kind] ?? []);
+    transitions[index] = newTransition;
+    setEditedEntry({ ...editedEntry, [kind]: transitions });
+  }
+
+  function removeTransition(kind: "enterTransitions" | "exitTransitions", index: number) {
+    const transitions = Array.from(editedEntry[kind] ?? []);
+    transitions.splice(index, 1);
+    setEditedEntry({ ...editedEntry, [kind]: transitions });
+  }
+
+  function addTransition(kind: "enterTransitions" | "exitTransitions") {
+    const transitions = Array.from(editedEntry[kind] ?? []);
+    transitions.push({ id: uuid() });
+    setEditedEntry({ ...editedEntry, [kind]: transitions });
+  }
+
+  function runEnterTransition() {
+    OBS.executeTransitionSet(scheduleEntry.enterTransitions);
   }
 
   return (
@@ -51,27 +67,60 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
       <Button
         className={styles.saveButton}
         onClick={handleSave}
-        disabled={saveState === SaveState.SAVING || !hasChanges}>
+        disabled={!hasChanges || saveState === SaveState.SAVING}>
         {getSaveText()}
       </Button>
-      <OBSButton onClick={transition}>Test</OBSButton>
+      <OBSButton onClick={() => runEnterTransition()}>Test</OBSButton>
       <div className={styles.editor}>
         <div>
-          <Header className={styles.className}>Timing</Header>
+          <Header className={styles.header}>Timing</Header>
           <DurationInput
             label="Estimated Setup Time"
             value={editedEntry.setupSeconds}
             onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
           />
-        </div>
 
-        <div>
-          <Header className={styles.className}>OBS Scene Setup</Header>
+          <Header className={styles.header}>OBS Scene Setup</Header>
           <OBSSceneSelector
             selectedSceneName={editedEntry.obsSceneName}
             note="Name of the scene to use for this run in OBS."
             onChange={(scene) => setEditedEntry({ ...scheduleEntry, obsSceneName: scene?.name })}
           />
+        </div>
+
+        <div className={styles.transitions}>
+          <Header className={styles.header}>
+            Enter Transition
+            <Button
+              className={styles.addTransitionButton}
+              onClick={() => addTransition("enterTransitions")}>
+              Add Transition
+            </Button>
+          </Header>
+          {editedEntry.enterTransitions?.map((transition, index) => (
+            <TransitionEditor
+              key={transition.id}
+              transition={transition}
+              onChange={(transition) => updateTransition("enterTransitions", transition, index)}
+              onRemove={() => removeTransition("enterTransitions", index)}
+            />
+          ))}
+          <Header className={styles.header}>
+            Exit Transition
+            <Button
+              className={styles.addTransitionButton}
+              onClick={() => addTransition("exitTransitions")}>
+              Add Transition
+            </Button>
+          </Header>
+          {editedEntry.exitTransitions?.map((transition, index) => (
+            <TransitionEditor
+              key={transition.id}
+              transition={transition}
+              onChange={(transition) => updateTransition("exitTransitions", transition, index)}
+              onRemove={() => removeTransition("exitTransitions", index)}
+            />
+          ))}
         </div>
       </div>
     </div>

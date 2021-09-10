@@ -40,6 +40,7 @@ export default function OBSTransitionSelector(props: OBSTransitionSelectorProps)
       value={selected}
       marginless={marginless}
       allowEmpty
+      emptyLabel="Select an OBS Transition"
       onChange={onChange}
     />
   );

@@ -40,6 +40,7 @@ export default function OBSSceneSelector(props: OBSSceneSelectorProps) {
       value={selected}
       marginless={marginless}
       allowEmpty
+      emptyLabel="Select an OBS Scene"
       onChange={onChange}
     />
   );

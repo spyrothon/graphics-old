@@ -14,3 +14,15 @@
   gap: 16px;
   padding: 16px;
 }
+
+.transitions {
+  flex: 1 1 600px;
+}
+
+.addTransitionButton {
+  float: right;
+}
+
+.header:not(:first-child) {
+  margin-top: 32px;
+}

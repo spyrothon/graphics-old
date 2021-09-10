@@ -10,6 +10,7 @@ export type SelectInputProps<T> = {
   itemToString: (item?: T) => string;
   includeEmpty?: boolean;
   allowEmpty?: boolean;
+  emptyLabel?: string;
   onChange: (item?: T) => unknown;
 } & InputWrapperPassthroughProps;
 
@@ -25,6 +26,7 @@ export default function SelectInput<T>(props: SelectInputProps<T>) {
     itemToString,
     includeEmpty = true,
     allowEmpty = false,
+    emptyLabel = "Select an Option",
     ...comboboxProps
   } = props;
 
@@ -38,7 +40,7 @@ export default function SelectInput<T>(props: SelectInputProps<T>) {
       <select className={styles.input} value={itemToString(value)} onChange={handleChange}>
         {includeEmpty ? (
           <option value="" disabled={!allowEmpty}>
-            Select an Option
+            {emptyLabel}
           </option>
         ) : null}
         {items.map((item) => {

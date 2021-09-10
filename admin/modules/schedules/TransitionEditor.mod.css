@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  gap: 8px;
+  border-radius: 4px;
+  background-color: var(--background-tertiary);
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.content {
+  flex: 1 1 auto;
+}
+
+.drag {
+  flex: 0 0 24px;
+  align-self: center;
+  visibility: hidden;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  & > * {
+    display: block;
+  }
+
+  .container:hover & {
+    visibility: visible;
+  }
+}
+
+.remove {
+  flex: 0 0 16px;
+  margin-left: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.transitionToScene {
+  display: flex;
+  align-items: center;
+}
+
+.transitionName {
+  flex: 1 1 auto;
+}
+
+.transitionArrow {
+  flex: 0 0 auto;
+  width: 72px;
+  padding: 0 24px;
+  justify-content: center;
+}
+
+.transitionScene {
+  flex: 1 1 auto;
+}
+
+.duration {
+  display: flex;
+  gap: 16px;
+}

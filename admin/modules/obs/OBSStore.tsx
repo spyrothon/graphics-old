@@ -1,13 +1,14 @@
 import create from "zustand";
 
 import type { Scene } from "obs-websocket-js";
-import type { OBSTransition } from "./OBSTypes";
+import type { OBSTransition, OBSMediaSource } from "./OBSTypes";
 
 interface OBSStoreState {
   connected: boolean;
   failed: boolean;
   sceneList: Scene[];
   transitionList: OBSTransition[];
+  mediaSourceList: OBSMediaSource[];
   busy: {
     busy: boolean;
     originator?: string;
@@ -20,6 +21,7 @@ export const useOBSStore = create<OBSStoreState>((_set) => ({
   busy: { busy: false },
   sceneList: [],
   transitionList: [],
+  mediaSourceList: [],
 }));
 
 export function setOBSConnected(connected: boolean) {
@@ -44,6 +46,10 @@ export function useOBSBusy() {
 
 export function setSceneList(sceneList: Scene[]) {
   useOBSStore.setState({ sceneList });
+}
+
+export function setMediaSourceList(mediaSourceList: OBSMediaSource[]) {
+  useOBSStore.setState({ mediaSourceList });
 }
 
 export function setTransitionList(transitionList: OBSTransition[]) {
