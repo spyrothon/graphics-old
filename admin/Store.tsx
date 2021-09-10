@@ -21,6 +21,7 @@ export const store = createStore(combinedReducer, composeEnhancers(applyMiddlewa
 
 export type StoreState = ReturnType<typeof combinedReducer>;
 export type Store = typeof store;
+export type AppDispatch = typeof store.dispatch;
 
 export const getProp = <T extends any>(key: string) => (
   _: StoreState,

@@ -6,6 +6,7 @@ import Button from "../../uikit/Button";
 import Header from "../../uikit/Header";
 import TextInput from "../../uikit/TextInput";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
+import OBSTransitionSelector from "../obs/OBSTransitionSelector";
 import { persistRun } from "../runs/RunActions";
 import { updateScheduleEntry } from "../schedules/ScheduleActions";
 
@@ -52,6 +53,7 @@ export default function LiveRunInfo(props: LiveRunInfoProps) {
         selectedSceneName={obsSceneName}
         onChange={(scene) => setOBSSceneName(scene.name)}
       />
+      <OBSTransitionSelector selectedTransitionName={undefined} onChange={() => null} />
       <Button onClick={handleSave} disabled={!hasChanges}>
         Save Game Info
       </Button>

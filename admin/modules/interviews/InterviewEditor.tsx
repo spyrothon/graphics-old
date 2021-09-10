@@ -4,21 +4,19 @@ import classNames from "classnames";
 import { Interview, ScheduleEntry } from "../../../api/APITypes";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
+import useSaveable, { SaveState } from "../../hooks/useSaveable";
 import Anchor from "../../uikit/Anchor";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
-import { updateScheduleEntry } from "../schedules/ScheduleActions";
+import NumberInput from "../../uikit/NumberInput";
 import * as DurationUtils from "../time/DurationUtils";
 import { persistInterview } from "./InterviewActions";
 import * as InterviewStore from "./InterviewStore";
 import useInterviewEditorState from "./useInterviewEditorState";
 
 import styles from "./InterviewEditor.mod.css";
-import NumberInput from "../../uikit/NumberInput";
-import OBSSceneSelector from "../obs/OBSSceneSelector";
 
 type InterviewEditorProps = {
   scheduleEntry: ScheduleEntry;
@@ -32,73 +30,27 @@ export default function InterviewEditor(props: InterviewEditorProps) {
   const dispatch = useSafeDispatch();
   const interview = useSafeSelector((state) => InterviewStore.getInterview(state, { interviewId }));
   const editor = useInterviewEditorState();
-  const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
-  const hasEntryChanges =
-    scheduleEntry.setupSeconds !== editedEntry.setupSeconds ||
-    scheduleEntry.obsSceneName !== editedEntry.obsSceneName;
-
-  React.useEffect(() => {
-    setEditedEntry(scheduleEntry);
-  }, [scheduleEntry]);
 
   React.useEffect(() => {
     editor.setBase(interview);
   }, [interview]);
 
-  const [saving, setSaving] = React.useState(false);
-  const [saved, setSaved] = React.useState(false);
-  const [saveFailed, setSaveFailed] = React.useState(false);
-
-  function handleSave() {
+  const [handleSave, getSaveText, saveState] = useSaveable(async () => {
     const interview = editor.getEditedInterview();
     if (interview == null) return;
 
-    setSaving(true);
-    setSaveFailed(false);
-    Promise.all([
-      editor.hasChanges() ? dispatch(persistInterview(interview.id, interview)) : undefined,
-      hasEntryChanges ? dispatch(updateScheduleEntry(editedEntry)) : undefined,
-    ])
-      .then(() => {
-        setSaving(false);
-        setSaveFailed(false);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2500);
-      })
-      .catch(() => {
-        setSaving(false);
-        setSaved(true);
-        setSaveFailed(true);
-      });
-  }
-
-  function getSaveText() {
-    if (!saved) return null;
-
-    if (saveFailed) {
-      return (
-        <Text className={styles.saveFailed} marginless>
-          <strong>Failed to save the interview!</strong>
-        </Text>
-      );
-    }
-
-    return (
-      <Text className={styles.saveSucceeded} marginless>
-        <strong>Saved!</strong>
-      </Text>
-    );
-  }
+    dispatch(persistInterview(interview.id, interview));
+  });
 
   function getNote<F extends keyof Interview>(field: F) {
-    let originalValue: any = interview?.[field];
+    const originalValue: any = interview?.[field];
     const newValue = editor.getField(field);
     if (interview == null || originalValue == null || originalValue == newValue) return null;
 
     const renderValue = () => {
       switch (field) {
         case "estimateSeconds":
-          return DurationUtils.toString(interview["estimateSeconds"]);
+          return DurationUtils.toString(interview.estimateSeconds);
         case "notes":
           return "original";
         default:
@@ -207,33 +159,17 @@ export default function InterviewEditor(props: InterviewEditorProps) {
 
   return (
     <div className={classNames(styles.container, className)}>
-      <div className={styles.actions}>
-        <div className={styles.saveAction}>
-          <Button
-            onClick={handleSave}
-            disabled={saving || (!editor.hasChanges() && !hasEntryChanges)}>
-            {saving ? "Saving..." : "Save Changes"}
-          </Button>
-          {getSaveText()}
-        </div>
-        <div className={styles.entryFields}>
-          <DurationInput
-            label="Setup Time"
-            value={editedEntry.setupSeconds}
-            onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
-            marginless
-          />
-          <OBSSceneSelector
-            selectedSceneName={editedEntry.obsSceneName}
-            note="Name of the scene to use for this run in OBS."
-            onChange={(scene) => setEditedEntry({ ...scheduleEntry, obsSceneName: scene?.name })}
-            marginless
-          />
-        </div>
-      </div>
       <div className={styles.editor}>
         <div className={styles.info}>
-          <Header className={styles.header}>Interview Information</Header>
+          <Header className={styles.header}>
+            Interview Information
+            <Button
+              className={styles.saveButton}
+              onClick={handleSave}
+              disabled={saveState === SaveState.SAVING || !editor.hasChanges()}>
+              {getSaveText()}
+            </Button>
+          </Header>
           <TextInput
             label="Topic"
             value={editor.getField("topic")}

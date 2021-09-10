@@ -56,6 +56,12 @@ export default function LiveDashboard() {
             Make this the Current Entry
           </Button>
         </div>
+        <div className={styles.transitions}>
+          <div className={styles.transitionActions}>
+            <Button>Transition In</Button>
+            <Button>Transition Out</Button>
+          </div>
+        </div>
         {selectedEntry?.run != null ? (
           <div className={styles.panels}>
             <LiveRunInfo entry={selectedEntry} run={selectedEntry.run} />

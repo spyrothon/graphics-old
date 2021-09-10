@@ -3,7 +3,7 @@
   box-sizing: border-box;
   background: none;
   border: none;
-  display: block;
+  /* display: block; */
   line-height: 1.3;
   margin: 0;
 
@@ -60,6 +60,7 @@
 
   &:not([disabled]):hover {
     background-color: var(--_button-hover);
+    color: var(--_button-secondary);
   }
 }
 

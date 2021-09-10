@@ -16,7 +16,7 @@ function runEditorReducer(state: RunEditorState, action: RunEditorAction) {
   switch (action.type) {
     case "setBaseRun":
       return { ...state, baseRun: action.run, runEdits: {}, hasChanges: false };
-    case "updateField":
+    case "updateField": {
       let { ...newEdits } = state.runEdits;
       if (state.baseRun?.[action.field] !== action.value) {
         newEdits = { ...newEdits, [action.field]: action.value };
@@ -25,6 +25,7 @@ function runEditorReducer(state: RunEditorState, action: RunEditorAction) {
       }
 
       return { ...state, runEdits: newEdits, hasChanges: Object.keys(newEdits).length > 0 };
+    }
     default:
       return state;
   }

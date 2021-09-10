@@ -8,16 +8,14 @@ import Anchor from "../../uikit/Anchor";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
 import TextInput from "../../uikit/TextInput";
-import OBSSceneSelector from "../obs/OBSSceneSelector";
-import { updateScheduleEntry } from "../schedules/ScheduleActions";
 import * as DurationUtils from "../time/DurationUtils";
 import { persistRun } from "./RunActions";
 import * as RunStore from "./RunStore";
 import useRunEditorState from "./useRunEditorState";
 
 import styles from "./RunEditor.mod.css";
+import useSaveable, { SaveState } from "../../hooks/useSaveable";
 
 type RunEditorProps = {
   scheduleEntry: ScheduleEntry;
@@ -31,63 +29,14 @@ export default function RunEditor(props: RunEditorProps) {
   const dispatch = useSafeDispatch();
   const run = useSafeSelector((state) => RunStore.getRun(state, { runId }));
   const editor = useRunEditorState();
-  const [editedEntry, setEditedEntry] = React.useState(scheduleEntry);
-  const hasEntryChanges =
-    scheduleEntry.setupSeconds !== editedEntry.setupSeconds ||
-    scheduleEntry.obsSceneName !== editedEntry.obsSceneName;
-
-  React.useEffect(() => {
-    setEditedEntry(scheduleEntry);
-  }, [scheduleEntry]);
 
   React.useEffect(() => {
     editor.setBaseRun(run);
   }, [run]);
 
-  const [saving, setSaving] = React.useState(false);
-  const [saved, setSaved] = React.useState(false);
-  const [saveFailed, setSaveFailed] = React.useState(false);
-
-  function handleSaveRun() {
-    const run = editor.getEditedRun();
-    if (run == null) return false;
-
-    setSaving(true);
-    setSaveFailed(false);
-    Promise.all([
-      editor.hasChanges() ? dispatch(persistRun(run.id, run)) : undefined,
-      hasEntryChanges ? dispatch(updateScheduleEntry(editedEntry)) : undefined,
-    ])
-      .then(() => {
-        setSaving(false);
-        setSaveFailed(false);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2500);
-      })
-      .catch(() => {
-        setSaving(false);
-        setSaved(true);
-        setSaveFailed(true);
-      });
-  }
-
-  function getSaveText() {
-    if (!saved) return null;
-
-    if (saveFailed) {
-      return (
-        <Text className={styles.saveFailed} marginless>
-          <strong>Failed to save the run!</strong>
-        </Text>
-      );
-    }
-
-    return (
-      <Text className={styles.saveSucceeded} marginless>
-        <strong>Saved!</strong>
-      </Text>
-    );
-  }
+  const [handleSaveRun, getSaveText, saveState] = useSaveable(async () =>
+    dispatch(persistRun(run.id, editor.getEditedRun())),
+  );
 
   function getNote<F extends keyof Run>(field: F, additional?: string) {
     const originalValue: any = run?.[field];
@@ -153,33 +102,17 @@ export default function RunEditor(props: RunEditorProps) {
 
   return (
     <div className={classNames(styles.container, className)}>
-      <div className={styles.actions}>
-        <div className={styles.saveAction}>
-          <Button
-            onClick={handleSaveRun}
-            disabled={saving || (!editor.hasChanges() && !hasEntryChanges)}>
-            {saving ? "Saving..." : "Save Changes"}
-          </Button>
-          {getSaveText()}
-        </div>
-        <div className={styles.entryFields}>
-          <DurationInput
-            label="Estimated Setup Time"
-            value={editedEntry.setupSeconds}
-            onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
-            marginless
-          />
-          <OBSSceneSelector
-            selectedSceneName={editedEntry.obsSceneName}
-            note="Name of the scene to use for this run in OBS."
-            onChange={(scene) => setEditedEntry({ ...scheduleEntry, obsSceneName: scene?.name })}
-            marginless
-          />
-        </div>
-      </div>
       <div className={styles.editor}>
         <div className={styles.runInfo}>
-          <Header className={styles.header}>Run Information</Header>
+          <Header className={styles.header}>
+            Run Information
+            <Button
+              className={styles.saveButton}
+              onClick={handleSaveRun}
+              disabled={saveState === SaveState.SAVING || !editor.hasChanges()}>
+              {getSaveText()}
+            </Button>
+          </Header>
           <TextInput
             label="Game Name"
             value={editor.getField("gameName")}

@@ -1,7 +1,7 @@
 import OBSWebSocket from "obs-websocket-js";
 
 import { OBSWebsocketConfig } from "../../../api/APITypes";
-import { setOBSConnected, setOBSFailed, setSceneList } from "./OBSStore";
+import { setOBSConnected, setOBSFailed, setSceneList, setTransitionList } from "./OBSStore";
 
 const obs = new OBSWebSocket();
 
@@ -24,6 +24,7 @@ class OBS {
 
   _preload() {
     this.getScenes().then((response) => setSceneList(response.scenes));
+    this.getTransitions().then((response) => setTransitionList(response.transitions));
   }
 
   async disconnect() {
@@ -37,6 +38,10 @@ class OBS {
 
   setScene(sceneName: string) {
     return obs.send("SetPreviewScene", { "scene-name": sceneName });
+  }
+
+  getTransitions() {
+    return obs.send("GetTransitionList");
   }
 }
 

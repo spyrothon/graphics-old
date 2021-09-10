@@ -51,6 +51,19 @@ export interface ScheduleEntry {
   runId?: string;
   interviewId?: string;
   obsSceneName?: string;
+  enterTransitions: Transition[];
+  exitTransitions: Transition[];
+}
+
+export enum ScheduleEntryType {
+  RUN = "RUN",
+  INTERVIEW = "INTERVIEW",
+}
+
+export interface Transition {
+  id: string;
+  obsTransitionInName?: string;
+  obsSceneName: string;
 }
 
 export interface InitialScheduleEntry {

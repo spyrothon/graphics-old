@@ -1,26 +1,61 @@
 import * as React from "react";
 
 import { useSafeSelector } from "../../Store";
+import Tabs, { Tab } from "../../uikit/Tabs";
 import Dashboard from "../dashboards/Dashboard";
 import InterviewEditor from "../interviews/InterviewEditor";
 import RunEditor from "../runs/RunEditor";
 import ScheduleList from "../schedules/ScheduleList";
 import * as ScheduleStore from "../schedules/ScheduleStore";
+import ScheduleEntryEditor from "./ScheduleEntryEditor";
 
 import styles from "./ScheduleEditor.mod.css";
+import { ScheduleEntryType } from "../../../api/APITypes";
 
 export default function ScheduleEditor() {
   const selectedScheduleEntry = useSafeSelector((state) => ScheduleStore.getSelectedEntry(state));
+  const [activeTab, setActiveTab] = React.useState("content");
+
+  const entryType =
+    selectedScheduleEntry?.runId != null
+      ? ScheduleEntryType.RUN
+      : selectedScheduleEntry?.interviewId != null
+      ? ScheduleEntryType.INTERVIEW
+      : undefined;
 
   function renderSidebar() {
     return <ScheduleList className={styles.sidebar} />;
   }
 
+  function renderContentEditor() {
+    if (selectedScheduleEntry == null) return null;
+
+    switch (entryType) {
+      case ScheduleEntryType.RUN:
+        return <RunEditor scheduleEntry={selectedScheduleEntry} className={styles.main} />;
+      case ScheduleEntryType.INTERVIEW:
+        return <InterviewEditor scheduleEntry={selectedScheduleEntry} className={styles.main} />;
+      default:
+        return null;
+    }
+  }
+
   function renderMain() {
-    if (selectedScheduleEntry?.runId != null)
-      return <RunEditor scheduleEntry={selectedScheduleEntry} className={styles.main} />;
-    if (selectedScheduleEntry?.interviewId != null)
-      return <InterviewEditor scheduleEntry={selectedScheduleEntry} className={styles.main} />;
+    return (
+      <Tabs className={styles.main} activeTab={activeTab} onTabChange={setActiveTab}>
+        <Tab id="content" label="Content">
+          {renderContentEditor()}
+        </Tab>
+        {selectedScheduleEntry != null ? (
+          <Tab id="meta" label="Meta">
+            <ScheduleEntryEditor scheduleEntry={selectedScheduleEntry} />
+          </Tab>
+        ) : undefined}
+        <Tab id="transitions" label="Transitions">
+          Transition Editor
+        </Tab>
+      </Tabs>
+    );
   }
 
   return <Dashboard fullPage renderSidebar={renderSidebar} renderMain={renderMain} />;

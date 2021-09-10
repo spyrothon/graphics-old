@@ -1,6 +1,6 @@
 import APIClient from "../../../api/APIClient";
 import { Schedule, ScheduleEntry, OBSWebsocketConfig } from "../../../api/APITypes";
-import { SafeDispatch } from "../../hooks/useDispatch";
+import { SafeDispatch, SafeThunk } from "../../hooks/useDispatch";
 import { fetchRunsSuccess } from "../runs/RunActions";
 import { ScheduleActionType, ScheduleAction } from "./ScheduleTypes";
 import { fetchInterviewsSuccess } from "../interviews/InterviewActions";

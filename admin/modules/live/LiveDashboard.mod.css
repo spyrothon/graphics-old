@@ -18,6 +18,15 @@
   align-items: center;
 }
 
+.transitions {
+  padding: 16px;
+}
+
+.transitionActions {
+  display: flex;
+  gap: 8px;
+}
+
 .setCurrentButton {
   flex: 1 1 200px;
 }

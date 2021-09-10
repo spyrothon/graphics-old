@@ -1,0 +1,46 @@
+import * as React from "react";
+
+import SelectInput from "../../uikit/SelectInput";
+import { useOBSStore } from "./OBSStore";
+
+import type { Transition } from "./OBSTypes";
+
+type OBSTransitionSelectorProps = {
+  label?: React.ReactNode;
+  note?: React.ReactNode;
+  selectedTransitionName?: string;
+  marginless?: boolean;
+  className?: string;
+  onChange: (entry?: Transition) => unknown;
+};
+
+export default function OBSTransitionSelector(props: OBSTransitionSelectorProps) {
+  const {
+    label = "OBS Transition",
+    note = "Name of the transition to use in OBS.",
+    selectedTransitionName,
+    marginless,
+    className,
+    onChange,
+  } = props;
+  const transitions = useOBSStore((state) => state.transitionList);
+
+  const selected = React.useMemo(
+    () => transitions.find((entry) => entry.name === selectedTransitionName),
+    [selectedTransitionName, transitions],
+  );
+
+  return (
+    <SelectInput
+      label={label}
+      note={note}
+      className={className}
+      items={transitions}
+      itemToString={(entry) => entry?.name ?? "(unnamed)"}
+      value={selected}
+      marginless={marginless}
+      allowEmpty
+      onChange={onChange}
+    />
+  );
+}

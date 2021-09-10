@@ -1,17 +1,20 @@
 import create from "zustand";
 
 import type { Scene } from "obs-websocket-js";
+import type { Transition } from "./OBSTypes";
 
 interface OBSStoreState {
   connected: boolean;
   failed: boolean;
   sceneList: Scene[];
+  transitionList: Transition[];
 }
 
 export const useOBSStore = create<OBSStoreState>((_set) => ({
   connected: false,
   failed: false,
   sceneList: [],
+  transitionList: [],
 }));
 
 export function setOBSConnected(connected: boolean) {
@@ -28,4 +31,8 @@ export function useOBSConnected() {
 
 export function setSceneList(sceneList: Scene[]) {
   useOBSStore.setState({ sceneList });
+}
+
+export function setTransitionList(transitionList: Transition[]) {
+  useOBSStore.setState({ transitionList });
 }
