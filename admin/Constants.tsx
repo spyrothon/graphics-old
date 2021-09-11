@@ -6,9 +6,12 @@ export const Routes = {
   ADMIN_BASE_PATH: "/admin",
   LOGIN: "/admin/login",
   LOGOUT: "/admin/logout",
+  // DASHBOARDS
   SCHEDULE_EDITOR: "/admin/schedule-editor",
   LIVE_DASHBOARD: "/admin/live",
-  CONFIG_DASHBOARD: "/admin/config",
-};
 
-export const MAIN_SCHEDULE_ID = "2";
+  // SETTINGS
+  SETTINGS: "/admin/settings",
+  SETTINGS_OBS: "/admin/settings/obs",
+  SETTINGS_TWITCH: "/admin/settings/twitch",
+};

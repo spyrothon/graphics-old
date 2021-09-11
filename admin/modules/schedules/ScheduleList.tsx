@@ -1,7 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { MAIN_SCHEDULE_ID } from "../../Constants";
 import { useSafeSelector } from "../../Store";
 import useSafeDispatch from "../../hooks/useDispatch";
 import Text from "../../uikit/Text";
@@ -65,7 +64,7 @@ export default function ScheduleList(props: RunListProps) {
           />
         ))
       )}
-      <AddEntryButton scheduleId={MAIN_SCHEDULE_ID} />
+      <AddEntryButton />
     </div>
   );
 }

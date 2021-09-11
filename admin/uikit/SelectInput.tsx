@@ -7,7 +7,7 @@ import styles from "./SelectInput.mod.css";
 export type SelectInputProps<T> = {
   value?: T;
   items: T[];
-  itemToString: (item?: T) => string;
+  itemToString: (item: T) => string;
   includeEmpty?: boolean;
   allowEmpty?: boolean;
   emptyLabel?: string;
@@ -37,7 +37,10 @@ export default function SelectInput<T>(props: SelectInputProps<T>) {
 
   return (
     <InputWrapper name={name} label={label} note={note} className={className} {...comboboxProps}>
-      <select className={styles.input} value={itemToString(value)} onChange={handleChange}>
+      <select
+        className={styles.input}
+        value={value != null ? itemToString(value) : ""}
+        onChange={handleChange}>
         {includeEmpty ? (
           <option value="" disabled={!allowEmpty}>
             {emptyLabel}

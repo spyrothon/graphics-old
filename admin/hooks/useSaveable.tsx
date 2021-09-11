@@ -18,7 +18,7 @@ export default function useSaveable(
 
     saveFunction()
       .then(() => setState(SaveState.SAVED))
-      .catch(() => setState(SaveState.FAILED))
+      .catch((error) => (console.log(error), setState(SaveState.FAILED)))
       .finally(() => setTimeout(() => setState(SaveState.PENDING), stateDuration));
   }, [saveFunction, stateDuration]);
 

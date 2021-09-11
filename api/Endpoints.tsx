@@ -1,4 +1,5 @@
 const Endpoints = {
+  INIT: "/init",
   INTERVIEWS: "/interviews",
   INTERVIEW: (id: string) => `/interviews/${id}`,
   RUNS: "/runs",

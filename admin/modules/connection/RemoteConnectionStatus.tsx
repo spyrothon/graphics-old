@@ -13,26 +13,19 @@ export default function RemoteConnectionStatus() {
   const [obsConnected] = useOBSConnected();
   const { busy: obsBusy } = useOBSBusy();
 
-  const obsStatus = obsBusy ? "Busy" : obsConnected ? "Connected" : "Not Connected";
-
   return (
     <div className={styles.container}>
-      <div className={styles.item}>
-        <Header size={Header.Sizes.H5} marginless>
-          Graphics Socket
-        </Header>
-        <div>
-          <span style={{ marginRight: 8 }}>{isConnected ? "Connected" : "Not Connected"}</span>
+      <Header size={Header.Sizes.H5} marginless>
+        Connections
+      </Header>
+      <div className={styles.items}>
+        <div className={styles.item}>
           <StatusDot boolean={isConnected} />
+          <span className={styles.itemName}>Graphics</span>
         </div>
-      </div>
-      <div className={styles.item}>
-        <Header size={Header.Sizes.H5} marginless>
-          OBS Socket
-        </Header>
-        <div>
-          <span style={{ marginRight: 8 }}>{obsStatus}</span>
+        <div className={styles.item}>
           <StatusDot boolean={obsConnected} busy={obsBusy} />
+          <span className={styles.itemName}>OBS</span>
         </div>
       </div>
     </div>

@@ -5,21 +5,18 @@ import Text from "../../uikit/Text";
 import { addRunToSchedule, addInterviewToSchedule } from "./ScheduleActions";
 
 import styles from "./ScheduleList.mod.css";
+import CurrentScheduleContext from "./CurrentScheduleContext";
 
-type AddEntryButtonsProps = {
-  scheduleId: string;
-};
-
-export default function AddEntryButtons(props: AddEntryButtonsProps) {
-  const { scheduleId } = props;
+export default function AddEntryButtons() {
   const dispatch = useSafeDispatch();
+  const { scheduleId } = React.useContext(CurrentScheduleContext);
 
-  async function handleAddRun() {
-    await dispatch(addRunToSchedule(scheduleId));
+  function handleAddRun() {
+    dispatch(addRunToSchedule(scheduleId));
   }
 
-  async function handleAddInterview() {
-    await dispatch(addInterviewToSchedule(scheduleId));
+  function handleAddInterview() {
+    dispatch(addInterviewToSchedule(scheduleId));
   }
 
   return (

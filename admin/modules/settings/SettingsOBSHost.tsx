@@ -8,23 +8,19 @@ import NumberInput from "../../uikit/NumberInput";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import { useSafeSelector } from "../../Store";
+import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 import * as ScheduleStore from "../schedules/ScheduleStore";
 
-import styles from "./ConfigDashboard.mod.css";
-import type { Schedule } from "../../../api/APITypes";
+import styles from "./SettingsDashboard.mod.css";
+import useSaveable from "../../hooks/useSaveable";
 
-type ConfigOBSHostProps = {
-  schedule: Schedule | undefined;
-};
-
-export default function ConfigOBSHost(props: ConfigOBSHostProps) {
-  const { schedule } = props;
+export default function ConfigOBSHost() {
   const dispatch = useSafeDispatch();
+  const { scheduleId, schedule } = React.useContext(CurrentScheduleContext);
 
   React.useEffect(() => {
-    if (schedule?.id == null) return;
-    fetchScheduleOBSConfig(schedule.id);
-  }, [schedule?.id]);
+    dispatch(fetchScheduleOBSConfig(scheduleId));
+  }, [scheduleId]);
 
   const obsConfig = useSafeSelector(ScheduleStore.getOBSConfig);
   const [host, setHost] = React.useState(obsConfig?.host || "");
@@ -38,7 +34,9 @@ export default function ConfigOBSHost(props: ConfigOBSHostProps) {
     setPassword(obsConfig.password);
   }, [obsConfig]);
 
-  if (schedule == null || obsConfig == null) return null;
+  const [handleSave, getSaveText] = useSaveable(async () => {
+    await dispatch(updateScheduleOBSConfig(scheduleId, { ...obsConfig, host, port, password }));
+  });
 
   return (
     <div className={styles.section}>
@@ -66,12 +64,8 @@ export default function ConfigOBSHost(props: ConfigOBSHostProps) {
         onChange={(event) => setPassword(event.target.value)}
         autoFocus
       />
-      <Button
-        className={styles.setCurrentButton}
-        onClick={() =>
-          dispatch(updateScheduleOBSConfig(schedule.id, { ...obsConfig, host, port, password }))
-        }>
-        Save
+      <Button className={styles.setCurrentButton} onClick={handleSave}>
+        {getSaveText()}
       </Button>
     </div>
   );

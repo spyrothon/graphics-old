@@ -1,6 +1,12 @@
 import APIClient from "../../../api/APIClient";
-import { Schedule, ScheduleEntry, OBSWebsocketConfig } from "../../../api/APITypes";
-import { SafeDispatch, SafeThunk } from "../../hooks/useDispatch";
+import {
+  Schedule,
+  ScheduleEntry,
+  OBSWebsocketConfig,
+  InitialSchedule,
+  ScheduleResponse,
+} from "../../../api/APITypes";
+import { SafeDispatch } from "../../hooks/useDispatch";
 import { fetchRunsSuccess } from "../runs/RunActions";
 import { ScheduleActionType, ScheduleAction } from "./ScheduleTypes";
 import { fetchInterviewsSuccess } from "../interviews/InterviewActions";
@@ -9,6 +15,25 @@ export function selectScheduleEntry(entryId?: string): ScheduleAction {
   return {
     type: ScheduleActionType.SCHEDULES_ENTRY_SELECTED,
     entryId,
+  };
+}
+
+export function setCurrentSchedule(newSchedule: ScheduleResponse) {
+  const { runs, interviews, ...schedule } = newSchedule;
+
+  return async (dispatch: SafeDispatch) => {
+    await APIClient.updateInit({ scheduleId: schedule.id });
+    dispatch(loadSchedule(schedule));
+    dispatch(fetchInterviewsSuccess(interviews));
+    dispatch(fetchRunsSuccess(runs));
+    await dispatch(fetchScheduleOBSConfig(schedule.id));
+  };
+}
+
+export function createSchedule(schedule: InitialSchedule) {
+  return async (dispatch: SafeDispatch) => {
+    const response = await APIClient.createSchedule(schedule);
+    dispatch(setCurrentSchedule(response));
   };
 }
 

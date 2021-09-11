@@ -80,7 +80,7 @@ function InterviewEntry(props: InterviewEntryProps) {
 type ScheduleListEntryProps = {
   scheduleEntry: ScheduleEntry;
   selected: boolean;
-  interactive: boolean;
+  interactive?: boolean;
   onReorder: (entryId: string, newIndex: number) => unknown;
 };
 

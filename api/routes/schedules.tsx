@@ -4,16 +4,21 @@ import Endpoints from "../Endpoints";
 import type {
   Schedule,
   ScheduleResponse,
+  InitialSchedule,
   InitialScheduleEntry,
   ScheduleEntry,
   OBSWebsocketConfig,
 } from "../APITypes";
 
+export async function fetchSchedules() {
+  return await HTTPUtils.get<ScheduleResponse[]>(Endpoints.SCHEDULES);
+}
+
 export async function fetchSchedule(scheduleId: string) {
   return await HTTPUtils.get<ScheduleResponse>(Endpoints.SCHEDULE(scheduleId));
 }
 
-export async function createSchedule(schedule: Schedule) {
+export async function createSchedule(schedule: InitialSchedule) {
   return await HTTPUtils.post<ScheduleResponse>(Endpoints.SCHEDULES, schedule);
 }
 

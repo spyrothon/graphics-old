@@ -6,35 +6,38 @@ import { updateSchedule } from "../schedules/ScheduleActions";
 import TextInput from "../../uikit/TextInput";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
+import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 
-import styles from "./ConfigDashboard.mod.css";
+import styles from "./SettingsDashboard.mod.css";
 import type { Schedule } from "../../../api/APITypes";
+import useSaveable from "../../hooks/useSaveable";
 
-type ConfigStreamTemplatesProps = {
-  schedule: Schedule | undefined;
-};
-
-export default function ConfigStreamTemplates(props: ConfigStreamTemplatesProps) {
-  const { schedule } = props;
+export default function SettingsStreamTemplates() {
   const dispatch = useSafeDispatch();
+  const { schedule } = React.useContext(CurrentScheduleContext);
 
-  const [runTitleTemplate, setRunTemplate] = React.useState(schedule?.runTitleTemplate);
+  const [runTitleTemplate, setRunTemplate] = React.useState(schedule.runTitleTemplate);
   const [interviewTitleTemplate, setInterviewTemplate] = React.useState(
-    schedule?.interviewTitleTemplate,
+    schedule.interviewTitleTemplate,
   );
-  const [breakTitleTemplate, setBreakTemplate] = React.useState(schedule?.breakTitleTemplate);
+  const [breakTitleTemplate, setBreakTemplate] = React.useState(schedule.breakTitleTemplate);
 
   React.useLayoutEffect(() => {
-    setRunTemplate(schedule?.runTitleTemplate);
-    setInterviewTemplate(schedule?.interviewTitleTemplate);
-    setBreakTemplate(schedule?.breakTitleTemplate);
+    setRunTemplate(schedule.runTitleTemplate);
+    setInterviewTemplate(schedule.interviewTitleTemplate);
+    setBreakTemplate(schedule.breakTitleTemplate);
   }, [schedule]);
 
-  function handleSaveSchedule(schedule: Schedule) {
-    dispatch(updateSchedule(schedule));
-  }
-
-  if (schedule == null) return null;
+  const [handleSave, getSaveText] = useSaveable(async () => {
+    await dispatch(
+      updateSchedule({
+        ...schedule,
+        runTitleTemplate,
+        interviewTitleTemplate,
+        breakTitleTemplate,
+      }),
+    );
+  });
 
   return (
     <div className={styles.section}>
@@ -65,17 +68,8 @@ export default function ConfigStreamTemplates(props: ConfigStreamTemplatesProps)
         onChange={(event) => setBreakTemplate(event.target.value)}
         autoFocus
       />
-      <Button
-        className={styles.setCurrentButton}
-        onClick={() =>
-          handleSaveSchedule({
-            ...schedule,
-            runTitleTemplate,
-            interviewTitleTemplate,
-            breakTitleTemplate,
-          })
-        }>
-        Save
+      <Button className={styles.setCurrentButton} onClick={handleSave}>
+        {getSaveText()}
       </Button>
     </div>
   );

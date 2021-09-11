@@ -1,37 +1,13 @@
 import * as React from "react";
-import { useHistory, useLocation } from "react-router-dom";
 
 import Header from "../../uikit/Header";
+import NavLink from "../../uikit/NavLink";
+import Text from "../../uikit/Text";
 import RemoteConnectionStatus from "../connection/RemoteConnectionStatus";
 
 import styles from "./DashboardHeader.mod.css";
 import { Routes } from "../../Constants";
-import Button from "../../uikit/Button";
-
-type NavLinkProps = {
-  route: string;
-  label: React.ReactNode;
-};
-
-function NavLink(props: NavLinkProps) {
-  const { route, label } = props;
-
-  const location = useLocation();
-  const isActive = location.pathname === route;
-  const history = useHistory();
-
-  function handleClick() {
-    if (isActive) return;
-
-    history.push(route);
-  }
-
-  return (
-    <Button onClick={handleClick} color={isActive ? Button.Colors.PRIMARY : Button.Colors.DEFAULT}>
-      {label}
-    </Button>
-  );
-}
+import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 
 type DashboardHeaderProps = {
   name: React.ReactNode;
@@ -39,19 +15,22 @@ type DashboardHeaderProps = {
 
 export default function DashboardHeader(props: DashboardHeaderProps) {
   const { name } = props;
+  const { schedule } = React.useContext(CurrentScheduleContext);
 
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <Header size={Header.Sizes.H2} marginless>
+        <Header size={Header.Sizes.H3} marginless>
           {name}
         </Header>
+        <Text size={Text.Sizes.SIZE_14} marginless>
+          {schedule.name}
+        </Text>
       </div>
       <div className={styles.pages}>
         <NavLink route={Routes.SCHEDULE_EDITOR} label="Schedule Editor" />
         <NavLink route={Routes.LIVE_DASHBOARD} label="Live Dashboard" />
-        <NavLink route={Routes.CONFIG_DASHBOARD} label="Settings" />
-        <NavLink route={Routes.LOGOUT} label="Logout" />
+        <NavLink route={Routes.SETTINGS} label="Settings" />
       </div>
       <div className={styles.right}>
         <RemoteConnectionStatus />

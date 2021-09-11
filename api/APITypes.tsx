@@ -1,3 +1,7 @@
+export interface InitPayload {
+  scheduleId: string;
+}
+
 export interface Interview {
   id: string;
   topic: string;
@@ -30,17 +34,33 @@ export interface InterviewQuestion {
 
 export interface Schedule {
   id: string;
+  scheduleEntries: ScheduleEntry[];
+  name: string;
+  series: string;
+  startTime: Date;
+  endTime?: Date;
+  logoUrl?: string;
+  twitchUrl?: string;
+
   runTitleTemplate?: string;
   interviewTitleTemplate?: string;
   breakTitleTemplate?: string;
   currentEntryId?: string;
-  scheduleEntries: ScheduleEntry[];
   debug: boolean;
 }
 
 export interface ScheduleResponse extends Schedule {
   runs: Run[];
   interviews: Interview[];
+}
+
+export interface InitialSchedule {
+  name?: string;
+  series?: string;
+  startTime?: Date;
+  endTime?: Date;
+  logoUrl?: string;
+  twitchUrl?: string;
 }
 
 export interface ScheduleEntry {
@@ -130,8 +150,8 @@ export interface RunParticipant {
 }
 
 export interface OBSWebsocketConfig {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   host: string;
   port: number;
   password: string;

@@ -17,6 +17,14 @@ export function isLocalUrl(url: string) {
   return !/(?:^[a-z][a-z0-9+.-]*:|\/\/)/.test(url);
 }
 
+export const history = createBrowserHistory();
+// Re-apply browser-standard scrolling behavior on route transitions
+history.listen((_location, action) => {
+  // If the user is navigating backwards, don't reset scroll.
+  if (action === "POP") return;
+  window.scrollTo(0, 0);
+});
+
 type NavigateOptions = {
   replace?: boolean;
   forceReload?: boolean;
@@ -44,15 +52,6 @@ export function navigateTo(pathname: string, options: NavigateOptions = {}) {
     window.location.reload();
   }
 }
-
-export const history = createBrowserHistory();
-
-// Re-apply browser-standard scrolling behavior on route transitions
-history.listen((_location, action) => {
-  // If the user is navigating backwards, don't reset scroll.
-  if (action === "POP") return;
-  window.scrollTo(0, 0);
-});
 
 export default {
   history,

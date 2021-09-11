@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
-import { Routes, MAIN_SCHEDULE_ID } from "./Constants";
+import { Routes } from "./Constants";
 import useSafeDispatch from "./hooks/useDispatch";
 import DS1 from "./layouts/DS1";
 import FiveFour1 from "./layouts/FiveFour1";
@@ -23,6 +23,7 @@ import { history } from "./modules/router/RouterUtils";
 import { fetchSchedule } from "./modules/schedules/ScheduleActions";
 import SyncSocketManager from "./modules/sync/SyncSocketManager";
 import SVGLibrary from "./uikit/svg/SVGLibrary";
+import APIClient from "../api/APIClient";
 
 export default function App() {
   React.useEffect(() => {
@@ -35,7 +36,10 @@ export default function App() {
   const dispatch = useSafeDispatch();
 
   React.useEffect(() => {
-    dispatch(fetchSchedule(MAIN_SCHEDULE_ID));
+    (async function () {
+      const { scheduleId } = await APIClient.fetchInit();
+      dispatch(fetchSchedule(scheduleId));
+    })();
   }, []);
 
   return (
