@@ -4,6 +4,7 @@ import { InitialSchedule } from "../../../api/APITypes";
 import useSafeDispatch from "../../hooks/useDispatch";
 import useSaveable from "../../hooks/useSaveable";
 import Button from "../../uikit/Button";
+import DateTimeInput from "../../uikit/DateTimeInput";
 import TextInput from "../../uikit/TextInput";
 import { createSchedule } from "./ScheduleActions";
 
@@ -36,27 +37,16 @@ export default function ScheduleForm(props: ScheduleFormProps) {
         required
         onChange={(event) => setEditedSchedule({ ...editedSchedule, series: event.target.value })}
       />
-      <TextInput
+      <DateTimeInput
         label="Start Time"
-        value={editedSchedule.startTime?.toISOString()}
+        value={editedSchedule.startTime}
         required
-        onChange={(event) =>
-          setEditedSchedule({
-            ...editedSchedule,
-            startTime: new Date(event.target.value),
-          })
-        }
+        onChange={(startTime) => setEditedSchedule({ ...editedSchedule, startTime })}
       />
-      <TextInput
+      <DateTimeInput
         label="End Time"
-        value={editedSchedule.endTime?.toISOString()}
-        required
-        onChange={(event) =>
-          setEditedSchedule({
-            ...editedSchedule,
-            endTime: new Date(event.target.value),
-          })
-        }
+        value={editedSchedule.endTime}
+        onChange={(endTime) => setEditedSchedule({ ...editedSchedule, endTime })}
       />
       <TextInput
         label="Twitch URL"
