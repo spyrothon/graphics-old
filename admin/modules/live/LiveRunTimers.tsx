@@ -1,16 +1,14 @@
 import * as React from "react";
 import classNames from "classnames";
-import { Pause, RefreshCw, Flag, Play } from "react-feather";
+import { Pause, Repeat, Flag, Play, Icon } from "react-feather";
 
-import type { Run } from "../../../api/APITypes";
-
-import useSafeDispatch from "../../hooks/useDispatch";
+import type { Run, RunParticipant } from "../../../api/APITypes";
+import useSafeDispatch, { SafeDispatch } from "../../hooks/useDispatch";
 import Button from "../../uikit/Button";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
-import getElapsedRunSeconds from "../runs/getElapsedRunSeconds";
 import type { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
-import DurationUtils from "../time/DurationUtils";
+import LiveTimer from "../time/LiveTimer";
 
 import styles from "./LiveRunTimers.mod.css";
 import {
@@ -20,81 +18,134 @@ import {
   resetRun,
   finishRunParticipant,
   resumeRun,
+  resumeRunParticipant,
 } from "../runs/RunActions";
 
-type LiveTimerProps = {
+interface LiveTimerProps {
   entry: ScheduleEntryWithDependants;
   run: Run;
   className?: string;
-};
+}
 
-function getPlayAction(run: Run) {
-  if (run.finished || run.pausedAt != null) return resumeRun(run.id);
+interface TimerAction {
+  Icon: Icon;
+  action: (dispatch: SafeDispatch) => void;
+  disabled?: boolean;
+  color?: typeof Button.Colors[keyof typeof Button.Colors];
+  strokeWidth?: string;
+  label?: string;
+}
+
+function getPlayAction(run: Run): TimerAction | undefined {
+  if ((run.runners.length <= 1 && run.finished) || run.pausedAt != null) {
+    return {
+      Icon: Play,
+      action(dispatch) {
+        dispatch(resumeRun(run.id));
+      },
+    };
+  }
+
   if (run.startedAt != null) return undefined;
-  return startRun(run.id);
+
+  return {
+    Icon: Play,
+    action(dispatch) {
+      dispatch(startRun(run.id));
+    },
+  };
 }
 
-function getFinishAction(run: Run) {
+function getFinishAction(run: Run): TimerAction | undefined {
   if (run.finished) return undefined;
+  if (run.runners.length > 1) return undefined;
   if (run.startedAt == null) return undefined;
-  return finishRun(run.id);
+
+  return {
+    Icon: Flag,
+    action(dispatch) {
+      dispatch(finishRun(run.id));
+    },
+  };
 }
 
-function getPauseAction(run: Run) {
+function getPauseAction(run: Run): TimerAction | undefined {
+  if (run.startedAt == null) return undefined;
   if (run.finished) return undefined;
   if (run.pausedAt != null) return undefined;
-  return pauseRun(run.id);
+
+  return {
+    Icon: Pause,
+    color: Button.Colors.DEFAULT,
+    strokeWidth: "2",
+    action(dispatch) {
+      dispatch(pauseRun(run.id));
+    },
+  };
 }
 
-function getResetAction(run: Run) {
+function getResetAction(run: Run): TimerAction | undefined {
   if (run.startedAt == null) return undefined;
-  return resetRun(run.id);
+  return {
+    Icon: Repeat,
+    color: Button.Colors.DEFAULT,
+    action(dispatch) {
+      dispatch(resetRun(run.id));
+    },
+  };
+}
+
+function getParticipantAction(run: Run, runner: RunParticipant): TimerAction {
+  const allDisabled = run.startedAt == null || run.pausedAt != null;
+
+  if (runner.finishedAt != null) {
+    return {
+      Icon: Play,
+      disabled: allDisabled,
+      action(dispatch) {
+        dispatch(resumeRunParticipant(run.id, runner.id));
+      },
+    };
+  }
+
+  return {
+    Icon: Flag,
+    disabled: allDisabled,
+    action(dispatch) {
+      dispatch(finishRunParticipant(run.id, runner.id));
+    },
+  };
+}
+
+interface ActionButtonProps {
+  action?: TimerAction;
+}
+
+function ActionButton(props: ActionButtonProps) {
+  const dispatch = useSafeDispatch();
+  if (props.action == null) return null;
+
+  const {
+    Icon,
+    action,
+    color = Button.Colors.PRIMARY,
+    disabled = false,
+    strokeWidth = "3",
+  } = props.action;
+
+  return (
+    <Button icon onClick={() => action(dispatch)} color={color} disabled={disabled}>
+      <Icon size={16} strokeWidth={strokeWidth} />
+    </Button>
+  );
 }
 
 export default function LiveRunTimers(props: LiveTimerProps) {
   const { run, className } = props;
-  const dispatch = useSafeDispatch();
 
-  const playAction = getPlayAction(run);
-  const finishAction = getFinishAction(run);
-  const pauseAction = getPauseAction(run);
-  const resetAction = getResetAction(run);
-
-  return (
-    <div className={classNames(styles.container, className)}>
-      <Header size={Header.Sizes.H4}>Run Timers</Header>
-      <div className={styles.globalTimer}>
-        <Text size={Text.Sizes.SIZE_32} marginless>
-          {DurationUtils.toString(getElapsedRunSeconds(run))}
-        </Text>
-        <Button
-          icon
-          disabled={playAction == null}
-          onClick={() => playAction != null && dispatch(playAction)}>
-          <Play size={16} strokeWidth="3" />
-        </Button>
-        <Button
-          icon
-          disabled={finishAction == null}
-          onClick={() => finishAction != null && dispatch(finishAction)}>
-          <Flag size={16} strokeWidth="3" />
-        </Button>
-        <Button
-          icon
-          disabled={pauseAction == null}
-          color={Button.Colors.DEFAULT}
-          onClick={() => pauseAction != null && dispatch(pauseAction)}>
-          <Pause size={16} />
-        </Button>
-        <Button
-          icon
-          disabled={resetAction == null}
-          color={Button.Colors.DEFAULT}
-          onClick={() => resetAction != null && dispatch(resetAction)}>
-          <RefreshCw size={16} />
-        </Button>
-      </div>
-      <table className={styles.timers}>
+  const runnersTable =
+    run.runners.length <= 1 ? null : (
+      <table className={styles.runners}>
         <thead>
           <tr>
             <th>Runner</th>
@@ -108,16 +159,34 @@ export default function LiveRunTimers(props: LiveTimerProps) {
               <td>
                 <Text marginless>{runner.displayName}</Text>
               </td>
-              <td>{DurationUtils.toString(getElapsedRunSeconds(run, runner.id))}</td>
+              <td
+                className={classNames(styles.timer, {
+                  [styles.inProgress]: runner.finishedAt == null,
+                })}>
+                <LiveTimer run={run} runnerId={runner.id} />
+              </td>
               <td width="20">
-                <Button icon onClick={() => dispatch(finishRunParticipant(run.id, runner.id))}>
-                  <Flag size={16} />
-                </Button>
+                <ActionButton action={getParticipantAction(run, runner)} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+    );
+
+  return (
+    <div className={classNames(styles.container, className)}>
+      <Header size={Header.Sizes.H4}>Run Timers</Header>
+      <div className={styles.globalTimer}>
+        <Text className={styles.timer} size={Text.Sizes.SIZE_32} marginless>
+          <LiveTimer run={run} />
+        </Text>
+        <ActionButton action={getFinishAction(run)} />
+        <ActionButton action={getPlayAction(run)} />
+        <ActionButton action={getPauseAction(run)} />
+        <ActionButton action={getResetAction(run)} />
+      </div>
+      {runnersTable}
     </div>
   );
 }

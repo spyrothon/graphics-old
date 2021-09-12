@@ -1,4 +1,4 @@
-.timers {
+.runners {
   width: 100%;
 
   th {
@@ -16,4 +16,12 @@
   & > * {
     flex: 1 1 auto;
   }
+}
+
+.timer {
+  font-family: var(--font-monospace);
+}
+
+.inProgress {
+  color: var(--text-muted);
 }

@@ -69,7 +69,7 @@ export function finishRunParticipant(runId: string, participantId: string) {
 
     dispatch({
       type: RunActionType.RUNS_UPDATE_RUN,
-      run: run,
+      run,
     });
   };
 }
@@ -80,7 +80,7 @@ export function resumeRunParticipant(runId: string, participantId: string) {
 
     dispatch({
       type: RunActionType.RUNS_UPDATE_RUN,
-      run: run,
+      run,
     });
   };
 }
