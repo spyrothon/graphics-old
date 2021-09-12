@@ -20,6 +20,7 @@ import {
   resumeRun,
   resumeRunParticipant,
 } from "../runs/RunActions";
+import getRunState from "../runs/getRunState";
 
 interface LiveTimerProps {
   entry: ScheduleEntryWithDependants;
@@ -176,11 +177,16 @@ export default function LiveRunTimers(props: LiveTimerProps) {
 
   return (
     <div className={classNames(styles.container, className)}>
-      <Header size={Header.Sizes.H4}>Run Timers</Header>
+      <Header size={Header.Sizes.H4}>Run Timer</Header>
       <div className={styles.globalTimer}>
-        <Text className={styles.timer} size={Text.Sizes.SIZE_32} marginless>
-          <LiveTimer run={run} />
-        </Text>
+        <div>
+          <Text className={styles.timer} size={Text.Sizes.SIZE_32} marginless>
+            <LiveTimer run={run} />
+          </Text>
+          <Text size={Text.Sizes.SIZE_14} marginless>
+            {getRunState(run)}
+          </Text>
+        </div>
         <ActionButton action={getFinishAction(run)} />
         <ActionButton action={getPlayAction(run)} />
         <ActionButton action={getPauseAction(run)} />
