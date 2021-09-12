@@ -14,4 +14,5 @@ export const Routes = {
   SETTINGS: "/admin/settings",
   SETTINGS_OBS: "/admin/settings/obs",
   SETTINGS_TWITCH: "/admin/settings/twitch",
+  SETTINGS_CREATE_SCHEDULE: "/admin/settings/create-schedule",
 };

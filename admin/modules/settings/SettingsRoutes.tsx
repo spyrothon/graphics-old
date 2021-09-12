@@ -1,10 +1,16 @@
 import * as React from "react";
 import { Routes } from "../../Constants";
-import { Twitch, Settings, Airplay } from "react-feather";
+import { Twitch, Settings, Airplay, PlusCircle } from "react-feather";
 
+import SettingsCreateSchedule from "./SettingsCreateSchedule";
 import SettingsGeneral from "./SettingsGeneral";
 import SettingsOBSHost from "./SettingsOBSHost";
 import SettingsStreamTemplates from "./SettingsStreamTemplates";
+
+const iconStyle = {
+  marginRight: 8,
+  marginBottom: -2,
+};
 
 interface SettingsRoute {
   id: string;
@@ -19,7 +25,7 @@ const SETTINGS_ROUTES: SettingsRoute[] = [
     id: "general",
     label: (
       <>
-        <Settings size={16} strokeWidth="2" style={{ marginRight: 8 }} /> General
+        <Settings size={18} strokeWidth="2" style={iconStyle} /> General
       </>
     ),
     route: Routes.SETTINGS,
@@ -27,10 +33,20 @@ const SETTINGS_ROUTES: SettingsRoute[] = [
     render: () => <SettingsGeneral />,
   },
   {
+    id: "create-schedule",
+    label: (
+      <>
+        <PlusCircle size={18} strokeWidth="2" style={iconStyle} /> Create a Schedule
+      </>
+    ),
+    route: Routes.SETTINGS_CREATE_SCHEDULE,
+    render: () => <SettingsCreateSchedule />,
+  },
+  {
     id: "obs",
     label: (
       <>
-        <Airplay size={16} strokeWidth="2" style={{ marginRight: 8 }} /> OBS Remote
+        <Airplay size={18} strokeWidth="2" style={iconStyle} /> OBS Remote
       </>
     ),
     route: Routes.SETTINGS_OBS,
@@ -40,7 +56,7 @@ const SETTINGS_ROUTES: SettingsRoute[] = [
     id: "twitch",
     label: (
       <>
-        <Twitch size={16} strokeWidth="2" style={{ marginRight: 8 }} /> Twitch
+        <Twitch size={18} strokeWidth="2" style={iconStyle} /> Twitch
       </>
     ),
     route: Routes.SETTINGS_TWITCH,
