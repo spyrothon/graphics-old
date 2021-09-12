@@ -13,7 +13,7 @@ const InputWrapperSizes = {
 interface InputWrapperProps {
   size?: typeof InputWrapperSizes[keyof typeof InputWrapperSizes];
   label?: React.ReactNode;
-  name?: React.ReactNode;
+  name?: string;
   required?: boolean;
   note?: React.ReactNode;
   leader?: React.ReactNode;
@@ -30,6 +30,7 @@ const InputWrapper = (props: InputWrapperProps) => {
     size = InputWrapperSizes.NORMAL,
     label,
     name,
+    required,
     note,
     leader,
     trailer,
@@ -46,6 +47,7 @@ const InputWrapper = (props: InputWrapperProps) => {
       {label != null && (
         <label className={styles.label} htmlFor={name}>
           {label}
+          {required ? " *" : null}
         </label>
       )}
       <div className={styles.input}>
