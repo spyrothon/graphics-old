@@ -156,3 +156,9 @@ export interface OBSWebsocketConfig {
   port: number;
   password: string;
 }
+
+export interface SessionToken {
+  userId: string;
+  token: string;
+  expiresAt: Date;
+}

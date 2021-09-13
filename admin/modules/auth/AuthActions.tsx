@@ -1,19 +1,21 @@
 import Cookies from "js-cookie";
 
 import { SafeDispatch } from "../../hooks/useDispatch";
-import { AUTH_KEY, AuthActionType, AuthAction } from "./AuthTypes";
+import { AuthActionType, AuthAction } from "./AuthTypes";
+import APIClient from "../../../api/APIClient";
 
-const AUTH_COOKIE_ID = "spyrothon_basic_auth";
+const AUTH_COOKIE_ID = "session";
 
 export function login(userName: string, password: string) {
   return async (dispatch: SafeDispatch) => {
-    if (password !== AUTH_KEY) return;
+    const token = await APIClient.login(userName, password);
 
-    Cookies.set(AUTH_COOKIE_ID, btoa(userName), { sameSite: "strict" });
+    Cookies.set(AUTH_COOKIE_ID, btoa(JSON.stringify(token)), { sameSite: "strict" });
 
     dispatch({
       type: AuthActionType.AUTH_LOGIN,
       userName,
+      token,
     });
   };
 }
@@ -32,7 +34,7 @@ export function loadSession() {
 
     dispatch({
       type: AuthActionType.AUTH_LOGIN,
-      userName: atob(cookie),
+      token: JSON.parse(atob(cookie)),
     });
   };
 }

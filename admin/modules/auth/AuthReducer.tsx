@@ -1,17 +1,21 @@
+import { SessionToken } from "../../../api/APITypes";
+
 import { ActionFor, Action } from "../../Actions";
 import { AuthActionType } from "./AuthTypes";
 
 type AuthReducerState = {
   authenticated: boolean;
   userName?: string;
+  token?: SessionToken;
 };
 
 function handleLogin(state: AuthReducerState, action: ActionFor<AuthActionType.AUTH_LOGIN>) {
-  const { userName } = action;
+  const { userName, token } = action;
   return {
     ...state,
     authenticated: true,
     userName,
+    token,
   };
 }
 
@@ -20,6 +24,7 @@ function handleLogout(state: AuthReducerState, _action: ActionFor<AuthActionType
     ...state,
     authenticated: false,
     userName: undefined,
+    token: undefined,
   };
 }
 
