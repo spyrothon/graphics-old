@@ -6,10 +6,10 @@ import Omnibar from "../../modules/omnibar/Omnibar";
 import RunStore from "../../modules/runs/RunStore";
 import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
+import RunTimer from "../../modules/time/RunTimer";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
 import NameplateGroup from "../../uikit/NameplateGroup";
-import Timer from "../../uikit/Timer";
 
 import styles from "./HD1.mod.css";
 import ArtRotation from "../../modules/art/ArtRotation";
@@ -43,7 +43,7 @@ export default function HD1() {
       </div>
       <div className={styles.bottomBar}>
         <div className={styles.timerArea}>
-          <Timer className={styles.timer} />
+          {currentRun != null ? <RunTimer run={currentRun} className={styles.timer} /> : null}
         </div>
         <NameplateGroup
           className={styles.runners}

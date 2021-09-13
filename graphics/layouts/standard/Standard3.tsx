@@ -8,11 +8,11 @@ import Omnibar from "../../modules/omnibar/Omnibar";
 import RunStore from "../../modules/runs/RunStore";
 import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
+import RunTimer from "../../modules/time/RunTimer";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
 import Nameplate from "../../uikit/Nameplate";
 import NameplateGroup from "../../uikit/NameplateGroup";
-import Timer from "../../uikit/Timer";
 
 import styles from "./Standard3.mod.css";
 
@@ -41,7 +41,7 @@ export default function Standard4() {
             participant={topLeft}
           />
         ) : null}
-        <Timer className={styles.timer} />
+        {currentRun != null ? <RunTimer run={currentRun} className={styles.timer} /> : null}
         {topRight != null ? (
           <Nameplate
             className={classNames(styles.nameplate, styles.nameplateTopRight)}

@@ -1,28 +1,23 @@
 import * as React from "react";
-import DurationUtils from "../../admin/modules/time/DurationUtils";
-import { DateTime } from "luxon";
 
-type LiveTimerProps = {
-  startTime: DateTime;
-  className?: string;
-};
+import { Run } from "../../api/APITypes";
+import useAnimationFrame from "../hooks/useAnimationFrame";
+import getElapsedRunSeconds from "../modules/runs/getElapsedRunSeconds";
+import * as DurationUtils from "../modules/time/DurationUtils";
+
+interface LiveTimerProps {
+  run: Run;
+  runnerId?: string;
+  asOf?: Date;
+}
 
 export default function LiveTimer(props: LiveTimerProps) {
-  const { startTime, className } = props;
+  const { run, runnerId, asOf } = props;
+  const [time, setTime] = React.useState(() => getElapsedRunSeconds(run, runnerId, asOf));
 
-  const [, setVersion] = React.useState(0);
+  useAnimationFrame(() => {
+    return setTime(getElapsedRunSeconds(run, runnerId, asOf));
+  }, [run, runnerId, asOf]);
 
-  React.useEffect(() => {
-    function update() {
-      setVersion((v) => v + 1);
-      requestAnimationFrame(update);
-    }
-
-    const rafId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
-  const diff = Math.max(Math.floor(startTime.toSeconds() - DateTime.utc().toSeconds()), 0);
-
-  return <div className={className}>{DurationUtils.toString(diff)}</div>;
+  return <>{DurationUtils.toString(time)}</>;
 }

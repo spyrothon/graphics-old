@@ -17,7 +17,7 @@ export function toString(rawSeconds: string | number, stringifyNull = false) {
   const negativeStr = isNegative ? "-" : "";
   const hoursStr = hours.toString().padStart(2, "0");
   const minutesStr = minutes.toString().padStart(2, "0");
-  const secondsStr = seconds.toString().padStart(2, "0");
+  const secondsStr = seconds.toFixed(0).padStart(2, "0");
 
   return `${negativeStr}${hoursStr}:${minutesStr}:${secondsStr}`;
 }

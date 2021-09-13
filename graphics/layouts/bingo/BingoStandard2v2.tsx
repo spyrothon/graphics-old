@@ -8,10 +8,10 @@ import GameInfo from "../../modules/game-info/GameInfo";
 import RunStore from "../../modules/runs/RunStore";
 import RunUtils from "../../modules/runs/RunUtils";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
+import RunTimer from "../../modules/time/RunTimer";
 import FeedArea from "../../uikit/FeedArea";
 import Layout from "../../uikit/Layout";
 import Nameplate from "../../uikit/Nameplate";
-import Timer from "../../uikit/Timer";
 
 import styles from "./BingoStandard2v2.mod.css";
 
@@ -40,7 +40,7 @@ export default function BingoStandard2v2() {
             participant={topLeft}
           />
         ) : null}
-        <Timer className={styles.timer} />
+        {currentRun != null ? <RunTimer run={currentRun} className={styles.timer} /> : null}
         {topRight != null ? (
           <Nameplate
             className={classNames(styles.nameplate, styles.nameplateTopRight)}
@@ -53,7 +53,6 @@ export default function BingoStandard2v2() {
             participant={bottomLeft}
           />
         ) : null}
-        <Timer className={styles.timer} />
         <BingoBoard className={styles.bingoBoard} />
         {bottomRight != null ? (
           <Nameplate
