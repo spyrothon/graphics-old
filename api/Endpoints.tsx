@@ -2,6 +2,7 @@ const Endpoints = {
   INIT: "/init",
   AUTH_LOGIN: "/auth/login",
   AUTH_LOGOUT: "/auth/logout",
+  AUTH_ME: "/auth/me",
   INTERVIEWS: "/interviews",
   INTERVIEW: (id: string) => `/interviews/${id}`,
   RUNS: "/runs",

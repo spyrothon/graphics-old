@@ -25,10 +25,10 @@ export default function App() {
 
   React.useEffect(() => {
     (async function () {
+      dispatch(loadSession());
       const { scheduleId } = await APIClient.fetchInit();
       dispatch(fetchSchedule(scheduleId));
       dispatch(fetchScheduleOBSConfig(scheduleId));
-      dispatch(loadSession());
     })();
   }, []);
 

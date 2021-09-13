@@ -7,6 +7,10 @@ export async function fetchInit() {
   return await HTTPUtils.get<InitPayload>(Endpoints.INIT);
 }
 
-export async function updateInit(payload: InitPayload) {
-  return await HTTPUtils.post<InitPayload>(Endpoints.INIT, payload);
+interface UpdatableInitPayload {
+  scheduleId: string;
+}
+
+export async function updateInit(payload: UpdatableInitPayload) {
+  return await HTTPUtils.post<UpdatableInitPayload>(Endpoints.INIT, payload);
 }

@@ -1,20 +1,20 @@
-import { SessionToken } from "../../../api/APITypes";
+import { SessionToken, User } from "../../../api/APITypes";
 
 import { ActionFor, Action } from "../../Actions";
 import { AuthActionType } from "./AuthTypes";
 
 type AuthReducerState = {
   authenticated: boolean;
-  userName?: string;
+  user?: User;
   token?: SessionToken;
 };
 
 function handleLogin(state: AuthReducerState, action: ActionFor<AuthActionType.AUTH_LOGIN>) {
-  const { userName, token } = action;
+  const { user, token } = action;
   return {
     ...state,
     authenticated: true,
-    userName,
+    user,
     token,
   };
 }
@@ -23,8 +23,17 @@ function handleLogout(state: AuthReducerState, _action: ActionFor<AuthActionType
   return {
     ...state,
     authenticated: false,
-    userName: undefined,
+    user: undefined,
     token: undefined,
+  };
+}
+
+function handleUpdateMe(state: AuthReducerState, action: ActionFor<AuthActionType.AUTH_UPDATE_ME>) {
+  const { user } = action;
+
+  return {
+    ...state,
+    user,
   };
 }
 
@@ -41,6 +50,8 @@ export default function authenticationReducer(
       return handleLogin(state, action);
     case AuthActionType.AUTH_LOGOUT:
       return handleLogout(state, action);
+    case AuthActionType.AUTH_UPDATE_ME:
+      return handleUpdateMe(state, action);
   }
 
   return state;

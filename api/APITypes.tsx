@@ -1,5 +1,6 @@
 export interface InitPayload {
   scheduleId: string;
+  currentUser?: User;
 }
 
 export interface Interview {
@@ -155,6 +156,12 @@ export interface OBSWebsocketConfig {
   host: string;
   port: number;
   password: string;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  role?: string;
 }
 
 export interface SessionToken {

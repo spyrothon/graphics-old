@@ -23,6 +23,11 @@ export const Encoders = {
   },
 };
 
+let authToken: string | undefined;
+export function setAuth(token: string) {
+  authToken = token;
+}
+
 function checkStatus(response: Response) {
   if ((response.status >= 200 && response.status < 300) || response.status === 422) {
     return response;
@@ -39,6 +44,10 @@ function getDefaultHeaders(method: string) {
   const headers: { [header: string]: any } = {
     "Content-Type": "application/json",
   };
+
+  if (authToken != null) {
+    headers["X-Session-Token"] = authToken;
+  }
 
   if (!skipsCSRF(method)) {
     // headers["X-CSRFToken"] = Cookies.get("csrftoken");
@@ -128,8 +137,11 @@ export async function send<T>(
 
   const response = await fetch(resolvedUrl, {
     method: verb,
-    ...getDefaultHeaders(verb),
     ...options,
+    headers: new Headers({
+      ...getDefaultHeaders(verb),
+      ...options?.headers,
+    }),
   });
   checkStatus(response);
 
@@ -152,6 +164,7 @@ export async function send<T>(
 }
 
 export default {
+  setAuth,
   get,
   post,
   put,
