@@ -22,12 +22,6 @@ import {
 } from "../runs/RunActions";
 import getRunState from "../runs/getRunState";
 
-interface LiveTimerProps {
-  entry: ScheduleEntryWithDependants;
-  run: Run;
-  className?: string;
-}
-
 interface TimerAction {
   Icon: Icon;
   action: (dispatch: SafeDispatch) => void;
@@ -139,6 +133,11 @@ function ActionButton(props: ActionButtonProps) {
       <Icon size={16} strokeWidth={strokeWidth} />
     </Button>
   );
+}
+
+interface LiveTimerProps {
+  run: Run;
+  className?: string;
 }
 
 export default function LiveRunTimers(props: LiveTimerProps) {

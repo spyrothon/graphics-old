@@ -7,7 +7,6 @@ import Dashboard from "../dashboards/Dashboard";
 import * as ScheduleStore from "../schedules/ScheduleStore";
 import { updateSchedule } from "../schedules/ScheduleActions";
 import ScheduleEntrySelector from "../schedules/ScheduleEntrySelector";
-import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
 import LiveInterviewInfo from "./LiveInterviewInfo";
 import LiveParticipants from "./LiveParticipants";
 import LiveRunTimers from "./LiveRunTimers";
@@ -24,16 +23,15 @@ export default function LiveDashboard() {
     currentEntry: ScheduleStore.getCurrentEntryWithDependants(state),
   }));
 
-  const [selectedEntry, setSelectedEntry] = React.useState<ScheduleEntryWithDependants | undefined>(
-    currentEntry,
-  );
+  const [selectedId, setSelectedId] = React.useState<string | undefined>(currentEntry?.id);
+  const selectedEntry = entries.find((entry) => entry.id === selectedId);
 
   React.useEffect(() => {
     if (currentEntry == null) return;
     // If we're editing a different run and the current run changes, don't overwrite it
-    if (selectedEntry != null && currentEntry.id !== selectedEntry.id) return;
+    if (currentEntry.id !== selectedEntry?.id) return;
 
-    setSelectedEntry(currentEntry);
+    setSelectedId(currentEntry.id);
   }, [schedule, currentEntry]);
 
   function handleSetCurrentEntry() {
@@ -49,8 +47,8 @@ export default function LiveDashboard() {
           <ScheduleEntrySelector
             label="Current Schedule Entry"
             entries={entries}
-            selectedEntryId={selectedEntry?.id}
-            onChange={setSelectedEntry}
+            selectedEntryId={selectedId}
+            onChange={(entry) => setSelectedId(entry?.id)}
           />
           <Button className={styles.setCurrentButton} onClick={handleSetCurrentEntry}>
             Make this the Current Entry
@@ -65,11 +63,7 @@ export default function LiveDashboard() {
         {selectedEntry?.run != null ? (
           <div className={styles.panels}>
             <LiveRunInfo entry={selectedEntry} run={selectedEntry.run} />
-            <LiveRunTimers
-              className={styles.actuals}
-              entry={selectedEntry}
-              run={selectedEntry.run}
-            />
+            <LiveRunTimers className={styles.actuals} run={selectedEntry.run} />
             <LiveParticipants run={selectedEntry.run} />
           </div>
         ) : null}
