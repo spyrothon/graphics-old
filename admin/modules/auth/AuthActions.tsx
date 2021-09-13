@@ -37,7 +37,7 @@ export function loadSession() {
     if (cookie == null) return;
 
     const { token } = JSON.parse(atob(cookie));
-    HTTPUtils.setAuth(token.token);
+    HTTPUtils.setAuth(token);
     const user = await APIClient.fetchMe();
 
     dispatch({
