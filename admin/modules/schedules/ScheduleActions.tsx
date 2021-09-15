@@ -107,6 +107,17 @@ export function fetchSchedule(scheduleId: string) {
   };
 }
 
+export function transitionToSecheduleEntry(scheduleId: string, entryId: string) {
+  return async (dispatch: SafeDispatch) => {
+    const scheduleResponse = await APIClient.transitionToScheduleEntry(scheduleId, entryId);
+    const { runs, interviews, ...schedule } = scheduleResponse;
+
+    dispatch(loadSchedule(schedule));
+    dispatch(fetchInterviewsSuccess(interviews));
+    dispatch(fetchRunsSuccess(runs));
+  };
+}
+
 export function loadSchedule(schedule: Schedule): ScheduleAction {
   return { type: ScheduleActionType.SCHEDULES_FETCH_SCHEDULE_SUCCESS, schedule };
 }

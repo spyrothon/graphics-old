@@ -69,11 +69,15 @@ export interface ScheduleEntry {
   scheduleId: string;
   position: number;
   setupSeconds?: number;
-  runId?: string;
-  interviewId?: string;
-  obsSceneName?: string;
+  actualSetupSeconds?: number;
+  enteredAt?: Date;
+  exitedAt?: Date;
+  durationSeconds?: number;
   enterTransitions: Transition[];
   exitTransitions: Transition[];
+  obsSceneName?: string;
+  runId?: string;
+  interviewId?: string;
 }
 
 export enum ScheduleEntryType {

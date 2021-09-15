@@ -13,7 +13,7 @@ type OBSMediaSelector = {
   onChange: (entry?: OBSMediaSource) => unknown;
 };
 
-export default function OBSSceneSelector(props: OBSMediaSelector) {
+export default function OBSMediaSelector(props: OBSMediaSelector) {
   const {
     label = "OBS Media Source",
     note = "Name of the media source to use in OBS.",

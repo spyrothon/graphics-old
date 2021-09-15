@@ -5,10 +5,7 @@ import useSafeDispatch from "../../hooks/useDispatch";
 import Button from "../../uikit/Button";
 import Header from "../../uikit/Header";
 import TextInput from "../../uikit/TextInput";
-import OBSSceneSelector from "../obs/OBSSceneSelector";
-import OBSTransitionSelector from "../obs/OBSTransitionSelector";
 import { persistRun } from "../runs/RunActions";
-import { updateScheduleEntry } from "../schedules/ScheduleActions";
 
 import { Run, ScheduleEntry } from "../../../api/APITypes";
 
@@ -23,18 +20,14 @@ export default function LiveRunInfo(props: LiveRunInfoProps) {
   const dispatch = useSafeDispatch();
 
   const [gameNameFormatted, setGameNameFormatted] = React.useState(run.gameNameFormatted);
-  const [obsSceneName, setOBSSceneName] = React.useState(entry.obsSceneName);
-  const hasChanges =
-    gameNameFormatted !== run.gameNameFormatted || obsSceneName !== entry.obsSceneName;
+  const hasChanges = gameNameFormatted !== run.gameNameFormatted;
 
   React.useEffect(() => {
     setGameNameFormatted(run.gameNameFormatted);
-    setOBSSceneName(entry.obsSceneName);
   }, [run, entry]);
 
   function handleSave() {
     dispatch(persistRun(run.id, { gameNameFormatted }));
-    dispatch(updateScheduleEntry({ ...entry, obsSceneName }));
   }
 
   return (
@@ -49,11 +42,6 @@ export default function LiveRunInfo(props: LiveRunInfoProps) {
         rows={2}
         onChange={(event) => setGameNameFormatted(event.target.value)}
       />
-      <OBSSceneSelector
-        selectedSceneName={obsSceneName}
-        onChange={(scene) => setOBSSceneName(scene.name)}
-      />
-      <OBSTransitionSelector selectedTransitionName={undefined} onChange={() => null} />
       <Button onClick={handleSave} disabled={!hasChanges}>
         Save Game Info
       </Button>

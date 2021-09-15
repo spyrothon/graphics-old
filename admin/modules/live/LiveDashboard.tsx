@@ -5,72 +5,71 @@ import useSafeDispatch from "../../hooks/useDispatch";
 import Button from "../../uikit/Button";
 import Dashboard from "../dashboards/Dashboard";
 import * as ScheduleStore from "../schedules/ScheduleStore";
-import { updateSchedule } from "../schedules/ScheduleActions";
-import ScheduleEntrySelector from "../schedules/ScheduleEntrySelector";
+import { transitionToSecheduleEntry } from "../schedules/ScheduleActions";
+import LiveEntryControl from "./LiveEntryControl";
 import LiveInterviewInfo from "./LiveInterviewInfo";
 import LiveParticipants from "./LiveParticipants";
 import LiveRunTimers from "./LiveRunTimers";
 import LiveRunInfo from "./LiveRunInfo";
 import LiveOnNow from "./LiveOnNow";
+import LiveTransitionSection from "./LiveTransitionSection";
 
 import styles from "./LiveDashboard.mod.css";
 
 export default function LiveDashboard() {
   const dispatch = useSafeDispatch();
-  const { schedule, entries, currentEntry } = useSafeSelector((state) => ({
+  const { schedule, currentEntry, nextEntry, prevEntry } = useSafeSelector((state) => ({
     schedule: ScheduleStore.getSchedule(state),
-    entries: ScheduleStore.getScheduleEntriesWithDependants(state),
     currentEntry: ScheduleStore.getCurrentEntryWithDependants(state),
+    nextEntry: ScheduleStore.getNextEntryWithDependants(state),
+    prevEntry: ScheduleStore.getPreviousEntryWithDependants(state),
   }));
 
-  const [selectedId, setSelectedId] = React.useState<string | undefined>(currentEntry?.id);
-  const selectedEntry = entries.find((entry) => entry.id === selectedId);
+  function handleTransitionPrevious() {
+    if (schedule == null || prevEntry == null) return;
 
-  React.useEffect(() => {
-    if (currentEntry == null) return;
-    // If we're editing a different run and the current run changes, don't overwrite it
-    if (currentEntry.id !== selectedEntry?.id) return;
+    dispatch(transitionToSecheduleEntry(schedule.id, prevEntry.id));
+  }
 
-    setSelectedId(currentEntry.id);
-  }, [schedule, currentEntry]);
+  function handleTransitionNext() {
+    if (schedule == null || nextEntry == null) return;
 
-  function handleSetCurrentEntry() {
-    if (schedule == null || selectedEntry == null) return;
-
-    dispatch(updateSchedule({ ...schedule, currentEntryId: selectedEntry.id }));
+    dispatch(transitionToSecheduleEntry(schedule.id, nextEntry.id));
   }
 
   function renderMain() {
     return (
       <div className={styles.main}>
-        <div className={styles.entrySelector}>
-          <ScheduleEntrySelector
-            label="Current Schedule Entry"
-            entries={entries}
-            selectedEntryId={selectedId}
-            onChange={(entry) => setSelectedId(entry?.id)}
-          />
-          <Button className={styles.setCurrentButton} onClick={handleSetCurrentEntry}>
-            Make this the Current Entry
-          </Button>
-        </div>
-        <div className={styles.transitions}>
-          <div className={styles.transitionActions}>
-            <Button>Transition In</Button>
-            <Button>Transition Out</Button>
-          </div>
-        </div>
-        {selectedEntry?.run != null ? (
+        <Button onClick={handleTransitionPrevious} disabled={prevEntry == null}>
+          Go to Previous Entry
+        </Button>
+        <Button onClick={handleTransitionNext} disabled={nextEntry == null}>
+          Go to Next Entry
+        </Button>
+        {currentEntry?.run != null ? (
           <div className={styles.panels}>
-            <LiveRunInfo entry={selectedEntry} run={selectedEntry.run} />
-            <LiveRunTimers className={styles.actuals} run={selectedEntry.run} />
-            <LiveParticipants run={selectedEntry.run} />
+            <LiveEntryControl className={styles.panel} />
+            <LiveTransitionSection
+              className={styles.transitionPanel}
+              transitions={currentEntry.enterTransitions}
+              label="Transition into Content"
+              onFinish={() => null}
+            />
+            <LiveRunInfo className={styles.panel} entry={currentEntry} run={currentEntry.run} />
+            <LiveRunTimers className={styles.panel} run={currentEntry.run} />
+            <LiveParticipants className={styles.panel} run={currentEntry.run} />
+            <LiveTransitionSection
+              className={styles.transitionPanel}
+              transitions={currentEntry.exitTransitions}
+              label="Transition to Break"
+              onFinish={() => null}
+            />
           </div>
         ) : null}
 
-        {selectedEntry?.interviewId != null ? (
+        {currentEntry?.interviewId != null ? (
           <div className={styles.panels}>
-            <LiveInterviewInfo interviewId={selectedEntry.interviewId} />
+            <LiveInterviewInfo interviewId={currentEntry.interviewId} />
           </div>
         ) : null}
       </div>

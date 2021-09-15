@@ -1,0 +1,12 @@
+.form {
+}
+
+.transitionActions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  & > * {
+    flex: 1 1 auto;
+  }
+}

@@ -42,6 +42,12 @@ export async function removeScheduleEntry(scheduleId: string, entryId: string) {
   return await HTTPUtils.delete(Endpoints.SCHEDULE_ENTRY(scheduleId, entryId));
 }
 
+export async function transitionToScheduleEntry(scheduleId: string, entryId: string) {
+  return await HTTPUtils.put<ScheduleResponse>(Endpoints.SCHEDULE_TRANSITION(scheduleId), {
+    entryId,
+  });
+}
+
 export async function fetchScheduleOBSConfig(scheduleId: string) {
   return await HTTPUtils.get<OBSWebsocketConfig>(Endpoints.SCHEDULE_OBS_CONFIG(scheduleId));
 }

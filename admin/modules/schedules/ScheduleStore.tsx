@@ -49,6 +49,22 @@ export const getCurrentEntryWithDependants = createSelector(
   (entries, entryId) => entries.find((entry) => entry.id === entryId),
 );
 
+export const getPreviousEntryWithDependants = createSelector(
+  [getScheduleEntriesWithDependants, getCurrentEntryId],
+  (entries, entryId) => {
+    const index = entries.findIndex((entry) => entry.id === entryId);
+    return index < 0 ? undefined : entries[index - 1];
+  },
+);
+
+export const getNextEntryWithDependants = createSelector(
+  [getScheduleEntriesWithDependants, getCurrentEntryId],
+  (entries, entryId) => {
+    const index = entries.findIndex((entry) => entry.id === entryId);
+    return index < 0 ? undefined : entries[index + 1];
+  },
+);
+
 export const getSelectedEntryId = createSelector(
   [getSchedulesState],
   (state) => state.selectedEntryId,
