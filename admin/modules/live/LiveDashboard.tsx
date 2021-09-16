@@ -21,32 +21,33 @@ export default function LiveDashboard() {
   function renderMain() {
     return (
       <div className={styles.main}>
-        {currentEntry?.run != null ? (
-          <div className={styles.panels}>
-            <LiveEntryControl className={styles.panel} />
-            <LiveTransitionSection
-              className={styles.transitionPanel}
-              transitionSet={currentEntry.enterTransitionSet}
-              label="Transition into Content"
-              onFinish={() => null}
-            />
-            <LiveRunInfo className={styles.panel} entry={currentEntry} run={currentEntry.run} />
-            <LiveRunTimers className={styles.panel} run={currentEntry.run} />
-            <LiveParticipants className={styles.panel} run={currentEntry.run} />
-            <LiveTransitionSection
-              className={styles.transitionPanel}
-              transitionSet={currentEntry.exitTransitionSet}
-              label="Transition to Break"
-              onFinish={() => null}
-            />
-          </div>
-        ) : null}
-
-        {currentEntry?.interviewId != null ? (
-          <div className={styles.panels}>
-            <LiveInterviewInfo interviewId={currentEntry.interviewId} />
-          </div>
-        ) : null}
+        <div className={styles.panels}>
+          <LiveEntryControl className={styles.panel} />
+          <LiveTransitionSection
+            className={styles.transitionPanel}
+            transitionSet={currentEntry?.enterTransitionSet}
+            label="Transition into Content"
+            onFinish={() => null}
+          />
+          {currentEntry?.run != null ? (
+            <div className={styles.panels}>
+              <LiveRunInfo className={styles.panel} entry={currentEntry} run={currentEntry.run} />
+              <LiveRunTimers className={styles.panel} run={currentEntry.run} />
+              <LiveParticipants className={styles.panel} run={currentEntry.run} />
+            </div>
+          ) : null}
+          {currentEntry?.interviewId != null ? (
+            <div className={styles.panels}>
+              <LiveInterviewInfo className={styles.panel} interviewId={currentEntry.interviewId} />
+            </div>
+          ) : null}
+          <LiveTransitionSection
+            className={styles.transitionPanel}
+            transitionSet={currentEntry?.exitTransitionSet}
+            label="Transition to Break"
+            onFinish={() => null}
+          />
+        </div>
       </div>
     );
   }
