@@ -5,6 +5,7 @@ import {
   OBSWebsocketConfig,
   InitialSchedule,
   ScheduleResponse,
+  TransitionSet,
 } from "../../../api/APITypes";
 import { SafeDispatch } from "../../hooks/useDispatch";
 import { fetchRunsSuccess } from "../runs/RunActions";
@@ -115,6 +116,13 @@ export function transitionToSecheduleEntry(scheduleId: string, entryId: string) 
     dispatch(loadSchedule(schedule));
     dispatch(fetchInterviewsSuccess(interviews));
     dispatch(fetchRunsSuccess(runs));
+  };
+}
+
+export function resetTransitionSet(transitionSet: TransitionSet) {
+  return async (dispatch: SafeDispatch) => {
+    const scheduleResponse = await APIClient.resetTransitionSet(transitionSet.id);
+    dispatch(loadSchedule(scheduleResponse));
   };
 }
 

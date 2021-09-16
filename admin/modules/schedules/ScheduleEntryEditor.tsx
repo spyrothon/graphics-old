@@ -12,8 +12,6 @@ import useSaveable, { SaveState } from "../../hooks/useSaveable";
 import Button from "../../uikit/Button";
 import DurationInput from "../../uikit/DurationInput";
 import Header from "../../uikit/Header";
-import OBS from "../obs/OBS";
-import OBSButton from "../obs/OBSButton";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "./ScheduleActions";
 import TransitionEditor from "./TransitionEditor";
@@ -31,9 +29,7 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
   const [editedEntry, setEditedEntry] = React.useState<InitialScheduleEntry>(scheduleEntry);
   const hasChanges = JSON.stringify(editedEntry) !== JSON.stringify(scheduleEntry);
 
-  React.useEffect(() => {
-    setEditedEntry(scheduleEntry);
-  }, [scheduleEntry]);
+  React.useEffect(() => setEditedEntry(scheduleEntry), [scheduleEntry]);
 
   const [handleSave, getSaveText, saveState] = useSaveable(async () =>
     dispatch(updateScheduleEntry(editedEntry as ScheduleEntry)),

@@ -1,13 +1,15 @@
 import * as React from "react";
 import classNames from "classnames";
+import { Loader, Check, Circle } from "react-feather";
 
 import { Transition, TransitionSet, TransitionState } from "../../../api/APITypes";
+import useSafeDispatch from "../../hooks/useDispatch";
 import Button from "../../uikit/Button";
 import Text from "../../uikit/Text";
+import OBS from "../obs/OBS";
+import { resetTransitionSet } from "../schedules/ScheduleActions";
 
 import styles from "./LiveTransitionSection.mod.css";
-import OBS from "../obs/OBS";
-import { Loader, Check, Circle } from "react-feather";
 
 function getIconForTransitionState(state?: TransitionState) {
   switch (state) {
@@ -28,6 +30,7 @@ interface LiveTransitionSectionProps {
 }
 
 export default function LiveTransitionSection(props: LiveTransitionSectionProps) {
+  const dispatch = useSafeDispatch();
   const { transitionSet, label, className, onFinish } = props;
 
   function renderTransitionText(transition: Transition) {
@@ -55,25 +58,40 @@ export default function LiveTransitionSection(props: LiveTransitionSectionProps)
   if (transitionSet == null) {
     return (
       <div className={classNames(styles.container, className)}>
-        <Text>No Transitions Specified</Text>
+        <Text className={styles.empty} color={Text.Colors.MUTED}>
+          No Transitions Specified
+        </Text>
       </div>
     );
   }
 
   const { transitions } = transitionSet;
+  const completed = transitions.every((transition) => transition.state === TransitionState.DONE);
+  const inProgress = transitions.some(
+    (transition) => transition.state === TransitionState.IN_PROGRESS,
+  );
 
   return (
-    <div className={classNames(styles.container, className)}>
+    <div className={classNames(styles.container, className, { [styles.completed]: completed })}>
       <div className={styles.readout}>
-        <Text>Sequence:</Text>
+        <Text>{inProgress ? "Sequence (in progress):" : "Sequence:"}</Text>
         {transitions.map((transition) => renderTransitionText(transition))}
       </div>
       <div className={styles.info}>
         <Button
           className={styles.transitionButton}
+          disabled={inProgress || completed}
           onClick={() => OBS.executeTransitionSet(transitionSet)}>
           {label}
         </Button>
+        {inProgress || completed ? (
+          <Button
+            className={styles.resetButton}
+            onClick={() => dispatch(resetTransitionSet(transitionSet))}
+            size={Button.Sizes.SMALL}>
+            Reset
+          </Button>
+        ) : null}
       </div>
     </div>
   );

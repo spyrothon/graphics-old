@@ -123,6 +123,10 @@ class OBS {
     await this.broadcast({ type: OBSCustomEventTypes.TRANSITION_SEQUENCE_ENDED });
   }
 
+  async setPreviewScene(sceneName: string) {
+    await obs.send("SetPreviewScene", { "scene-name": sceneName });
+  }
+
   async broadcast(message: OBSCustomEvent) {
     obs.send("BroadcastCustomMessage", { realm: "admin", data: message });
   }

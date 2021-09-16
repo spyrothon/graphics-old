@@ -11,6 +11,7 @@ import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "../schedules/ScheduleActions";
 
 import styles from "./LiveEntryControl.mod.css";
+import OBS from "../obs/OBS";
 
 type LiveEntryControlProps = {
   className?: string;
@@ -25,12 +26,20 @@ export default function LiveEntryControl(props: LiveEntryControlProps) {
   }));
 
   const [editedEntry, setEditedEntry] = React.useState<ScheduleEntry | undefined>(currentEntry);
+  React.useEffect(() => setEditedEntry(currentEntry), [currentEntry]);
 
   const [handleSave, getSaveText] = useSaveable(async () => {
     if (editedEntry == null) return;
 
     dispatch(updateScheduleEntry(editedEntry));
   });
+
+  function handleSetPreview() {
+    const sceneName = editedEntry?.obsSceneName;
+    if (sceneName == null) return;
+
+    OBS.setPreviewScene(sceneName);
+  }
 
   if (currentEntry == null || editedEntry == null) return null;
 
@@ -44,7 +53,10 @@ export default function LiveEntryControl(props: LiveEntryControlProps) {
           selectedSceneName={obsSceneName}
           onChange={(scene) => setEditedEntry({ ...editedEntry, obsSceneName: scene?.name })}
         />
-        <Button onClick={handleSave}>{getSaveText()}</Button>
+        <div className={styles.actions}>
+          <Button onClick={handleSave}>{getSaveText()}</Button>
+          <Button onClick={handleSetPreview}>Set Preview Scene</Button>
+        </div>
       </div>
     </div>
   );
