@@ -1,3 +1,4 @@
+import snakecaseKeys from "snakecase-keys";
 import SturdyWebSocket from "sturdy-websocket";
 
 import { SOCKET_PING_INTERVAL, SOCKET_SYNC_HOST, SOCKET_WEBSOCKET_PROTOCOL } from "../Config";
@@ -28,7 +29,7 @@ export default class SyncSocket {
   disconnect = () => this.socket?.close();
 
   send = (message: SyncSocketMessage) => {
-    this.socket?.send(JSON.stringify(message));
+    this.socket?.send(JSON.stringify(snakecaseKeys(message)));
   };
 
   ping = () => this.send({ type: "ping" });

@@ -1,7 +1,12 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
 
-import { ScheduleEntry, InitialTransition, InitialScheduleEntry } from "../../../api/APITypes";
+import {
+  ScheduleEntry,
+  InitialTransition,
+  InitialScheduleEntry,
+  InitialTransitionSet,
+} from "../../../api/APITypes";
 import useSafeDispatch from "../../hooks/useDispatch";
 import useSaveable, { SaveState } from "../../hooks/useSaveable";
 import Button from "../../uikit/Button";
@@ -35,37 +40,37 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
   );
 
   function updateTransition(
-    kind: "enterTransitions" | "exitTransitions",
+    kind: "enterTransitionSet" | "exitTransitionSet",
     newTransition: InitialTransition,
     index: number,
   ) {
-    const transitions = Array.from(editedEntry[kind] ?? []);
+    const set = editedEntry[kind] ?? ({} as InitialTransitionSet);
+    const transitions = Array.from(set.transitions ?? []);
     transitions[index] = newTransition;
-    setEditedEntry({ ...editedEntry, [kind]: transitions });
+    setEditedEntry({ ...editedEntry, [kind]: { ...set, transitions } });
   }
 
-  function removeTransition(kind: "enterTransitions" | "exitTransitions", index: number) {
-    const transitions = Array.from(editedEntry[kind] ?? []);
+  function removeTransition(kind: "enterTransitionSet" | "exitTransitionSet", index: number) {
+    const set = editedEntry[kind] ?? ({} as InitialTransitionSet);
+    const transitions = Array.from(set.transitions ?? []);
     transitions.splice(index, 1);
-    setEditedEntry({ ...editedEntry, [kind]: transitions });
+    setEditedEntry({ ...editedEntry, [kind]: { ...set, transitions } });
   }
 
-  function addTransition(kind: "enterTransitions" | "exitTransitions") {
-    const transitions = Array.from(editedEntry[kind] ?? []);
+  function addTransition(kind: "enterTransitionSet" | "exitTransitionSet") {
+    const set = editedEntry[kind] ?? ({} as InitialTransitionSet);
+    const transitions = Array.from(set.transitions ?? []);
     transitions.push({ id: uuid() });
-    setEditedEntry({ ...editedEntry, [kind]: transitions });
-  }
-
-  function runEnterTransition() {
-    OBS.executeTransitionSet(scheduleEntry.enterTransitions);
+    setEditedEntry({ ...editedEntry, [kind]: { ...set, transitions } });
   }
 
   function reorderTransitions(
-    kind: "enterTransitions" | "exitTransitions",
+    kind: "enterTransitionSet" | "exitTransitionSet",
     direction: "up" | "down",
     index: number,
   ) {
-    const transitions = Array.from(editedEntry[kind] ?? []);
+    const set = editedEntry[kind] ?? ({} as InitialTransitionSet);
+    const transitions = Array.from(set.transitions ?? []);
     const [item] = transitions.splice(index, 1);
     switch (direction) {
       case "up":
@@ -75,7 +80,7 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
         transitions.splice(index + 1, 0, item);
         break;
     }
-    setEditedEntry({ ...editedEntry, [kind]: transitions });
+    setEditedEntry({ ...editedEntry, [kind]: { ...set, transitions } });
   }
 
   return (
@@ -86,7 +91,6 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
         disabled={!hasChanges || saveState === SaveState.SAVING}>
         {getSaveText()}
       </Button>
-      <OBSButton onClick={() => runEnterTransition()}>Test</OBSButton>
       <div className={styles.editor}>
         <div>
           <Header className={styles.header}>Timing</Header>
@@ -109,36 +113,36 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
             Enter Transition
             <Button
               className={styles.addTransitionButton}
-              onClick={() => addTransition("enterTransitions")}>
+              onClick={() => addTransition("enterTransitionSet")}>
               Add Transition
             </Button>
           </Header>
-          {editedEntry.enterTransitions?.map((transition, index) => (
+          {editedEntry.enterTransitionSet?.transitions.map((transition, index) => (
             <TransitionEditor
               key={transition.id}
-              onMoveUp={() => reorderTransitions("enterTransitions", "up", index)}
-              onMoveDown={() => reorderTransitions("enterTransitions", "down", index)}
+              onMoveUp={() => reorderTransitions("enterTransitionSet", "up", index)}
+              onMoveDown={() => reorderTransitions("enterTransitionSet", "down", index)}
               transition={transition}
-              onChange={(transition) => updateTransition("enterTransitions", transition, index)}
-              onRemove={() => removeTransition("enterTransitions", index)}
+              onChange={(transition) => updateTransition("enterTransitionSet", transition, index)}
+              onRemove={() => removeTransition("enterTransitionSet", index)}
             />
           ))}
           <Header className={styles.header}>
             Exit Transition
             <Button
               className={styles.addTransitionButton}
-              onClick={() => addTransition("exitTransitions")}>
+              onClick={() => addTransition("exitTransitionSet")}>
               Add Transition
             </Button>
           </Header>
-          {editedEntry.exitTransitions?.map((transition, index) => (
+          {editedEntry.exitTransitionSet?.transitions.map((transition, index) => (
             <TransitionEditor
               key={transition.id}
-              onMoveUp={() => reorderTransitions("exitTransitions", "up", index)}
-              onMoveDown={() => reorderTransitions("exitTransitions", "down", index)}
+              onMoveUp={() => reorderTransitions("exitTransitionSet", "up", index)}
+              onMoveDown={() => reorderTransitions("exitTransitionSet", "down", index)}
               transition={transition}
-              onChange={(transition) => updateTransition("exitTransitions", transition, index)}
-              onRemove={() => removeTransition("exitTransitions", index)}
+              onChange={(transition) => updateTransition("exitTransitionSet", transition, index)}
+              onRemove={() => removeTransition("exitTransitionSet", index)}
             />
           ))}
         </div>

@@ -73,28 +73,12 @@ export interface ScheduleEntry {
   enteredAt?: Date;
   exitedAt?: Date;
   durationSeconds?: number;
-  enterTransitions: Transition[];
-  exitTransitions: Transition[];
+  enterTransitionSet?: TransitionSet;
+  exitTransitionSet?: TransitionSet;
   obsSceneName?: string;
   runId?: string;
   interviewId?: string;
 }
-
-export enum ScheduleEntryType {
-  RUN = "RUN",
-  INTERVIEW = "INTERVIEW",
-}
-
-export interface Transition {
-  id: string;
-  obsTransitionInName: string;
-  transitionDuration: number;
-  obsSceneName: string;
-  sceneDuration?: number;
-  obsMediaSourceName?: string;
-}
-
-export type InitialTransition = Partial<Transition>;
 
 export interface InitialScheduleEntry {
   id?: string;
@@ -104,8 +88,43 @@ export interface InitialScheduleEntry {
   runId?: string;
   interviewId?: string;
   obsSceneName?: string;
-  enterTransitions?: InitialTransition[];
-  exitTransitions?: InitialTransition[];
+  enterTransitionSet?: InitialTransitionSet;
+  exitTransitionSet?: InitialTransitionSet;
+}
+
+export enum ScheduleEntryType {
+  RUN = "run",
+  INTERVIEW = "interview",
+}
+
+export enum TransitionState {
+  PENDING = "pending",
+  IN_PROGRESS = "in_progress",
+  DONE = "done",
+}
+
+export interface TransitionSet {
+  id: string;
+  state: TransitionState;
+  transitions: Transition[];
+}
+
+export interface Transition {
+  id: string;
+  obsTransitionInName: string;
+  transitionDuration: number;
+  obsSceneName: string;
+  sceneDuration?: number;
+  obsMediaSourceName?: string;
+  state?: TransitionState;
+}
+
+export type InitialTransition = Partial<Transition>;
+
+export interface InitialTransitionSet {
+  id?: string;
+  state?: TransitionState;
+  transitions: InitialTransition[];
 }
 
 export interface Run {

@@ -18,7 +18,7 @@ class SyncSocketManager {
   }
 
   handleMessage = (message: SyncSocketMessage) => {
-    console.log("received from socket", message);
+    console.log("[SYNC_SOCKET ->]", message);
     switch (message.type) {
       case "load_schedule":
         store.dispatch(loadSchedule(message.schedule));
@@ -28,9 +28,13 @@ class SyncSocketManager {
         return;
       case "load_interview":
         store.dispatch(loadInterview(message.interview));
-        return;
     }
   };
+
+  send(message: SyncSocketMessage) {
+    console.log("[SYNC_SOCKET <-]", message);
+    this.socket?.send(message);
+  }
 }
 
 export default new SyncSocketManager();

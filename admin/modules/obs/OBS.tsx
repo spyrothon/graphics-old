@@ -1,6 +1,7 @@
 import OBSWebSocket from "obs-websocket-js";
 
-import { OBSWebsocketConfig, Transition } from "../../../api/APITypes";
+import { OBSWebsocketConfig, Transition, TransitionSet } from "../../../api/APITypes";
+import SyncSocketManager from "../sync/SyncSocketManager";
 import OBSEventQueue from "./OBSEventQueue";
 import {
   setOBSConnected,
@@ -104,10 +105,20 @@ class OBS {
     });
   }
 
-  async executeTransitionSet(transitions: Transition[]) {
+  async executeTransitionSet(transitionSet: TransitionSet) {
     await this.broadcast({ type: OBSCustomEventTypes.TRANSITION_SEQUENCE_STARTED });
-    for (const transition of transitions) {
+    for (const transition of transitionSet.transitions) {
+      SyncSocketManager.send({
+        type: "obs_transition_started",
+        setId: transitionSet.id,
+        transitionId: transition.id,
+      });
       await this.executeTransition(transition);
+      SyncSocketManager.send({
+        type: "obs_transition_finished",
+        setId: transitionSet.id,
+        transitionId: transition.id,
+      });
     }
     await this.broadcast({ type: OBSCustomEventTypes.TRANSITION_SEQUENCE_ENDED });
   }

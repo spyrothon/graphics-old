@@ -51,7 +51,7 @@ export default function LiveDashboard() {
             <LiveEntryControl className={styles.panel} />
             <LiveTransitionSection
               className={styles.transitionPanel}
-              transitions={currentEntry.enterTransitions}
+              transitionSet={currentEntry.enterTransitionSet}
               label="Transition into Content"
               onFinish={() => null}
             />
@@ -60,7 +60,7 @@ export default function LiveDashboard() {
             <LiveParticipants className={styles.panel} run={currentEntry.run} />
             <LiveTransitionSection
               className={styles.transitionPanel}
-              transitions={currentEntry.exitTransitions}
+              transitionSet={currentEntry.exitTransitionSet}
               label="Transition to Break"
               onFinish={() => null}
             />

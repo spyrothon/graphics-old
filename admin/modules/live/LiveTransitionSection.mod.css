@@ -1,10 +1,33 @@
 .container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: top;
   gap: 8px;
   padding: 16px;
   border-radius: 8px;
   background-color: var(--background-secondary);
+}
+
+.info {
+  flex: 0 0 auto;
+  justify-self: end;
+}
+
+.transitionButton {
+  margin-bottom: 16px;
+}
+
+.readout {
+  flex: 1 1 auto;
+}
+
+.transition {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.transitionIcon {
+  flex: 0 0 24px;
 }
