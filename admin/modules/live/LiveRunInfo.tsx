@@ -10,13 +10,12 @@ import { persistRun } from "../runs/RunActions";
 import { Run, ScheduleEntry } from "../../../api/APITypes";
 
 type LiveRunInfoProps = {
-  entry: ScheduleEntry;
   run: Run;
   className?: string;
 };
 
 export default function LiveRunInfo(props: LiveRunInfoProps) {
-  const { entry, run, className } = props;
+  const { run, className } = props;
   const dispatch = useSafeDispatch();
 
   const [gameNameFormatted, setGameNameFormatted] = React.useState(run.gameNameFormatted);
@@ -24,7 +23,7 @@ export default function LiveRunInfo(props: LiveRunInfoProps) {
 
   React.useEffect(() => {
     setGameNameFormatted(run.gameNameFormatted);
-  }, [run, entry]);
+  }, [run]);
 
   function handleSave() {
     dispatch(persistRun(run.id, { gameNameFormatted }));

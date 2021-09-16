@@ -18,6 +18,27 @@ export default function LiveDashboard() {
     currentEntry: ScheduleStore.getCurrentEntryWithDependants(state),
   }));
 
+  function renderContentSections() {
+    if (currentEntry?.run != null) {
+      return (
+        <div className={styles.panels}>
+          <LiveRunInfo className={styles.panel} run={currentEntry.run} />
+          <LiveRunTimers className={styles.panel} run={currentEntry.run} />
+          <LiveParticipants className={styles.panel} run={currentEntry.run} />
+        </div>
+      );
+    }
+    if (currentEntry?.interviewId != null) {
+      return (
+        <div className={styles.panels}>
+          <LiveInterviewInfo className={styles.panel} interviewId={currentEntry.interviewId} />
+        </div>
+      );
+    }
+
+    return null;
+  }
+
   function renderMain() {
     return (
       <div className={styles.main}>
@@ -29,18 +50,7 @@ export default function LiveDashboard() {
             label="Transition into Content"
             onFinish={() => null}
           />
-          {currentEntry?.run != null ? (
-            <div className={styles.panels}>
-              <LiveRunInfo className={styles.panel} entry={currentEntry} run={currentEntry.run} />
-              <LiveRunTimers className={styles.panel} run={currentEntry.run} />
-              <LiveParticipants className={styles.panel} run={currentEntry.run} />
-            </div>
-          ) : null}
-          {currentEntry?.interviewId != null ? (
-            <div className={styles.panels}>
-              <LiveInterviewInfo className={styles.panel} interviewId={currentEntry.interviewId} />
-            </div>
-          ) : null}
+          {renderContentSections()}
           <LiveTransitionSection
             className={styles.transitionPanel}
             transitionSet={currentEntry?.exitTransitionSet}
