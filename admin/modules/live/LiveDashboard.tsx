@@ -28,6 +28,7 @@ export default function LiveDashboard() {
         </div>
       );
     }
+
     if (currentEntry?.interviewId != null) {
       return (
         <div className={styles.panels}>
