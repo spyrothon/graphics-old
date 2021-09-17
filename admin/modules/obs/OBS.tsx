@@ -12,6 +12,7 @@ import {
   setMediaSourceList,
 } from "./OBSStore";
 import { OBSCustomEvent, OBSCustomEventTypes } from "./OBSTypes";
+import { SOCKET_WEBSOCKET_PROTOCOL } from "../../../api/Config";
 
 const obs = new OBSWebSocket();
 
@@ -44,6 +45,7 @@ class OBS {
       .connect({
         address: `${config.host}:${config.port}`,
         password: config.password,
+        secure: SOCKET_WEBSOCKET_PROTOCOL === "wss",
       })
       .then(() => {
         this._preload();
