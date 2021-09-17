@@ -93,14 +93,14 @@ export default function ScheduleEntryEditor(props: ScheduleEntryEditorProps) {
           <DurationInput
             label="Estimated Setup Time"
             value={editedEntry.setupSeconds}
-            onChange={(value) => setEditedEntry({ ...scheduleEntry, setupSeconds: value })}
+            onChange={(value) => setEditedEntry({ ...editedEntry, setupSeconds: value })}
           />
 
           <Header className={styles.header}>OBS Scene Setup</Header>
           <OBSSceneSelector
             selectedSceneName={editedEntry.obsSceneName}
             note="Name of the scene to use for this run in OBS."
-            onChange={(scene) => setEditedEntry({ ...scheduleEntry, obsSceneName: scene?.name })}
+            onChange={(scene) => setEditedEntry({ ...editedEntry, obsSceneName: scene?.name })}
           />
         </div>
 
