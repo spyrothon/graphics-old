@@ -33,10 +33,10 @@ jobs:
         run: yarn install
 
       - name: Build Admin
-        run: yarn ci:admin
+        run: yarn build:admin
 
       - name: Build Graphics
-        run: yarn ci:graphics
+        run: yarn build:graphics
 
       - name: TypeScript
         run: yarn tsc

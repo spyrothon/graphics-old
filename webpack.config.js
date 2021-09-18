@@ -8,7 +8,7 @@ module.exports = (_env, options) => {
   if (options.mode == null) {
     console.warn("WARNING: No mode was set. Will default to `development`");
   }
-  const NODE_ENV = options.mode || "development";
+  const NODE_ENV = process.env.NODE_ENV || options.mode || "development";
 
   const configPath = path.resolve(__dirname, `./config/${NODE_ENV}.json`);
   const config = require(configPath);
@@ -83,11 +83,11 @@ module.exports = (_env, options) => {
                 outputPath: "./images/",
                 publicPath: "/images/",
                 name: (_file) => {
-                  if (NODE_ENV === "development") {
-                    return "[name].[ext]";
+                  if (NODE_ENV === "production") {
+                    return "[contenthash].[ext]";
                   }
 
-                  return "[contenthash].[ext]";
+                  return "[name].[ext]";
                 },
               },
             },
