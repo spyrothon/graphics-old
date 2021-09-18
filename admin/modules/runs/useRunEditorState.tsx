@@ -76,7 +76,7 @@ export default function useRunEditorState(): RunEditorStateValue {
         displayName: "",
         twitchName: "",
         twitterName: "",
-      };
+      } as RunParticipant;
     }
     list[index][field] = value;
     dispatch({ type: "updateField", field: type, value: list });

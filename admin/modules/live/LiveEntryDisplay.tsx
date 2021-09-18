@@ -41,7 +41,7 @@ function EntryInterviewContent({ interview }: { interview: Interview }) {
   return (
     <div className={styles.content}>
       <Text>{interview.topic}</Text>
-      <Notes content={run.notes} />
+      <Notes content={interview.notes} />
     </div>
   );
 }

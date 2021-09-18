@@ -16,7 +16,7 @@ function runEditorReducer(state: InterviewEditorState, action: RunEditorAction) 
   switch (action.type) {
     case "setBase":
       return { ...state, base: action.interview, edits: {}, hasChanges: false };
-    case "updateField":
+    case "updateField": {
       let { ...newEdits } = state.edits;
       if (state.base?.[action.field] !== action.value) {
         newEdits = { ...newEdits, [action.field]: action.value };
@@ -25,6 +25,7 @@ function runEditorReducer(state: InterviewEditorState, action: RunEditorAction) 
       }
 
       return { ...state, edits: newEdits, hasChanges: Object.keys(newEdits).length > 0 };
+    }
     default:
       return state;
   }
@@ -86,7 +87,7 @@ export default function useInterviewEditorState(): InterviewEditorStateValue {
         twitterName: "",
         hasWebcam: false,
         visible: true,
-      };
+      } as RunParticipant;
     }
     list[index][field] = value;
     dispatch({ type: "updateField", field: type, value: list });
@@ -109,7 +110,7 @@ export default function useInterviewEditorState(): InterviewEditorStateValue {
     if (list[index] == null) {
       list[index] = {
         question: "",
-      };
+      } as InterviewQuestion;
     }
     list[index][field] = value;
     dispatch({ type: "updateField", field: "questions", value: list });

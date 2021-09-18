@@ -3,12 +3,10 @@ import { InterviewAction, InterviewActionType } from "./modules/interviews/Inter
 import { ScheduleAction, ScheduleActionType } from "./modules/schedules/ScheduleTypes";
 import { RemoteAction, RemoteActionType } from "./modules/remote/RemoteTypes";
 import { RunAction, RunActionType } from "./modules/runs/RunsTypes";
-import { OBSAction, OBSActionType } from "./modules/obs/OBSTypes";
 
 export const ActionTypes = {
   ...AuthActionType,
   ...InterviewActionType,
-  ...OBSActionType,
   ...ScheduleActionType,
   ...RemoteActionType,
   ...RunActionType,
@@ -18,7 +16,6 @@ export type Action =
   | { type: "@@INIT" }
   | AuthAction
   | InterviewAction
-  | OBSAction
   | ScheduleAction
   | RemoteAction
   | RunAction;

@@ -38,7 +38,6 @@ export default function ScheduleEntrySelector(props: ScheduleEntrySelectorProps)
       itemToString={(entry) => getOptionName(entry)}
       value={selectedEntry}
       onChange={onChange}
-      renderItem={(entry) => renderEntry(entry)}
     />
   );
 }

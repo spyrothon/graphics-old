@@ -6,7 +6,6 @@ type RunMap = { [id: string]: Run };
 
 type RunReducerState = {
   fetching: boolean;
-  currentRunId: string;
   runs: RunMap;
 };
 

@@ -38,15 +38,15 @@ const getEntriesWithStartTimes = createSelector(
     InterviewStore.getInterviewsById,
   ],
   (scheduleStartTime, entries, runs, interviews) => {
-    const scheduleStart = scheduleStartTime;
+    const scheduleStart = scheduleStartTime!;
 
     let lastActualStartTime = scheduleStart;
     let lastEstimatedStartTime = scheduleStart;
 
     return entries.map(
       (entry): ScheduleEntryWithTimes => {
-        let nextActualStartTime = lastActualStartTime.plus({ seconds: entry.setupSeconds ?? 0 });
-        let nextEstimatedStartTime = lastEstimatedStartTime.plus({
+        const nextActualStartTime = lastActualStartTime.plus({ seconds: entry.setupSeconds ?? 0 });
+        const nextEstimatedStartTime = lastEstimatedStartTime.plus({
           seconds: entry.setupSeconds ?? 0,
         });
 
@@ -54,7 +54,7 @@ const getEntriesWithStartTimes = createSelector(
           const run = runs[entry.runId];
           if (run != null) {
             lastActualStartTime = nextActualStartTime.plus({
-              seconds: run.actualTime ?? run.estimateSeconds,
+              seconds: run.actualSeconds ?? run.estimateSeconds,
             });
             lastEstimatedStartTime = nextEstimatedStartTime.plus({ seconds: run.estimateSeconds });
           }

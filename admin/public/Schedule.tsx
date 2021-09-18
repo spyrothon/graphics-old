@@ -142,7 +142,7 @@ export default function Schedule() {
     return groups;
   }
 
-  if (schedule == null) return;
+  if (schedule == null) return null;
 
   return (
     <div className={styles.page}>

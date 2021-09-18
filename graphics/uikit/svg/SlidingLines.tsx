@@ -72,17 +72,15 @@ function LineStack(props: LineStackProps) {
     Math.floor(Math.random() * 1001) % 2 === 0 ? "alternate" : "alernate-reverse",
   );
 
+  const style = {
+    "--stackHeight": `${totalHeight}px`,
+    "--randomDelay": delay,
+    "--randomTime": time,
+    "--randomDirection": direction,
+  } as React.CSSProperties;
+
   return (
-    <g
-      x={x}
-      y={y}
-      className={styles.stack}
-      style={{
-        "--stackHeight": `${totalHeight}px`,
-        "--randomDelay": delay,
-        "--randomTime": time,
-        "--randomDirection": direction,
-      }}>
+    <g x={x} y={y} className={styles.stack} style={style}>
       {lines}
     </g>
   );
