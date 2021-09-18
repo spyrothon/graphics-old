@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Routes } from "../../Constants";
-import { Twitch, Settings, Airplay, PlusCircle, Icon, User } from "react-feather";
+import { Twitch, Settings, Airplay, PlusCircle, Icon, User, Edit } from "react-feather";
 
 import SettingsCreateSchedule from "./SettingsCreateSchedule";
 import SettingsGeneral from "./SettingsGeneral";
+import SettingsManageSchedule from "./SettingsManageSchedule";
 import SettingsOBSHost from "./SettingsOBSHost";
 import SettingsStreamTemplates from "./SettingsStreamTemplates";
 import SettingsUser from "./SettingsUser";
@@ -25,6 +26,13 @@ const SETTINGS_ROUTES: SettingsRoute[] = [
     route: Routes.SETTINGS,
     exact: true,
     render: () => <SettingsGeneral />,
+  },
+  {
+    id: "manage-schedule",
+    icon: Edit,
+    label: "Manage Schedule",
+    route: Routes.SETTINGS_MANAGE_SCHEDULE,
+    render: () => <SettingsManageSchedule />,
   },
   {
     id: "create-schedule",
