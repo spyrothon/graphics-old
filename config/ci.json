@@ -3,7 +3,7 @@
   "API_VERSION": "v1",
   "SYNC_HOST": "localhost:3000/socket/sync",
   "ASSETS_ENDPOINT": "//localhost:8080",
-  "PAGE_TITLE": "Spyrothon Graphics",
+  "PAGE_TITLE": "",
   "private": {
     "admin": {
       "HOSTNAME": "localhost",
