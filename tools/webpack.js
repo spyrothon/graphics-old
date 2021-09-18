@@ -46,7 +46,11 @@ module.exports = {
           chunkFilename: "[id].[hash].css",
         }),
         new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({ title: config.PAGE_TITLE, template: "./index.html" }),
+        new HtmlWebpackPlugin({
+          title: config.PAGE_TITLE,
+          template: "./index.html",
+          favicon: "./favicon/favicon.ico",
+        }),
       ],
       resolve: {
         extensions: [".tsx", ".ts", ".js", ".json"],
