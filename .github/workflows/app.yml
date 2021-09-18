@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: ci
 
     strategy:
       matrix:
@@ -31,7 +33,7 @@ jobs:
       run: yarn install
 
     - name: Build Admin
-      run: yarn build:admin
+      run: NODE_ENV=ci yarn build:admin
 
     - name: Build Graphics
       run: yarn build:graphics
