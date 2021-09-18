@@ -13,8 +13,8 @@ export const getOBSConfig = (state: StoreState) => getSchedulesState(state).obsC
 export const isFetchingSchedule = createSelector([getSchedulesState], (state) => state.fetching);
 export const isDebug = createSelector([getSchedule], (schedule) => schedule?.debug);
 
-export const getScheduleStartTime = createSelector([], () =>
-  DateTime.fromISO("2021-06-26T14:45:00Z"),
+export const getScheduleStartTime = createSelector([getSchedule], (schedule) =>
+  DateTime.fromJSDate(schedule!.startTime),
 );
 
 export const getScheduleEntries = createSelector(

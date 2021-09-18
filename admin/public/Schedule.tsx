@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 
 import { useSafeSelector } from "../Store";
 import { getInterview } from "../modules/interviews/InterviewStore";
-import { getEntriesWithStartTimes, getScheduleStartTime } from "../modules/schedules/ScheduleStore";
+import { getEntriesWithStartTimes, getSchedule } from "../modules/schedules/ScheduleStore";
 import { RunParticipant } from "../../api/APITypes";
 import { getRun } from "../modules/runs/RunStore";
 import { ScheduleEntryWithTimes } from "../modules/schedules/ScheduleTypes";
@@ -13,7 +13,6 @@ import PublicHelmet from "./PublicHelmet";
 
 import styles from "./Schedule.mod.css";
 
-import logo from "../res/spyrothon_logo.png";
 import backgroundVideo from "../res/schedule_background.webm";
 import backgroundPoster from "../res/schedule_background.png";
 
@@ -89,10 +88,15 @@ function DayMarker(props: DayMarkerProps) {
 }
 
 export default function Schedule() {
-  const [scheduleEntries, scheduleStartTime] = useSafeSelector((state) => [
+  const [scheduleEntries, schedule] = useSafeSelector((state) => [
     getEntriesWithStartTimes(state),
-    getScheduleStartTime(state),
+    getSchedule(state),
   ]);
+
+  const startTime = React.useMemo(
+    () => (schedule != null ? DateTime.fromJSDate(schedule.startTime) : undefined),
+    [schedule?.startTime],
+  );
 
   function renderEntry(entry: ScheduleEntryWithTimes) {
     if (entry.runId != null)
@@ -103,7 +107,7 @@ export default function Schedule() {
   }
 
   function renderEntries() {
-    let lastStartTime = scheduleStartTime;
+    let lastStartTime = startTime!;
     let dayEntries: JSX.Element[] = [];
     const groups: JSX.Element[] = [];
 
@@ -138,6 +142,8 @@ export default function Schedule() {
     return groups;
   }
 
+  if (schedule == null) return;
+
   return (
     <div className={styles.page}>
       <PublicHelmet className={styles.body} />
@@ -146,10 +152,10 @@ export default function Schedule() {
       </video>
       <div className={styles.schedule}>
         <div className={styles.eventInfo}>
-          <img className={styles.logo} src={logo} />
-          <div className={styles.dates}>June 26th, 2021</div>
+          <img className={styles.logo} src={schedule.logoUrl} />
+          <div className={styles.dates}>{startTime?.toLocaleString(DateTime.DATE_FULL)}</div>
           <div className={styles.timezone}>
-            All times are shown in <strong>{scheduleStartTime.offsetNameShort}</strong>.
+            All times are shown in <strong>{startTime?.offsetNameShort}</strong>.
           </div>
         </div>
         {renderEntries()}
