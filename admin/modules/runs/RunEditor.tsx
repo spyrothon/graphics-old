@@ -173,6 +173,9 @@ export default function RunEditor(props: RunEditorProps) {
           {renderParticipantFields("runners", 3)}
           {renderParticipantFields("runners", 4)}
           {renderParticipantFields("runners", 5)}
+          {renderParticipantFields("runners", 6)}
+          {renderParticipantFields("runners", 7)}
+          {renderParticipantFields("runners", 8)}
           <Header className={styles.header}>Commentators</Header>
           {renderParticipantFields("commentators", 0)}
           {renderParticipantFields("commentators", 1)}
