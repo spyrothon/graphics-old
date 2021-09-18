@@ -5,6 +5,7 @@ import type { Run } from "../../../api/APITypes";
 
 import useSafeDispatch from "../../hooks/useDispatch";
 import Button from "../../uikit/Button";
+import Checkbox from "../../uikit/Checkbox";
 import Header from "../../uikit/Header";
 import Text from "../../uikit/Text";
 import { persistRun } from "../runs/RunActions";
@@ -94,26 +95,18 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
           {run.runners.map((runner) => (
             <div key={runner.displayName} className={styles.row}>
               <div className={styles.participantVisibility}>
-                <label>
-                  <input
-                    type="checkbox"
-                    className={styles.checkbox}
-                    onChange={(event) => setRunnerVisible(runner.displayName, event.target.checked)}
-                    checked={runnerVisibilities[runner.displayName] ?? runner.visible}
-                  />
-                  {runner.displayName}
-                </label>
+                <Checkbox
+                  checked={runnerVisibilities[runner.displayName] ?? runner.visible}
+                  onChange={(event) => setRunnerVisible(runner.displayName, event.target.checked)}
+                  label={runner.displayName}
+                />
               </div>
               <div className={styles.participantWebcam}>
-                <label>
-                  <input
-                    type="checkbox"
-                    className={styles.checkbox}
-                    onChange={(event) => setRunnerWebcam(runner.displayName, event.target.checked)}
-                    checked={runnerWebcams[runner.displayName] ?? runner.hasWebcam}
-                  />
-                  Has Webcam
-                </label>
+                <Checkbox
+                  checked={runnerWebcams[runner.displayName] ?? runner.hasWebcam}
+                  label="Has Webcam"
+                  onChange={(event) => setRunnerWebcam(runner.displayName, event.target.checked)}
+                />
               </div>
             </div>
           ))}
@@ -123,32 +116,22 @@ export default function LiveParticipants(props: LiveParticipantsProps) {
           {run.commentators.map((commentator) => (
             <div key={commentator.displayName} className={styles.row}>
               <div className={styles.participantVisibility}>
-                <label>
-                  <input
-                    type="checkbox"
-                    className={styles.checkbox}
-                    onChange={(event) =>
-                      setCommentatorVisible(commentator.displayName, event.target.checked)
-                    }
-                    checked={
-                      commentatorVisibilities[commentator.displayName] ?? commentator.visible
-                    }
-                  />
-                  {commentator.displayName}
-                </label>
+                <Checkbox
+                  checked={commentatorVisibilities[commentator.displayName] ?? commentator.visible}
+                  onChange={(event) =>
+                    setCommentatorVisible(commentator.displayName, event.target.checked)
+                  }
+                  label={commentator.displayName}
+                />
               </div>
               <div className={styles.participantWebcam}>
-                <label>
-                  <input
-                    type="checkbox"
-                    className={styles.checkbox}
-                    onChange={(event) =>
-                      setCommentatorWebcam(commentator.displayName, event.target.checked)
-                    }
-                    checked={commentatorWebcams[commentator.displayName] ?? commentator.hasWebcam}
-                  />
-                  Has Webcam
-                </label>
+                <Checkbox
+                  checked={commentatorWebcams[commentator.displayName] ?? commentator.hasWebcam}
+                  label="Has Webcam"
+                  onChange={(event) =>
+                    setCommentatorWebcam(commentator.displayName, event.target.checked)
+                  }
+                />
               </div>
             </div>
           ))}
