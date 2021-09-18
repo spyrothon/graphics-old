@@ -9,7 +9,7 @@ module.exports = {
     if (options.mode == null) {
       console.warn("WARNING: No mode was set. Will default to `development`");
     }
-    const NODE_ENV = options.mode || "development";
+    const NODE_ENV = process.env.NODE_ENV === "ci" ? "ci" : options.mode || "development";
 
     const configPath = path.resolve(__dirname, `../config/${NODE_ENV}.json`);
     const config = require(configPath);
