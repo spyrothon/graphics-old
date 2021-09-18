@@ -9,6 +9,19 @@ import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
 import styles from "./LiveEntryDisplay.mod.css";
 import DurationUtils from "../time/DurationUtils";
 
+function Notes({ content }: { content?: string }) {
+  if (content == null) return null;
+
+  return (
+    <div className={styles.notes}>
+      <Header color={Header.Colors.MUTED} size={Header.Sizes.H6} marginless>
+        NOTES
+      </Header>
+      <Text marginless>{content}</Text>
+    </div>
+  );
+}
+
 function EntryRunContent({ run }: { run: Run }) {
   return (
     <div className={styles.content}>
@@ -19,12 +32,18 @@ function EntryRunContent({ run }: { run: Run }) {
         Estimate: {DurationUtils.toString(run.estimateSeconds)}
       </Text>
       <Text marginless>{run.runners.map((runner) => runner.displayName).join(", ")}</Text>
+      <Notes content={run.notes} />
     </div>
   );
 }
 
 function EntryInterviewContent({ interview }: { interview: Interview }) {
-  return <div className={styles.content}>{interview.topic}</div>;
+  return (
+    <div className={styles.content}>
+      <Text>{interview.topic}</Text>
+      <Notes content={run.notes} />
+    </div>
+  );
 }
 
 interface LiveEntryDisplayProps {

@@ -48,6 +48,9 @@ html,
   --text-link: #0076a3;
   --text-inverted: #fff;
 
+  --header-normal: var(--text-normal);
+  --header-muted: var(--text-muted);
+
   --background-primary: #fff;
   --background-secondary: #efe5e9;
   --background-tertiary: #f9f6f7;

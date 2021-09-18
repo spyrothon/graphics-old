@@ -7,3 +7,8 @@
 .title {
   font-weight: 700;
 }
+
+.notes {
+  margin: 16px 0 0 0;
+  white-space: pre;
+}
