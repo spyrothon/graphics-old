@@ -89,24 +89,15 @@ export const getEntriesWithStartTimes = createSelector(
           seconds: entry.setupSeconds ?? 0,
         });
 
-        if (entry.runId != null) {
-          const run = runs[entry.runId];
-          if (run != null) {
-            lastActualStartTime = nextActualStartTime.plus({
-              seconds: run.actualSeconds ?? run.estimateSeconds,
-            });
-            lastEstimatedStartTime = nextEstimatedStartTime.plus({ seconds: run.estimateSeconds });
-          }
-        }
-        if (entry.interviewId != null) {
-          const interview = interviews[entry.interviewId];
-          if (interview != null) {
-            lastActualStartTime = nextActualStartTime.plus({ seconds: interview.estimateSeconds });
-            lastEstimatedStartTime = nextEstimatedStartTime.plus({
-              seconds: interview.estimateSeconds,
-            });
-          }
-        }
+        // Estimate is given by entry setup time + estimated time for the content
+        const entryEstimatedSeconds =
+          (runs[entry.runId!]?.estimateSeconds ?? 0) +
+          (interviews[entry.interviewId!]?.estimateSeconds ?? 0);
+        // Actual time is _either_ the entry's entire duration, or the estimated time
+        const entryActualSeconds = entry.actualSetupSeconds ?? entryEstimatedSeconds;
+
+        lastActualStartTime = nextActualStartTime.plus({ seconds: entryActualSeconds });
+        lastEstimatedStartTime = nextEstimatedStartTime.plus({ seconds: entryEstimatedSeconds });
 
         return {
           ...entry,

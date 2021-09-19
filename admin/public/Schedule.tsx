@@ -46,7 +46,8 @@ function Run(props: RunEntryProps) {
       <div className={styles.startTime}>{startTime.toLocaleString(DateTime.TIME_SIMPLE)}</div>
       <div className={styles.details}>
         <div className={styles.game}>
-          {run.gameName} <span className={styles.category}>&middot; {run.categoryName}</span>
+          {run.gameNameFormatted}{" "}
+          <span className={styles.category}>&middot; {run.categoryName}</span>
         </div>
         <div className={styles.participants}>
           {DurationUtils.toString(run.estimateSeconds)} &middot; {renderNameList(run.runners)}
