@@ -22,6 +22,7 @@
 .timer {
   padding: 8px 16px;
   font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 40px;
   font-weight: 900;
   color: var(--text-inverted);

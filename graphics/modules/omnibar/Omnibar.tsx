@@ -2,12 +2,12 @@ import * as React from "react";
 import classNames from "classnames";
 import { animated, config, useTransition } from "react-spring";
 
+import { useSafeSelector } from "../../Store";
+import ScheduleStore from "../schedules/ScheduleStore";
 import OmnibarPlainText from "./OmnibarPlainText";
 import OmnibarUpNext from "./OmnibarUpNext";
 
 import styles from "./Omnibar.mod.css";
-
-import logo from "../../res/spyrothon_logo.png";
 
 type OmnibarProps = {
   className?: string;
@@ -15,6 +15,7 @@ type OmnibarProps = {
 
 export default function Omnibar(props: OmnibarProps) {
   const { className } = props;
+  const schedule = useSafeSelector(ScheduleStore.getSchedule);
 
   const sections = [
     { id: "up-next", content: () => <OmnibarUpNext /> },
@@ -100,9 +101,11 @@ export default function Omnibar(props: OmnibarProps) {
 
   return (
     <div className={classNames(styles.omnibar, className)}>
-      <div className={styles.logo}>
-        <img src={logo} height={54} />
-      </div>
+      {schedule?.logoUrl != null ? (
+        <div className={styles.logo}>
+          <img src={schedule?.logoUrl} height={54} />
+        </div>
+      ) : null}
       <div className={styles.mainContent}>
         {transitions.map(({ item, props, key }) => (
           <animated.div key={key} style={props} className={styles.section}>

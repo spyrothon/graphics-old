@@ -10,7 +10,6 @@
   flex: 0 0 max-content;
   padding: 0 16px;
   margin-top: -2px;
-  filter: drop-shadow(0 0 1px var(--primary-bg-100)) drop-shadow(0 0 12px #000);
 }
 
 .mainContent {
