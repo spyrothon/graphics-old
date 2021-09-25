@@ -26,7 +26,7 @@ export default function Omnibar(props: OmnibarProps) {
           text={
             <>
               Check out the full schedule at{" "}
-              <span className={styles.textEmphasis}>spyrothon.org/schedule</span>
+              <span className={styles.textEmphasis}>spyrothon.org</span>
             </>
           }
         />
@@ -64,21 +64,7 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              <span className={styles.textEmphasis}>Spyrothon Miscellaneous Showcase</span> is June
-              26th, 2021
-            </>
-          }
-        />
-      ),
-    },
-    {
-      id: "art",
-      content: () => (
-        <OmnibarPlainText
-          text={
-            <>
-              Check out the Spyro 3 Art Collab{" "}
-              <span className={styles.textEmphasis}>@Spyro3_collab</span>
+              <span className={styles.textEmphasis}>Spyrothon 7</span> is September 25-26th, 2021
             </>
           }
         />
