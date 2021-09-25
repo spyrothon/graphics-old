@@ -1,19 +1,23 @@
 import * as React from "react";
 
+import { useSafeSelector } from "../../Store";
 import ArtRotation from "../../modules/art/ArtRotation";
 import Omnibar from "../../modules/omnibar/Omnibar";
+import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import Layout from "../../uikit/Layout";
 import BreakUpNext from "./BreakUpNext";
 
 import styles from "./Break.mod.css";
 
-import logo from "../../res/spyrothon_logo.png";
-
 export default function BreakLeft() {
+  const schedule = useSafeSelector(ScheduleStore.getSchedule);
+
+  if (schedule == null) return null;
+
   return (
     <Layout showBackground={false}>
       <div className={styles.breakLeft}>
-        <img className={styles.logo} src={logo} />
+        <img className={styles.logo} src={schedule.logoUrl} />
         <BreakUpNext className={styles.upcoming} />
         <div className={styles.backSoon}>
           <div className={styles.backHeader}>Stay fired up, Bob</div>
