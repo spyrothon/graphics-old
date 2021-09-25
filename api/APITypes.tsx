@@ -46,6 +46,8 @@ export interface Schedule {
   runTitleTemplate?: string;
   interviewTitleTemplate?: string;
   breakTitleTemplate?: string;
+  rtmpHost?: string;
+
   currentEntryId?: string;
   debug: boolean;
 }

@@ -68,6 +68,11 @@ export default function SettingsGeneral() {
         value={editedSchedule.logoUrl}
         onChange={(event) => setEditedSchedule({ ...editedSchedule, logoUrl: event.target.value })}
       />
+      <TextInput
+        label="RTMP Host"
+        value={editedSchedule.rtmpHost}
+        onChange={(event) => setEditedSchedule({ ...editedSchedule, rtmpHost: event.target.value })}
+      />
 
       <Button onClick={handleSave}>{getSaveText()}</Button>
     </div>
