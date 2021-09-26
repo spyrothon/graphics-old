@@ -9,6 +9,7 @@ import Button from "../../uikit/Button";
 import LiveEntryDisplay from "./LiveEntryDisplay";
 
 import styles from "./LiveSidebar.mod.css";
+import RTMPStreams from "../rtmp/RTMPStreams";
 
 type LiveSidebarProps = {
   className?: string;
@@ -57,6 +58,9 @@ export default function LiveSidebar(props: LiveSidebarProps) {
         </Button>
       </div>
       {nextEntry != null ? <LiveEntryDisplay scheduleEntry={nextEntry} label="Up Next" /> : null}
+      {schedule?.rtmpHost != null ? (
+        <RTMPStreams className={styles.rtmp} rtmpHost={schedule.rtmpHost} />
+      ) : null}
       <div className={styles.bottom}>
         <Button color={Button.Colors.DEFAULT} fullwidth onClick={handleToggleDebug}>
           {!schedule?.debug ? "Enable Debug Mode" : "Disable Debug Mode"}
