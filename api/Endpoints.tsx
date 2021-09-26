@@ -24,6 +24,7 @@ const Endpoints = {
     `/schedules/${scheduleId}/entries/${entryId}`,
   SCHEDULE_SET_CURRENT_ENTRY: (id: string) => `/schedules/${id}/set-current-entry`,
   SCHEDULE_OBS_CONFIG: (id: string) => `/schedules/${id}/obs`,
+  SCHEDULE_RTMP_STAT: (id: string) => `/schedules/${id}/rtmp-stat`,
   TRANSITION_SET_RESET: (id: string) => `/transition-sets/${id}/reset`,
 };
 

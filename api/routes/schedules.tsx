@@ -58,3 +58,7 @@ export async function updateScheduleOBSConfig(scheduleId: string, config: OBSWeb
     config,
   );
 }
+
+export async function fetchScheduleRTMPStat(scheduleId: string) {
+  return await HTTPUtils.get<string>(Endpoints.SCHEDULE_RTMP_STAT(scheduleId));
+}

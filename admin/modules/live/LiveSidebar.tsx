@@ -58,8 +58,8 @@ export default function LiveSidebar(props: LiveSidebarProps) {
         </Button>
       </div>
       {nextEntry != null ? <LiveEntryDisplay scheduleEntry={nextEntry} label="Up Next" /> : null}
-      {schedule?.rtmpHost != null ? (
-        <RTMPStreams className={styles.rtmp} rtmpHost={schedule.rtmpHost} />
+      {schedule?.id != null ? (
+        <RTMPStreams className={styles.rtmp} scheduleId={schedule.id} />
       ) : null}
       <div className={styles.bottom}>
         <Button color={Button.Colors.DEFAULT} fullwidth onClick={handleToggleDebug}>

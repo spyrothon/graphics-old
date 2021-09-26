@@ -1,3 +1,5 @@
+import APIClient from "../../../api/APIClient";
+
 const DOM_PARSER = new DOMParser();
 
 interface RTMPClient {}
@@ -13,11 +15,9 @@ export interface RTMPStream {
   clients?: RTMPClient[];
 }
 
-export default async function getRTMPStats(statHost: string): Promise<RTMPStream[]> {
-  const statUrl = `http://${statHost}/stat`;
-  const response = await fetch(statUrl);
-  const text = await response.text();
-  const parsed = DOM_PARSER.parseFromString(text, "application/xml");
+export default async function getRTMPStats(scheduleId: string): Promise<RTMPStream[]> {
+  const response = await APIClient.fetchScheduleRTMPStat(scheduleId);
+  const parsed = DOM_PARSER.parseFromString(response, "application/xml");
 
   const liveStreams = Array.from(parsed.querySelectorAll("application")).filter(
     (app) => app.querySelector("name")?.innerHTML === "live",

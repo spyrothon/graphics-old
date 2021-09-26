@@ -48,17 +48,17 @@ function RTMPStreamStat({ stream }: { stream: RTMPStream }) {
 }
 
 interface RTMPStreamsProps {
-  rtmpHost: string;
+  scheduleId: string;
   className?: string;
 }
 
 export default function RTMPStreams(props: RTMPStreamsProps) {
-  const { rtmpHost, className } = props;
+  const { scheduleId, className } = props;
 
   const [streams, setStreams] = React.useState<RTMPStream[]>([]);
   React.useEffect(() => {
     async function fetchStreams() {
-      const streams = await getRTMPStats(rtmpHost);
+      const streams = await getRTMPStats(scheduleId);
       setStreams(streams);
     }
 
@@ -66,7 +66,7 @@ export default function RTMPStreams(props: RTMPStreamsProps) {
     fetchStreams();
 
     return () => clearInterval(intervalId);
-  }, [rtmpHost]);
+  }, [scheduleId]);
 
   return (
     <div className={classNames(styles.container, className)}>
