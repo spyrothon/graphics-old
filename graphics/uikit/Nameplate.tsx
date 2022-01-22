@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { RunParticipant } from "../../api/APITypes";
+import { RunParticipant } from "@api/APITypes";
 import DurationUtils from "../modules/time/DurationUtils";
 
 import styles from "./Nameplate.mod.css";

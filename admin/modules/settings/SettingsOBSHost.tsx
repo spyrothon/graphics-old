@@ -1,22 +1,22 @@
 import * as React from "react";
 
-import useSafeDispatch from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
-import { fetchScheduleOBSConfig, updateScheduleOBSConfig } from "../schedules/ScheduleActions";
-import TextInput from "../../uikit/TextInput";
-import NumberInput from "../../uikit/NumberInput";
-import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable from "@common/hooks/useSaveable";
+import Button from "@uikit/Button";
+import TextInput from "@uikit/TextInput";
+import NumberInput from "@uikit/NumberInput";
+import Header from "@uikit/Header";
+import Text from "@uikit/Text";
 import { useSafeSelector } from "../../Store";
+import { fetchScheduleOBSConfig, updateScheduleOBSConfig } from "../schedules/ScheduleActions";
 import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 import * as ScheduleStore from "../schedules/ScheduleStore";
 
 import styles from "./SettingsDashboard.mod.css";
-import useSaveable from "../../hooks/useSaveable";
 
 export default function ConfigOBSHost() {
   const dispatch = useSafeDispatch();
-  const { scheduleId, schedule } = React.useContext(CurrentScheduleContext);
+  const { scheduleId } = React.useContext(CurrentScheduleContext);
 
   React.useEffect(() => {
     dispatch(fetchScheduleOBSConfig(scheduleId));
@@ -35,7 +35,7 @@ export default function ConfigOBSHost() {
   }, [obsConfig]);
 
   const [handleSave, getSaveText] = useSaveable(async () => {
-    await dispatch(updateScheduleOBSConfig(scheduleId, { ...obsConfig, host, port, password }));
+    dispatch(updateScheduleOBSConfig(scheduleId, { ...obsConfig, host, port, password }));
   });
 
   return (

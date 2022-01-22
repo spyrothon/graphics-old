@@ -1,9 +1,9 @@
 import * as React from "react";
 import classNames from "classnames";
 
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Text from "@uikit/Text";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
-import Text from "../../uikit/Text";
 import { selectScheduleEntry, reorderScheduleEntries } from "./ScheduleActions";
 import ScheduleListEntry from "./ScheduleListEntry";
 import * as ScheduleStore from "./ScheduleStore";

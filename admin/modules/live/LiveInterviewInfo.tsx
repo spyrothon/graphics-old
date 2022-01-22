@@ -1,16 +1,16 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import type { InterviewQuestion, Interview } from "../../../api/APITypes";
+import type { InterviewQuestion, Interview } from "@api/APITypes";
 
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
+import NumberInput from "@uikit/NumberInput";
+import SelectInput from "@uikit/SelectInput";
+import Text from "@uikit/Text";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
 import * as InterviewStore from "../../modules/interviews/InterviewStore";
-import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
-import NumberInput from "../../uikit/NumberInput";
-import SelectInput from "../../uikit/SelectInput";
-import Text from "../../uikit/Text";
 import { persistInterview } from "../interviews/InterviewActions";
 
 import styles from "./LiveInterviewInfo.mod.css";

@@ -1,5 +1,5 @@
-import SyncSocket from "../../../api/socket/SyncSocket";
-import { SyncSocketMessage } from "../../../api/socket/SyncSocketTypes";
+import SyncSocket from "@api/socket/SyncSocket";
+import { SyncSocketMessage } from "@api/socket/SyncSocketTypes";
 import { store } from "../../Store";
 import { loadInterview } from "../interviews/InterviewActions";
 import { loadRun } from "../runs/RunActions";

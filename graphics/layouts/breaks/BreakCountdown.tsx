@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { Schedule } from "../../../api/APITypes";
+import { Schedule } from "@api/APITypes";
+import useAnimationFrame from "@common/hooks/useAnimationFrame";
 import { useSafeSelector } from "../../Store";
-import useAnimationFrame from "../../hooks/useAnimationFrame";
 import ScheduleStore from "../../modules/schedules/ScheduleStore";
 import DurationUtils from "../../modules/time/DurationUtils";
 import Layout from "../../uikit/Layout";

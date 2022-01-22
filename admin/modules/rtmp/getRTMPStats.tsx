@@ -1,4 +1,4 @@
-import APIClient from "../../../api/APIClient";
+import APIClient from "@api/APIClient";
 
 const DOM_PARSER = new DOMParser();
 

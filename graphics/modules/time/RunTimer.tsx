@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Run } from "../../../api/APITypes";
-import useAnimationFrame from "../../hooks/useAnimationFrame";
+import { Run } from "@api/APITypes";
+import useAnimationFrame from "@common/hooks/useAnimationFrame";
 import Timer from "../../uikit/Timer";
 import getElapsedRunSeconds from "../runs/getElapsedRunSeconds";
 

@@ -1,9 +1,9 @@
 import Cookies from "js-cookie";
 
-import APIClient from "../../../api/APIClient";
-import { User } from "../../../api/APITypes";
-import HTTPUtils from "../../../api/HTTPUtils";
-import { SafeDispatch } from "../../hooks/useDispatch";
+import APIClient from "@api/APIClient";
+import { User } from "@api/APITypes";
+import HTTPUtils from "@api/HTTPUtils";
+import { SafeDispatch } from "@admin/hooks/useDispatch";
 import { AuthActionType, AuthAction } from "./AuthTypes";
 
 const AUTH_COOKIE_ID = "session";

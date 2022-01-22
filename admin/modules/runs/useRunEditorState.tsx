@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Run, RunParticipant } from "../../../api/APITypes";
+import type { Run, RunParticipant } from "@api/APITypes";
 
 type RunEditorState = {
   baseRun?: Run;

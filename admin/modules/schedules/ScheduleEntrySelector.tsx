@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import SelectInput from "../../uikit/SelectInput";
+import SelectInput from "@uikit/SelectInput";
 import { ScheduleEntryWithDependants } from "./ScheduleTypes";
 
 type ScheduleEntrySelectorProps = {

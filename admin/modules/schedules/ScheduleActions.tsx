@@ -1,4 +1,4 @@
-import APIClient from "../../../api/APIClient";
+import APIClient from "@api/APIClient";
 import {
   Schedule,
   ScheduleEntry,
@@ -6,8 +6,8 @@ import {
   InitialSchedule,
   ScheduleResponse,
   TransitionSet,
-} from "../../../api/APITypes";
-import { SafeDispatch } from "../../hooks/useDispatch";
+} from "@api/APITypes";
+import { SafeDispatch } from "@admin/hooks/useDispatch";
 import { fetchRunsSuccess } from "../runs/RunActions";
 import { ScheduleActionType, ScheduleAction } from "./ScheduleTypes";
 import { fetchInterviewsSuccess } from "../interviews/InterviewActions";

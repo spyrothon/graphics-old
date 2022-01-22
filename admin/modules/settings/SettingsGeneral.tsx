@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import APIClient from "../../../api/APIClient";
-import { ScheduleResponse } from "../../../api/APITypes";
-import useSafeDispatch from "../../hooks/useDispatch";
-import Header from "../../uikit/Header";
+import APIClient from "@api/APIClient";
+import { ScheduleResponse } from "@api/APITypes";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Header from "@uikit/Header";
 import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 import { setCurrentSchedule } from "../schedules/ScheduleActions";
 import ScheduleCard from "../schedules/ScheduleCard";

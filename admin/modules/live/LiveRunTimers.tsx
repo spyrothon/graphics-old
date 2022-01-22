@@ -2,15 +2,13 @@ import * as React from "react";
 import classNames from "classnames";
 import { Pause, Repeat, Flag, Play, Icon } from "react-feather";
 
-import type { Run, RunParticipant } from "../../../api/APITypes";
-import useSafeDispatch, { SafeDispatch } from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
-import type { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
-import LiveTimer from "../time/LiveTimer";
-
-import styles from "./LiveRunTimers.mod.css";
+import type { Run, RunParticipant } from "@api/APITypes";
+import useSafeDispatch, { SafeDispatch } from "@admin/hooks/useDispatch";
+import LiveTimer from "@common/time/LiveTimer";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
+import Text from "@uikit/Text";
+import getRunState from "../runs/getRunState";
 import {
   finishRun,
   startRun,
@@ -20,7 +18,8 @@ import {
   resumeRun,
   resumeRunParticipant,
 } from "../runs/RunActions";
-import getRunState from "../runs/getRunState";
+
+import styles from "./LiveRunTimers.mod.css";
 
 interface TimerAction {
   Icon: Icon;

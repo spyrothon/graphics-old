@@ -1,4 +1,4 @@
-import { SessionToken, User } from "../../../api/APITypes";
+import { SessionToken, User } from "@api/APITypes";
 
 export enum AuthActionType {
   AUTH_LOGIN = "AUTH_LOGIN",

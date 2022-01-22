@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { InitialSchedule } from "../../../api/APITypes";
-import useSafeDispatch from "../../hooks/useDispatch";
-import useSaveable from "../../hooks/useSaveable";
-import Header from "../../uikit/Header";
-import Button from "../../uikit/Button";
-import DateTimeInput from "../../uikit/DateTimeInput";
-import TextInput from "../../uikit/TextInput";
+import { InitialSchedule } from "@api/APITypes";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable from "@common/hooks/useSaveable";
+import Header from "@uikit/Header";
+import Button from "@uikit/Button";
+import DateTimeInput from "@uikit/DateTimeInput";
+import TextInput from "@uikit/TextInput";
 import { createSchedule } from "../schedules/ScheduleActions";
 
 import styles from "./SettingsCreateSchedule.mod.css";

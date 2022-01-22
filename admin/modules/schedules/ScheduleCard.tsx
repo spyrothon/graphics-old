@@ -1,10 +1,10 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Schedule } from "../../../api/APITypes";
-import Anchor from "../../uikit/Anchor";
-import Button from "../../uikit/Button";
-import Text from "../../uikit/Text";
+import { Schedule } from "@api/APITypes";
+import Anchor from "@uikit/Anchor";
+import Button from "@uikit/Button";
+import Text from "@uikit/Text";
 import CurrentScheduleContext from "./CurrentScheduleContext";
 
 import styles from "./ScheduleCard.mod.css";

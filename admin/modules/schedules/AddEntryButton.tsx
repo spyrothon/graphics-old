@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import useSafeDispatch from "../../hooks/useDispatch";
-import Text from "../../uikit/Text";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Text from "@uikit/Text";
 import { addRunToSchedule, addInterviewToSchedule } from "./ScheduleActions";
 
 import styles from "./ScheduleList.mod.css";

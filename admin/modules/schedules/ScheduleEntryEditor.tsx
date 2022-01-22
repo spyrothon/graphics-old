@@ -6,12 +6,12 @@ import {
   InitialTransition,
   InitialScheduleEntry,
   InitialTransitionSet,
-} from "../../../api/APITypes";
-import useSafeDispatch from "../../hooks/useDispatch";
-import useSaveable, { SaveState } from "../../hooks/useSaveable";
-import Button from "../../uikit/Button";
-import DurationInput from "../../uikit/DurationInput";
-import Header from "../../uikit/Header";
+} from "@api/APITypes";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable, { SaveState } from "@common/hooks/useSaveable";
+import Button from "@uikit/Button";
+import DurationInput from "@uikit/DurationInput";
+import Header from "@uikit/Header";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "./ScheduleActions";
 import TransitionEditor from "./TransitionEditor";

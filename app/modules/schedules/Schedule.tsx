@@ -1,20 +1,20 @@
 import * as React from "react";
 import { DateTime } from "luxon";
 
-import { useSafeSelector } from "../Store";
-import { getInterview } from "../modules/interviews/InterviewStore";
-import { getEntriesWithStartTimes, getSchedule } from "../modules/schedules/ScheduleStore";
-import { RunParticipant } from "../../api/APITypes";
-import { getRun } from "../modules/runs/RunStore";
-import { ScheduleEntryWithTimes } from "../modules/schedules/ScheduleTypes";
-import * as DurationUtils from "../modules/time/DurationUtils";
-import Anchor from "../uikit/Anchor";
-import PublicHelmet from "./PublicHelmet";
+import { RunParticipant } from "@api/APITypes";
+import * as DurationUtils from "@common/time/DurationUtils";
+import Anchor from "@uikit/Anchor";
+import { useSafeSelector } from "../../Store";
+import PublicHelmet from "../core/PublicHelmet";
+import { getInterview } from "../interviews/InterviewStore";
+import { getEntriesWithStartTimes, getSchedule } from "../schedules/ScheduleStore";
+import { getRun } from "../runs/RunStore";
+import { ScheduleEntryWithTimes } from "../schedules/ScheduleTypes";
 
 import styles from "./Schedule.mod.css";
 
-import backgroundVideo from "../res/schedule_background.webm";
-import backgroundPoster from "../res/schedule_background.png";
+import backgroundVideo from "../../res/schedule_background.webm";
+import backgroundPoster from "../../res/schedule_background.png";
 
 function renderNameList(participants: RunParticipant[]) {
   return participants.map((runner, index) => (
@@ -136,7 +136,7 @@ export default function Schedule() {
     });
 
     groups.push(
-      <div key={`group-last`} className={styles.dayGroup}>
+      <div key="group-last" className={styles.dayGroup}>
         {dayEntries}
       </div>,
     );

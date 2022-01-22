@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
+import APIClient from "@api/APIClient";
 import { Routes } from "./Constants";
 import useSafeDispatch from "./hooks/useDispatch";
 import DS1 from "./layouts/DS1";
@@ -23,7 +24,6 @@ import { history } from "./modules/router/RouterUtils";
 import { fetchSchedule } from "./modules/schedules/ScheduleActions";
 import SyncSocketManager from "./modules/sync/SyncSocketManager";
 import SVGLibrary from "./uikit/svg/SVGLibrary";
-import APIClient from "../api/APIClient";
 
 export default function App() {
   React.useEffect(() => {

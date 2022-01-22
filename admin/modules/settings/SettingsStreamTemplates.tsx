@@ -1,16 +1,15 @@
 import * as React from "react";
 
-import useSafeDispatch from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable from "@common/hooks/useSaveable";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
+import Text from "@uikit/Text";
+import TextInput from "@uikit/TextInput";
 import { updateSchedule } from "../schedules/ScheduleActions";
-import TextInput from "../../uikit/TextInput";
-import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
 import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 
 import styles from "./SettingsDashboard.mod.css";
-import type { Schedule } from "../../../api/APITypes";
-import useSaveable from "../../hooks/useSaveable";
 
 export default function SettingsStreamTemplates() {
   const dispatch = useSafeDispatch();
@@ -29,7 +28,7 @@ export default function SettingsStreamTemplates() {
   }, [schedule]);
 
   const [handleSave, getSaveText] = useSaveable(async () => {
-    await dispatch(
+    dispatch(
       updateSchedule({
         ...schedule,
         runTitleTemplate,

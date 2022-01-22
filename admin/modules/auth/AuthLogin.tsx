@@ -1,12 +1,12 @@
 import * as React from "react";
 
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import RouterUtils from "@common/router/RouterUtils";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
+import TextInput, { TextInputType } from "@uikit/TextInput";
 import { Routes } from "../../Constants";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
-import TextInput, { TextInputType } from "../../uikit/TextInput";
-import RouterUtils from "../router/RouterUtils";
 import { login } from "./AuthActions";
 import AuthStore from "./AuthStore";
 

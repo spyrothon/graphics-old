@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import Header from "../../uikit/Header";
-import NavLink from "../../uikit/NavLink";
-import Text from "../../uikit/Text";
+import Header from "@uikit/Header";
+import NavLink from "@uikit/NavLink";
+import Text from "@uikit/Text";
+import { Routes } from "../../Constants";
 import RemoteConnectionStatus from "../connection/RemoteConnectionStatus";
+import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 
 import styles from "./DashboardHeader.mod.css";
-import { Routes } from "../../Constants";
-import CurrentScheduleContext from "../schedules/CurrentScheduleContext";
 
 type DashboardHeaderProps = {
   name: React.ReactNode;

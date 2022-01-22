@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import DashboardHeader from "../dashboards/DashboardHeader";
-import SidebarLayout from "../../uikit/SidebarLayout";
+import SidebarLayout from "@uikit/SidebarLayout";
 
 type DashboardProps = {
   fullPage?: boolean;

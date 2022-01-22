@@ -1,17 +1,17 @@
 import * as React from "react";
 
-import { ScheduleEntry } from "../../../api/APITypes";
+import { ScheduleEntry } from "@api/APITypes";
+import useSaveable from "@common/hooks/useSaveable";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
 import { useSafeSelector } from "../../Store";
-import useSaveable from "../../hooks/useSaveable";
-import useSafeDispatch from "../../hooks/useDispatch";
 import * as ScheduleStore from "../../modules/schedules/ScheduleStore";
-import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
+import OBS from "../obs/OBS";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
 import { updateScheduleEntry } from "../schedules/ScheduleActions";
 
 import styles from "./LiveEntryControl.mod.css";
-import OBS from "../obs/OBS";
 
 type LiveEntryControlProps = {
   className?: string;

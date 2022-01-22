@@ -9,9 +9,13 @@
       "HOSTNAME": "localhost",
       "PORT": 8080
     },
-    "graphics": {
+    "app": {
       "HOSTNAME": "localhost",
       "PORT": 8081
+    },
+    "graphics": {
+      "HOSTNAME": "localhost",
+      "PORT": 8082
     }
   }
 }

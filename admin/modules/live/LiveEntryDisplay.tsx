@@ -1,13 +1,13 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Run, Interview } from "../../../api/APITypes";
-import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
+import { Run, Interview } from "@api/APITypes";
+import DurationUtils from "@common/time/DurationUtils";
+import Header from "@uikit/Header";
+import Text from "@uikit/Text";
 import { ScheduleEntryWithDependants } from "../schedules/ScheduleTypes";
 
 import styles from "./LiveEntryDisplay.mod.css";
-import DurationUtils from "../time/DurationUtils";
 
 function Notes({ content }: { content?: string }) {
   if (content == null) return null;

@@ -1,9 +1,9 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
-import DurationUtils from "../time/DurationUtils";
+import Header from "@uikit/Header";
+import Text from "@uikit/Text";
+import DurationUtils from "@common/time/DurationUtils";
 import getRTMPStats, { RTMPStream } from "./getRTMPStats";
 
 import styles from "./RTMPStreams.mod.css";

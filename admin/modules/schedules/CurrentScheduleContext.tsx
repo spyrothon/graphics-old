@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Schedule } from "../../../api/APITypes";
+import { Schedule } from "@api/APITypes";
 
 interface ScheduleContextState {
   scheduleId: string;

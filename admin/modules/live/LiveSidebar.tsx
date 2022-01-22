@@ -1,15 +1,15 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import useSafeDispatch from "../../hooks/useDispatch";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Button from "@uikit/Button";
 import { useSafeSelector } from "../../Store";
+import RTMPStreams from "../rtmp/RTMPStreams";
 import * as ScheduleStore from "../schedules/ScheduleStore";
 import { updateSchedule, transitionToSecheduleEntry } from "../schedules/ScheduleActions";
-import Button from "../../uikit/Button";
 import LiveEntryDisplay from "./LiveEntryDisplay";
 
 import styles from "./LiveSidebar.mod.css";
-import RTMPStreams from "../rtmp/RTMPStreams";
 
 type LiveSidebarProps = {
   className?: string;

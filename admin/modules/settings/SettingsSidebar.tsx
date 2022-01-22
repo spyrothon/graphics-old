@@ -1,17 +1,16 @@
 import * as React from "react";
 import classNames from "classnames";
+import { LogOut } from "react-feather";
 
-import NavLink from "../../uikit/NavLink";
-import Text from "../../uikit/Text";
-
+import Button from "@uikit/Button";
+import NavLink from "@uikit/NavLink";
+import Text from "@uikit/Text";
 import { Routes } from "../../Constants";
-
-import styles from "./SettingsSidebar.mod.css";
-import Button from "../../uikit/Button";
-import SETTINGS_ROUTES from "./SettingsRoutes";
 import { useSafeSelector } from "../../Store";
 import AuthStore from "../auth/AuthStore";
-import { LogOut } from "react-feather";
+import SETTINGS_ROUTES from "./SettingsRoutes";
+
+import styles from "./SettingsSidebar.mod.css";
 
 const ICON_STYLE = { marginRight: 8, marginBottom: -2.5 };
 

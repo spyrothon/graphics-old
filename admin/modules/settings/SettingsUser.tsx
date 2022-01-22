@@ -1,11 +1,11 @@
 import * as React from "react";
 
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable from "@common/hooks/useSaveable";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
+import TextInput, { TextInputType } from "@uikit/TextInput";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
-import useSaveable from "../../hooks/useSaveable";
-import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
-import TextInput, { TextInputType } from "../../uikit/TextInput";
 import AuthStore from "../auth/AuthStore";
 import { updateMe } from "../auth/AuthActions";
 
@@ -18,7 +18,7 @@ export default function SettingsUser() {
   const [password, setPassword] = React.useState("");
 
   const [handleSave, getSaveText] = useSaveable(async () => {
-    await dispatch(updateMe(editedUser, password));
+    dispatch(updateMe(editedUser, password));
   });
 
   React.useEffect(() => {

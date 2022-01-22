@@ -1,9 +1,9 @@
 import * as React from "react";
 
+import StatusDot from "@uikit/StatusDot";
+import Header from "@uikit/Header";
 import { useSafeSelector } from "../../Store";
 import * as RemoteStore from "../../modules/remote/RemoteStore";
-import StatusDot from "../../uikit/StatusDot";
-import Header from "../../uikit/Header";
 
 import styles from "./RemoteConnectionStatus.mod.css";
 import { useOBSConnected, useOBSBusy } from "../obs/OBSStore";

@@ -2,16 +2,15 @@ import * as React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
 import { Routes } from "./Constants";
-import useSafeDispatch from "./hooks/useDispatch";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import BlankPage from "@common/router/BlankPage";
+import { history } from "@common/router/RouterUtils";
 import { loadSession } from "./modules/auth/AuthActions";
 import AuthStore from "./modules/auth/AuthStore";
 import AuthLogin from "./modules/auth/AuthLogin";
 import AuthLogout from "./modules/auth/AuthLogout";
-import BlankPage from "./modules/router/BlankPage";
-import { history } from "./modules/router/RouterUtils";
 import { fetchSchedule, fetchScheduleOBSConfig } from "./modules/schedules/ScheduleActions";
 import * as ScheduleStore from "./modules/schedules/ScheduleStore";
-import Schedule from "./public/Schedule";
 import Dashboards from "./Dashboards";
 import { useSafeSelector } from "./Store";
 import OBSManager from "./modules/obs/OBSManager";
@@ -25,7 +24,7 @@ export default function App() {
 
   React.useEffect(() => {
     (async function () {
-      await dispatch(loadSession());
+      dispatch(loadSession());
       const { scheduleId } = await APIClient.fetchInit();
       dispatch(fetchSchedule(scheduleId));
       dispatch(fetchScheduleOBSConfig(scheduleId));
@@ -47,8 +46,6 @@ export default function App() {
         <Switch>
           <Route path={Routes.LOGIN} component={AuthLogin} />
           <Route path={Routes.LOGOUT} component={AuthLogout} />
-          <Route path={Routes.SCHEDULE} component={Schedule} />
-          <Route exact path={Routes.BASE_PATH} component={Schedule} />
           {isLoggedIn ? <Dashboards /> : null}
           <Route>
             <BlankPage />

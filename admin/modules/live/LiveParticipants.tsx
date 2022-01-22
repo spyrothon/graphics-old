@@ -1,13 +1,13 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import type { Run } from "../../../api/APITypes";
+import type { Run } from "@api/APITypes";
 
-import useSafeDispatch from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
-import Checkbox from "../../uikit/Checkbox";
-import Header from "../../uikit/Header";
-import Text from "../../uikit/Text";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Button from "@uikit/Button";
+import Checkbox from "@uikit/Checkbox";
+import Header from "@uikit/Header";
+import Text from "@uikit/Text";
 import { persistRun } from "../runs/RunActions";
 
 import styles from "./LiveParticipants.mod.css";

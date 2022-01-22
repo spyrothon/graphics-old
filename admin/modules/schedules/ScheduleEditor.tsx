@@ -1,7 +1,7 @@
 import * as React from "react";
 
+import Tabs, { Tab } from "@uikit/Tabs";
 import { useSafeSelector } from "../../Store";
-import Tabs, { Tab } from "../../uikit/Tabs";
 import Dashboard from "../dashboards/Dashboard";
 import InterviewEditor from "../interviews/InterviewEditor";
 import RunEditor from "../runs/RunEditor";
@@ -10,7 +10,7 @@ import * as ScheduleStore from "../schedules/ScheduleStore";
 import ScheduleEntryEditor from "./ScheduleEntryEditor";
 
 import styles from "./ScheduleEditor.mod.css";
-import { ScheduleEntryType } from "../../../api/APITypes";
+import { ScheduleEntryType } from "@api/APITypes";
 
 export default function ScheduleEditor() {
   const selectedScheduleEntry = useSafeSelector((state) => ScheduleStore.getSelectedEntry(state));

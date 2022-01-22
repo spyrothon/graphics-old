@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 
-import { RunParticipant } from "../../../api/APITypes";
+import { RunParticipant } from "@api/APITypes";
 
 import { useSafeSelector } from "../../Store";
 import InterviewStore from "../../modules/interviews/InterviewStore";

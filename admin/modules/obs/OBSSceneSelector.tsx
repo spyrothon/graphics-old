@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import SelectInput from "../../uikit/SelectInput";
+import SelectInput from "@uikit/SelectInput";
 import { useOBSStore } from "./OBSStore";
 
 import type { Scene } from "obs-websocket-js";

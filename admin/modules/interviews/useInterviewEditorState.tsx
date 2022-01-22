@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Interview, RunParticipant, InterviewQuestion } from "../../../api/APITypes";
+import { Interview, RunParticipant, InterviewQuestion } from "@api/APITypes";
 
 type InterviewEditorState = {
   base?: Interview;

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { ArrowRight, X, ChevronsUp, ChevronsDown } from "react-feather";
 
-import NumberInput from "../../uikit/NumberInput";
+import NumberInput from "@uikit/NumberInput";
 import OBSMediaSelector from "../obs/OBSMediaSelector";
 import OBSSceneSelector from "../obs/OBSSceneSelector";
 import OBSTransitionSelector from "../obs/OBSTransitionSelector";
 
-import type { InitialTransition } from "../../../api/APITypes";
+import type { InitialTransition } from "@api/APITypes";
 
 import styles from "./TransitionEditor.mod.css";
 

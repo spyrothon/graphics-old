@@ -1,4 +1,4 @@
-import { Schedule, OBSWebsocketConfig } from "../../../api/APITypes";
+import { Schedule, OBSWebsocketConfig } from "@api/APITypes";
 import { ActionFor, Action } from "../../Actions";
 import { ScheduleActionType } from "./ScheduleTypes";
 

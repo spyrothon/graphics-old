@@ -1,4 +1,4 @@
-import { SessionToken, User } from "../../../api/APITypes";
+import { SessionToken, User } from "@api/APITypes";
 
 import { ActionFor, Action } from "../../Actions";
 import { AuthActionType } from "./AuthTypes";

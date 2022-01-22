@@ -1,7 +1,8 @@
 import OBS from "./OBS";
 import { store } from "../../Store";
 import * as ScheduleStore from "../schedules/ScheduleStore";
-import { OBSWebsocketConfig } from "../../../api/APITypes";
+
+import type { OBSWebsocketConfig } from "@api/APITypes";
 
 export default {
   init() {

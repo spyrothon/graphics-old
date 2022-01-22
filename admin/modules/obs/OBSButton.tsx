@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Button from "../../uikit/Button";
+import Button from "@uikit/Button";
 import { useOBSBusy } from "./OBSStore";
 
 interface OBSButtonProps {

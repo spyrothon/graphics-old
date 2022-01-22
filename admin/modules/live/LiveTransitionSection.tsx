@@ -2,10 +2,10 @@ import * as React from "react";
 import classNames from "classnames";
 import { Loader, Check, Circle } from "react-feather";
 
-import { Transition, TransitionSet, TransitionState } from "../../../api/APITypes";
-import useSafeDispatch from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
-import Text from "../../uikit/Text";
+import { Transition, TransitionSet, TransitionState } from "@api/APITypes";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Button from "@uikit/Button";
+import Text from "@uikit/Text";
 import OBS from "../obs/OBS";
 import { resetTransitionSet } from "../schedules/ScheduleActions";
 

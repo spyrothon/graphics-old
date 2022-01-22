@@ -54,6 +54,16 @@ module.exports = {
       ],
       resolve: {
         extensions: [".tsx", ".ts", ".js", ".json"],
+        alias: {
+          // Shared
+          "@api": path.resolve(__dirname, "..", "api"),
+          "@common": path.resolve(__dirname, "..", "common"),
+          "@uikit": path.resolve(__dirname, "..", "uikit"),
+          // Apps
+          "@app": path.resolve(__dirname, "..", "app"),
+          "@admin": path.resolve(__dirname, "..", "admin"),
+          "@graphics": path.resolve(__dirname, "..", "graphics"),
+        },
       },
       module: {
         rules: [

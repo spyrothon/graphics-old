@@ -1,21 +1,21 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Run, ScheduleEntry } from "../../../api/APITypes";
+import { Run, ScheduleEntry } from "@api/APITypes";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
-import Anchor from "../../uikit/Anchor";
-import Button from "../../uikit/Button";
-import DurationInput from "../../uikit/DurationInput";
-import Header from "../../uikit/Header";
-import TextInput from "../../uikit/TextInput";
-import * as DurationUtils from "../time/DurationUtils";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable, { SaveState } from "@common/hooks/useSaveable";
+import * as DurationUtils from "@common/time/DurationUtils";
+import Anchor from "@uikit/Anchor";
+import Button from "@uikit/Button";
+import DurationInput from "@uikit/DurationInput";
+import Header from "@uikit/Header";
+import TextInput from "@uikit/TextInput";
 import { persistRun } from "./RunActions";
 import * as RunStore from "./RunStore";
 import useRunEditorState from "./useRunEditorState";
 
 import styles from "./RunEditor.mod.css";
-import useSaveable, { SaveState } from "../../hooks/useSaveable";
 
 type RunEditorProps = {
   scheduleEntry: ScheduleEntry;

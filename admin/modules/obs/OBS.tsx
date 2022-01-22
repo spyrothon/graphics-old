@@ -1,6 +1,7 @@
 import OBSWebSocket from "obs-websocket-js";
 
-import { OBSWebsocketConfig, Transition, TransitionSet } from "../../../api/APITypes";
+import { SOCKET_WEBSOCKET_PROTOCOL } from "@api/Config";
+import { OBSWebsocketConfig, Transition, TransitionSet } from "@api/APITypes";
 import SyncSocketManager from "../sync/SyncSocketManager";
 import OBSEventQueue from "./OBSEventQueue";
 import {
@@ -12,7 +13,6 @@ import {
   setMediaSourceList,
 } from "./OBSStore";
 import { OBSCustomEvent, OBSCustomEventTypes } from "./OBSTypes";
-import { SOCKET_WEBSOCKET_PROTOCOL } from "../../../api/Config";
 
 const obs = new OBSWebSocket();
 

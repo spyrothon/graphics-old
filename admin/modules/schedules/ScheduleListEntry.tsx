@@ -2,13 +2,13 @@ import * as React from "react";
 import classNames from "classnames";
 import { useDrag, useDrop } from "react-dnd";
 
-import { RunParticipant, ScheduleEntry } from "../../../api/APITypes";
+import { RunParticipant, ScheduleEntry } from "@api/APITypes";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import * as DurationUtils from "@common/time/DurationUtils";
+import Text from "@uikit/Text";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
-import Text from "../../uikit/Text";
 import * as InterviewStore from "../interviews/InterviewStore";
 import * as RunStore from "../runs/RunStore";
-import * as DurationUtils from "../time/DurationUtils";
 import { removeScheduleEntry, selectScheduleEntry } from "./ScheduleActions";
 
 import styles from "./ScheduleList.mod.css";

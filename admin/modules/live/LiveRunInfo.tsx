@@ -1,13 +1,13 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import useSafeDispatch from "../../hooks/useDispatch";
-import Button from "../../uikit/Button";
-import Header from "../../uikit/Header";
-import TextInput from "../../uikit/TextInput";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import Button from "@uikit/Button";
+import Header from "@uikit/Header";
+import TextInput from "@uikit/TextInput";
 import { persistRun } from "../runs/RunActions";
 
-import { Run, ScheduleEntry } from "../../../api/APITypes";
+import type { Run } from "@api/APITypes";
 
 type LiveRunInfoProps = {
   run: Run;

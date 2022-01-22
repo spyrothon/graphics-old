@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import SelectInput from "../../uikit/SelectInput";
+import SelectInput from "@uikit/SelectInput";
 import { useOBSStore } from "./OBSStore";
 import type { OBSMediaSource } from "./OBSTypes";
 
-type OBSMediaSelector = {
+type OBSMediaSelectorProps = {
   label?: React.ReactNode;
   note?: React.ReactNode;
   selectedMediaName?: string;
@@ -13,7 +13,7 @@ type OBSMediaSelector = {
   onChange: (entry?: OBSMediaSource) => unknown;
 };
 
-export default function OBSMediaSelector(props: OBSMediaSelector) {
+export default function OBSMediaSelector(props: OBSMediaSelectorProps) {
   const {
     label = "OBS Media Source",
     note = "Name of the media source to use in OBS.",

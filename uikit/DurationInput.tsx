@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import * as DurationUtils from "../modules/time/DurationUtils";
+import * as DurationUtils from "@common/time/DurationUtils";
 import TextInput, { TextInputProps } from "./TextInput";
 
 type DurationInputProps = Omit<TextInputProps, "value" | "onChange"> & {

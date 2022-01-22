@@ -1,17 +1,17 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Interview, ScheduleEntry } from "../../../api/APITypes";
+import { Interview, ScheduleEntry } from "@api/APITypes";
+import useSafeDispatch from "@admin/hooks/useDispatch";
+import useSaveable, { SaveState } from "@common/hooks/useSaveable";
+import * as DurationUtils from "@common/time/DurationUtils";
+import Anchor from "@uikit/Anchor";
+import Button from "@uikit/Button";
+import DurationInput from "@uikit/DurationInput";
+import Header from "@uikit/Header";
+import TextInput from "@uikit/TextInput";
+import NumberInput from "@uikit/NumberInput";
 import { useSafeSelector } from "../../Store";
-import useSafeDispatch from "../../hooks/useDispatch";
-import useSaveable, { SaveState } from "../../hooks/useSaveable";
-import Anchor from "../../uikit/Anchor";
-import Button from "../../uikit/Button";
-import DurationInput from "../../uikit/DurationInput";
-import Header from "../../uikit/Header";
-import TextInput from "../../uikit/TextInput";
-import NumberInput from "../../uikit/NumberInput";
-import * as DurationUtils from "../time/DurationUtils";
 import { persistInterview } from "./InterviewActions";
 import * as InterviewStore from "./InterviewStore";
 import useInterviewEditorState from "./useInterviewEditorState";

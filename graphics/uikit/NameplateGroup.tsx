@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { RunParticipant } from "../../api/APITypes";
+import { RunParticipant } from "@api/APITypes";
 
 import styles from "./NameplateGroup.mod.css";
 import Nameplate from "./Nameplate";
