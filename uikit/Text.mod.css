@@ -1,7 +1,7 @@
 .text {
   font-weight: 400;
   font-family: var(--font-primary);
-  line-height: 1.7em;
+  line-height: 1.4em;
   margin-bottom: 1rem;
 
   strong {

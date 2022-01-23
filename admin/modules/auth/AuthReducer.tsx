@@ -10,11 +10,12 @@ type AuthReducerState = {
 };
 
 function handleLogin(state: AuthReducerState, action: ActionFor<AuthActionType.AUTH_LOGIN>) {
-  const { token } = action;
+  const { token, user } = action;
   return {
     ...state,
     authenticated: true,
     token,
+    user,
   };
 }
 

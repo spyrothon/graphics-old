@@ -149,7 +149,7 @@ export async function send<T>(
     const json = await response.json();
     const parsed = camelizeJSON<T>(json);
 
-    if (response.status === 422) {
+    if (response.status === 422 || response.status === 500) {
       return Promise.reject(parsed);
     } else {
       return Promise.resolve(parsed);

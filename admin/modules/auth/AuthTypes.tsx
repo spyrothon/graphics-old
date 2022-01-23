@@ -7,6 +7,6 @@ export enum AuthActionType {
 }
 
 export type AuthAction =
-  | { type: AuthActionType.AUTH_LOGIN; token: SessionToken }
+  | { type: AuthActionType.AUTH_LOGIN; token: SessionToken; user?: User }
   | { type: AuthActionType.AUTH_LOGOUT }
   | { type: AuthActionType.AUTH_UPDATE_ME; user: User };

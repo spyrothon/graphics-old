@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Routes } from "../../Constants";
-import { Twitch, Settings, Airplay, PlusCircle, Icon, User, Edit } from "react-feather";
+import { Twitch, Settings, Airplay, PlusCircle, Icon, User, Edit, Mail } from "react-feather";
 
+import { Routes } from "../../Constants";
 import SettingsCreateSchedule from "./SettingsCreateSchedule";
 import SettingsGeneral from "./SettingsGeneral";
 import SettingsManageSchedule from "./SettingsManageSchedule";

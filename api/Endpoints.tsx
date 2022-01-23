@@ -1,10 +1,13 @@
 const Endpoints = {
   INIT: "/init",
+  // Auth
   AUTH_LOGIN: "/auth/login",
   AUTH_LOGOUT: "/auth/logout",
   AUTH_ME: "/auth/me",
+  // Interviews
   INTERVIEWS: "/interviews",
   INTERVIEW: (id: string) => `/interviews/${id}`,
+  // Runs
   RUNS: "/runs",
   RUN: (id: string) => `/runs/${id}`,
   RUN_START: (id: string) => `/runs/${id}/start`,
@@ -16,6 +19,7 @@ const Endpoints = {
     `/runs/${id}/finish-participant/${participantId}`,
   RUN_PARTICIPANT_RESUME: (id: string, participantId: string) =>
     `/runs/${id}/resume-participant/${participantId}`,
+  // Schedules
   SCHEDULES: "/schedules",
   SCHEDULE: (id: string) => `/schedules/${id}`,
   SCHEDULE_ENTRIES: (id: string) => `/schedules/${id}/entries`,
@@ -26,6 +30,9 @@ const Endpoints = {
   SCHEDULE_OBS_CONFIG: (id: string) => `/schedules/${id}/obs`,
   SCHEDULE_RTMP_STAT: (id: string) => `/schedules/${id}/rtmp-stat`,
   TRANSITION_SET_RESET: (id: string) => `/transition-sets/${id}/reset`,
+  // Publishing
+  NEWSLETTERS: `/newsletters`,
+  NEWSLETTER: (id: string) => `/newsletters/${id}`,
 };
 
 export default Endpoints;

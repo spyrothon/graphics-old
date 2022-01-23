@@ -31,6 +31,7 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
         <NavLink route={Routes.SCHEDULE_EDITOR} label="Schedule Editor" />
         <NavLink route={Routes.LIVE_DASHBOARD} label="Live Dashboard" />
         <NavLink route={Routes.SETTINGS} label="Settings" />
+        <NavLink route={Routes.PUBLISHING} label="Publishing" />
       </div>
       <div className={styles.right}>
         <RemoteConnectionStatus />

@@ -194,3 +194,29 @@ export interface SessionToken {
   token: string;
   expiresAt: Date;
 }
+
+export type InitialArticle = Partial<Article>;
+
+export interface Article {
+  id: string;
+  title: string;
+  content: string;
+  authorName?: string;
+  publishedAt: string;
+}
+
+export interface Publication {
+  articleId: string;
+  priority: number;
+}
+
+export type InitialNewsletter = Partial<Newsletter>;
+
+export interface Newsletter {
+  id: string;
+  title: string;
+  introduction: string;
+  published?: boolean;
+  publications: Publication[];
+  articles: Article[];
+}

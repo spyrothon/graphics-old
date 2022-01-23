@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import SettingsDashboard from "./modules/settings/SettingsDashboard";
 import LiveDashboard from "./modules/live/LiveDashboard";
+import PublishingDashboard from "./modules/publishing/PublishingDashboard";
 import ScheduleEditor from "./modules/schedules/ScheduleEditor";
 import SyncSocketManager from "./modules/sync/SyncSocketManager";
 import AdminHelmet from "./AdminHelmet";
@@ -21,6 +22,7 @@ export default function Dashboards() {
         <Route path={Routes.SCHEDULE_EDITOR} component={ScheduleEditor} />
         <Route path={Routes.LIVE_DASHBOARD} component={LiveDashboard} />
         <Route path={Routes.SETTINGS} component={SettingsDashboard} />
+        <Route path={Routes.PUBLISHING} component={PublishingDashboard} />
       </Switch>
     </>
   );

@@ -39,7 +39,7 @@ export default function SettingsUser() {
         type={TextInputType.PASSWORD}
         onChange={(event) => setPassword(event.target.value)}
       />
-      <Button onClick={handleSave} disabled={password.length == 0}>
+      <Button onClick={handleSave} disabled={password.length === 0}>
         {getSaveText()}
       </Button>
     </div>

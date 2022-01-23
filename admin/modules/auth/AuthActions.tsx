@@ -42,8 +42,8 @@ export function loadSession() {
 
     dispatch({
       type: AuthActionType.AUTH_LOGIN,
-      user,
       token,
+      user,
     });
   };
 }
