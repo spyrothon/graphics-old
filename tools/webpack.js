@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  getBaseWebpackConfig(options, app) {
+  getBaseWebpackConfig(options, { app, index = "./index.html" }) {
     if (options.mode == null) {
       console.warn("WARNING: No mode was set. Will default to `development`");
     }
@@ -48,7 +48,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           title: config.PAGE_TITLE,
-          template: "./index.html",
+          template: index,
           favicon: "./favicon/favicon.ico",
         }),
       ],

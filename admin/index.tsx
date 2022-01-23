@@ -4,7 +4,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Provider } from "react-redux";
 
-import ThemeProvider from "../graphics/uikit/ThemeProvider";
+import ThemeProvider from "@uikit/ThemeProvider";
 import App from "./App";
 import { store } from "./Store";
 
