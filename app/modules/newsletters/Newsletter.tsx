@@ -7,6 +7,8 @@ import FixedWidthLayout from "../layouts/FixedWidthLayout";
 import Header from "@uikit/Header";
 import Text from "@uikit/Text";
 
+import styles from "./Newsletter.mod.css";
+
 interface ArticleProps {
   article: ArticleType;
 }
@@ -15,7 +17,7 @@ function Article(props: ArticleProps) {
   const { article } = props;
 
   return (
-    <section>
+    <section className={styles.article}>
       <Header>{article.title}</Header>
       <Remark>{article.content}</Remark>
     </section>
@@ -41,14 +43,36 @@ export default function Newsletter(props: NewsletterProps) {
 
   return (
     <FixedWidthLayout>
-      <Header size={Header.Sizes.H1}>{newsletter.title}</Header>
-      <Text>Published {newsletter.publishedAt?.toLocaleDateString()}</Text>
+      <div className={styles.container}>
+        <main className={styles.newsletterContent}>
+          <Header size={Header.Sizes.H1} marginless>
+            {newsletter.title}
+          </Header>
+          <Text size={Text.Sizes.SIZE_20} color={Text.Colors.MUTED}>
+            Published {newsletter.publishedAt?.toLocaleDateString()}
+          </Text>
 
-      <Remark>{newsletter.introduction}</Remark>
+          <Remark>{newsletter.introduction}</Remark>
 
-      {newsletter.articles.map((article) => (
-        <Article key={article.id} article={article} />
-      ))}
+          {newsletter.articles.map((article) => (
+            <Article key={article.id} article={article} />
+          ))}
+        </main>
+        <aside className={styles.sidebar}>
+          <Header size={Header.Sizes.H4} className={styles.sidebarHeader}>
+            Articles
+          </Header>
+          <ul>
+            {newsletter.articles.map((article) => (
+              <li key={article.id}>{article.title}</li>
+            ))}
+          </ul>
+
+          <Header size={Header.Sizes.H4} className={styles.sidebarHeader}>
+            Upcoming
+          </Header>
+        </aside>
+      </div>
     </FixedWidthLayout>
   );
 }
