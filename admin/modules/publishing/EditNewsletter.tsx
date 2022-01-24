@@ -14,7 +14,6 @@ interface EditNewsletterProps {
 export default function EditNewsletter(props: EditNewsletterProps) {
   const dispatch = useSafeDispatch();
   const { newsletterId } = props;
-  console.log(props);
 
   const newsletter = useSafeSelector((state) =>
     PublishingStore.getNewsletter(state, { newsletterId }),

@@ -6,7 +6,7 @@ import InputWrapper, { InputWrapperPassthroughProps } from "./InputWrapper";
 import styles from "./TextInput.mod.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
-export type NumberInputProps = Omit<
+export type DateTimeInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "value" | "onChange"
 > & {
@@ -14,7 +14,7 @@ export type NumberInputProps = Omit<
   onChange: (date: Date) => void;
 } & InputWrapperPassthroughProps;
 
-export default function NumberInput(props: NumberInputProps) {
+export default function DateTimeInput(props: DateTimeInputProps) {
   const { name, value, className, onChange, marginless, ...inputProps } = props;
 
   return (

@@ -11,6 +11,7 @@ import * as PublishingStore from "./PublishingStore";
 
 import styles from "./NewslettersIndex.mod.css";
 import { Routes } from "@admin/Constants";
+import NavLink from "@uikit/NavLink";
 
 interface NewsletterPreviewProps {
   newsletter: Newsletter;
@@ -25,6 +26,7 @@ function NewsletterPreviw(props: NewsletterPreviewProps) {
       <Text className={styles.previewTitle}>{newsletter.introduction}</Text>
       <div className={styles.previewExtra}>
         <Text marginless>{newsletter.articles.length} Articles</Text>
+        <Text marginless>{newsletter.publishedAt?.toLocaleString()}</Text>
         <Anchor
           href={Routes.PUBLISHING_NEWSLETTERS_EDIT(newsletter.id)}
           className={styles.editButton}>
@@ -45,6 +47,7 @@ export default function NewslettersIndex() {
 
   return (
     <div className={styles.container}>
+      <NavLink route={Routes.PUBLISHING_NEWSLETTERS_NEW} label="New Newsletter" />
       {newsletters.map((newsletter) => (
         <NewsletterPreviw newsletter={newsletter} key={newsletter.id} />
       ))}

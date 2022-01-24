@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export interface InitPayload {
   scheduleId: string;
   currentUser?: User;
@@ -202,21 +204,37 @@ export interface Article {
   title: string;
   content: string;
   authorName?: string;
-  publishedAt: string;
+  publishedAt?: Date;
+  insertedAt: Date;
+  updatedAt: Date;
 }
+
+export type InitialPublication = Partial<Publication>;
 
 export interface Publication {
+  id: string;
   articleId: string;
+  newsletterId: string;
   priority: number;
 }
-
-export type InitialNewsletter = Partial<Newsletter>;
 
 export interface Newsletter {
   id: string;
   title: string;
   introduction: string;
   published?: boolean;
+  publishedAt?: Date;
   publications: Publication[];
   articles: Article[];
+  insertedAt: Date;
+  updatedAt: Date;
+}
+
+export interface InitialNewsletter {
+  id?: string;
+  title?: string;
+  introduction?: string;
+  published?: boolean;
+  publishedAt?: Date;
+  publications?: InitialPublication[];
 }

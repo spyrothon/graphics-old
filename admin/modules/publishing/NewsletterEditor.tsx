@@ -1,24 +1,80 @@
 import * as React from "react";
 import classNames from "classnames";
+import { X } from "react-feather";
 
-import { Newsletter } from "@api/APITypes";
-import { useSafeSelector } from "../../Store";
+import { Newsletter, InitialPublication, InitialNewsletter } from "@api/APITypes";
+import { AppRoutes } from "@admin/Constants";
+import { useSafeSelector } from "@admin/Store";
+import getPublicAppURL from "@admin/hooks/getPublicAppURL";
 import useSafeDispatch from "@admin/hooks/useDispatch";
 import useSaveable, { SaveState } from "@common/hooks/useSaveable";
 import Anchor from "@uikit/Anchor";
 import Button from "@uikit/Button";
+import DateTimeInput from "@uikit/DateTimeInput";
 import Header from "@uikit/Header";
+import NumberInput from "@uikit/NumberInput";
+import SelectInput from "@uikit/SelectInput";
 import TextInput from "@uikit/TextInput";
-import { createNewsletter, persistNewsletter } from "./PublishingActions";
+import { createNewsletter, fetchArticles, persistNewsletter } from "./PublishingActions";
 import * as PublishingStore from "./PublishingStore";
-import useNewsletterEditorState from "./useNewsletterEditorState";
 
 import styles from "./NewsletterEditor.mod.css";
 
-type NewsletterEditorProps = {
+function validateNewsletter(newsletter: InitialNewsletter) {
+  return (
+    newsletter.title != null &&
+    newsletter.title.length > 0 &&
+    newsletter.publications?.every(
+      (publication) => publication.articleId != null && publication.newsletterId != null,
+    )
+  );
+}
+
+interface ArticleSelectorProps {
+  publication: InitialPublication;
+  onChange: (publication: InitialPublication) => void;
+  onRemove: () => void;
+}
+
+function ArticleSelector(props: ArticleSelectorProps) {
+  const { publication, onChange, onRemove } = props;
+  const { priority, articleId } = publication;
+
+  const articles = useSafeSelector(PublishingStore.getArticles);
+  const articleIds = articles.map((article) => article.id);
+
+  return (
+    <div className={styles.publication}>
+      <div className={styles.inputRow}>
+        <SelectInput
+          label="Article"
+          value={articleId}
+          items={articleIds}
+          onChange={(articleId) => onChange({ ...publication, articleId: articleId })}
+          emptyLabel="Select an Article"
+          itemToString={(articleId) =>
+            articles.find((article) => article.id === articleId)?.title ?? articleId
+          }
+        />
+        <NumberInput
+          label="Priority"
+          value={priority || 1}
+          min={0}
+          onChange={(event) => onChange({ ...publication, priority: parseInt(event.target.value) })}
+        />
+
+        <div className={styles.remove} onClick={onRemove}>
+          <X size={16} strokeWidth="3" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface NewsletterEditorProps {
   newsletterId?: string;
   className?: string;
-};
+}
 
 export default function NewsletterEditor(props: NewsletterEditorProps) {
   const { newsletterId, className } = props;
@@ -27,71 +83,87 @@ export default function NewsletterEditor(props: NewsletterEditorProps) {
   const newsletter = useSafeSelector((state) =>
     newsletterId != null ? PublishingStore.getNewsletter(state, { newsletterId }) : undefined,
   );
-  const editor = useNewsletterEditorState();
+  const [edited, setEdited] = React.useState<InitialNewsletter>(newsletter ?? {});
+  const hasChanges = JSON.stringify(edited) !== JSON.stringify(newsletter);
+  const valid = validateNewsletter(edited);
+  React.useEffect(() => {
+    if (newsletter == null) return;
+    setEdited(newsletter);
+  }, [newsletter]);
 
   React.useEffect(() => {
-    editor.setBaseNewsletter(newsletter);
-  }, [newsletter]);
+    dispatch(fetchArticles());
+  }, []);
+
+  function updatePublication(newPublication: InitialPublication, index: number) {
+    const publications = Array.from(edited.publications ?? []);
+    publications[index] = newPublication;
+    setEdited({ ...edited, publications });
+  }
+
+  function removePublication(index: number) {
+    const publications = Array.from(edited.publications ?? []);
+    publications.splice(index, 1);
+    setEdited({ ...edited, publications });
+  }
+
+  function addPublication() {
+    const publications = Array.from(edited.publications ?? []);
+    publications.push({ newsletterId: edited.id, priority: 1 });
+    setEdited({ ...edited, publications });
+  }
 
   const [handleSaveNewsletter, getSaveText, saveState] = useSaveable(async () => {
     if (newsletterId != null) {
-      dispatch(persistNewsletter(newsletterId, editor.getEditedNewsletter()));
+      dispatch(persistNewsletter(newsletterId, edited as Newsletter));
     } else {
-      dispatch(createNewsletter(editor.getEditedNewsletter()));
+      dispatch(createNewsletter(edited));
     }
   });
-
-  function getNote<F extends keyof Newsletter>(field: F, additional?: string) {
-    const originalValue: any = newsletter?.[field];
-    const newValue = editor.getField(field);
-    if (newsletter == null || originalValue == null || originalValue === newValue) {
-      return additional;
-    }
-
-    const renderValue = () => {
-      switch (field) {
-        case "content":
-          return "original";
-        default:
-          return <>&ldquo;{originalValue}&rdquo;</>;
-      }
-    };
-
-    return (
-      <>
-        {additional}{" "}
-        <Anchor onClick={() => originalValue != null && editor.updateField(field, originalValue)}>
-          Reset to {renderValue()}.
-        </Anchor>
-      </>
-    );
-  }
 
   return (
     <div className={classNames(styles.container, className)}>
       <div className={styles.editor}>
-        <Header className={styles.header}>
-          <Button
-            className={styles.saveButton}
-            onClick={handleSaveNewsletter}
-            disabled={saveState === SaveState.SAVING || !editor.hasChanges()}>
-            {getSaveText()}
-          </Button>
-        </Header>
+        <Button
+          className={styles.saveButton}
+          onClick={handleSaveNewsletter}
+          disabled={saveState === SaveState.SAVING || !hasChanges || !valid}>
+          {getSaveText()}
+        </Button>
+        {edited.id != null ? (
+          <Anchor href={getPublicAppURL(AppRoutes.NEWSLETTER(edited.id))} target="_blank">
+            Preview
+          </Anchor>
+        ) : null}
         <TextInput
           label="Title"
-          value={editor.getField("title")}
-          note={getNote("title")}
-          onChange={(event) => editor.updateField("title", event.target.value)}
+          value={edited.title}
+          onChange={(event) => setEdited({ ...edited, title: event.target.value })}
+        />
+        <DateTimeInput
+          label="Publish Date"
+          value={edited.publishedAt}
+          onChange={(publishedAt) => setEdited({ ...edited, publishedAt })}
         />
         <TextInput
           label="Introduction"
           multiline
           rows={12}
-          value={editor.getField("introduction")}
-          note={getNote("introduction")}
-          onChange={(event) => editor.updateField("introduction", event.target.value)}
+          value={edited.introduction}
+          onChange={(event) => setEdited({ ...edited, introduction: event.target.value })}
         />
+      </div>
+
+      <div className={styles.articles}>
+        {(edited.publications ?? []).map((publication, index) => (
+          <ArticleSelector
+            key={publication.id ?? index}
+            publication={publication}
+            onChange={(changed) => updatePublication(changed, index)}
+            onRemove={() => removePublication(index)}
+          />
+        ))}
+        <Button onClick={addPublication}>Add an Article</Button>
       </div>
     </div>
   );

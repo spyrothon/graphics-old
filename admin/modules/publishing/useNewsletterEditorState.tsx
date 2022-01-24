@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { Newsletter } from "@api/APITypes";
+import type { Newsletter, InitialPublication } from "@api/APITypes";
 
 type NewsletterEditorState = {
   baseNewsletter?: Newsletter;
@@ -57,8 +57,28 @@ export default function useNewsletterEditorState(): NewsletterEditorsStateValue 
   function updateField<F extends keyof Newsletter>(field: F, value: Newsletter[F]) {
     dispatch({ type: "updateField", field, value });
   }
-  function getField<F extends keyof Newsletter>(field: F): Newsletter[F] | undefined {
-    return (state.edits[field] as Newsletter[F]) ?? state.baseNewsletter?.[field];
+  function getField<F extends keyof Newsletter>(
+    field: F,
+    defaultValue: Newsletter[F] | undefined = undefined,
+  ): Newsletter[F] | undefined {
+    return (state.edits[field] as Newsletter[F]) ?? state.baseNewsletter?.[field] ?? defaultValue;
+  }
+  function updatePublication(newPublication: InitialPublication, index: number) {
+    const publications = getField("publications") ?? [];
+    publications[index] = newPublication;
+    updateField("publications", publications);
+  }
+
+  function removePublication(index: number) {
+    const publications = getField("publications") ?? [];
+    publications.splice(index, 1);
+    updateField("publications", publications);
+  }
+
+  function addPublication() {
+    const publications = Array.from(getField("publications") ?? []);
+    publications.push({ id: uuid() });
+    updateField("publications", publications);
   }
   function getEditedNewsletter(): Newsletter {
     return { ...state.baseNewsletter, ...state.edits } as Newsletter;
@@ -73,6 +93,9 @@ export default function useNewsletterEditorState(): NewsletterEditorsStateValue 
     setBaseNewsletter,
     updateField,
     getField,
+    updatePublication,
+    removePublication,
+    addPublication,
     getEditedNewsletter,
     hasChanges,
   };

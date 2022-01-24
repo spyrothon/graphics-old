@@ -1,3 +1,5 @@
+import { Routes as AppRoutes } from "@app/Constants";
+
 export const Routes = {
   ADMIN_BASE_PATH: "/admin",
   LOGIN: "/admin/login",
@@ -16,8 +18,14 @@ export const Routes = {
 
   // Publishing
   PUBLISHING: "/admin/publishing",
+  PUBLISHING_NEWSLETTERS: "/admin/publishing/newsletters",
   PUBLISHING_NEWSLETTER: (newsletterId: string) => `/admin/publishing/newsletters/${newsletterId}`,
   PUBLISHING_NEWSLETTERS_NEW: "/admin/publishing/newsletters/new",
   PUBLISHING_NEWSLETTERS_EDIT: (newsletterId: string) =>
     `/admin/publishing/newsletters/${newsletterId}/edit`,
+  PUBLISHING_ARTICLES: "/admin/publishing/articles",
+  PUBLISHING_ARTICLES_NEW: "/admin/publishing/articles/new",
+  PUBLISHING_ARTICLES_EDIT: (articleId: string) => `/admin/publishing/articles/${articleId}/edit`,
 };
+
+export { AppRoutes };

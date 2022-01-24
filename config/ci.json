@@ -2,16 +2,21 @@
   "API_BASE": "//localhost:4000/api",
   "API_VERSION": "v1",
   "SYNC_HOST": "localhost:3000/socket/sync",
-  "ASSETS_ENDPOINT": "//localhost:8080",
+  "ASSETS_ENDPOINT": "//localhost:8081",
+  "APP_HOST": "//localhost:8081",
   "PAGE_TITLE": "",
   "private": {
     "admin": {
       "HOSTNAME": "localhost",
       "PORT": 8080
     },
-    "graphics": {
+    "app": {
       "HOSTNAME": "localhost",
       "PORT": 8081
+    },
+    "graphics": {
+      "HOSTNAME": "localhost",
+      "PORT": 8082
     }
   }
 }

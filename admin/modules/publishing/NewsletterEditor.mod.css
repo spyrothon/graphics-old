@@ -6,21 +6,6 @@
   float: right;
 }
 
-.saveAction {
-  flex: 1 1 auto;
-}
-
-.entryFields {
-  flex: 0 0 auto;
-  margin-left: 8px;
-  display: flex;
-
-  & > * {
-    flex: 1 1 auto;
-    margin-left: 8px;
-  }
-}
-
 .editor {
   display: flex;
   flex-wrap: wrap;
@@ -29,23 +14,28 @@
   gap: 16px;
 }
 
-.runInfo {
-  flex: 2 1 400px;
-}
-
-.participants {
-  flex: 1 0 440px;
-}
-
 .header:not(:first-child) {
   margin-top: 16px;
 }
 
+.publication {
+  padding: 16px;
+  border-radius: 4px;
+  background-color: var(--background-tertiary);
+  margin: 8px 0;
+}
+
 .inputRow {
   display: flex;
+  align-items: flex-start;
   gap: 4px;
 }
 
-.participantInput {
-  margin: 4px 0;
+.remove {
+  flex: 0 0 16px;
+  margin-left: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

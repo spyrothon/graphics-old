@@ -1,5 +1,5 @@
 import APIClient from "@api/APIClient";
-import { Newsletter, InitialNewsletter } from "@api/APITypes";
+import { Newsletter, InitialNewsletter, Article, InitialArticle } from "@api/APITypes";
 import { SafeDispatch } from "@admin/hooks/useDispatch";
 import { PublishingAction, PublishingActionType } from "./PublishingTypes";
 
@@ -53,6 +53,60 @@ export function persistNewsletter(newsletterId: string, changes: Partial<Newslet
     dispatch({
       type: PublishingActionType.PUBLISHING_UPDATE_NEWSLETTER,
       newsletter: updatedNewsletter,
+    });
+  };
+}
+
+export function updateArticle(article: Article): PublishingAction {
+  return {
+    type: PublishingActionType.PUBLISHING_UPDATE_ARTICLE,
+    article,
+  };
+}
+
+export function fetchArticles() {
+  return async (dispatch: SafeDispatch) => {
+    dispatch({ type: PublishingActionType.PUBLISHING_FETCH_ARTICLES_STARTED });
+    const articles = await APIClient.fetchArticles();
+
+    dispatch(fetchArticlesSuccess(articles));
+  };
+}
+
+export function fetchArticle(articleId: string) {
+  return async (dispatch: SafeDispatch) => {
+    dispatch({ type: PublishingActionType.PUBLISHING_FETCH_ARTICLES_STARTED });
+    const article = await APIClient.fetchArticle(articleId);
+
+    dispatch(fetchArticlesSuccess([article]));
+  };
+}
+
+export function loadArticle(article: Article): PublishingAction {
+  return {
+    type: PublishingActionType.PUBLISHING_FETCH_ARTICLES_SUCCESS,
+    articles: [article],
+  };
+}
+
+export function fetchArticlesSuccess(articles: Article[]): PublishingAction {
+  return { type: PublishingActionType.PUBLISHING_FETCH_ARTICLES_SUCCESS, articles };
+}
+
+export function createArticle(article: InitialArticle) {
+  return async (dispatch: SafeDispatch) => {
+    const response = await APIClient.createArticle(article);
+    dispatch(loadArticle(response));
+  };
+}
+
+export function persistArticle(articleId: string, changes: Partial<Article>) {
+  return async (dispatch: SafeDispatch) => {
+    const filteredChanges = { ...changes };
+    const updatedArticle = await APIClient.updateArticle(articleId, filteredChanges);
+    dispatch({
+      type: PublishingActionType.PUBLISHING_UPDATE_ARTICLE,
+      article: updatedArticle,
     });
   };
 }

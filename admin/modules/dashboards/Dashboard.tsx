@@ -14,7 +14,7 @@ export default function Dashboard(props: DashboardProps) {
   return (
     <SidebarLayout
       fullPage={props.fullPage}
-      renderHeader={() => <DashboardHeader name="Graphics Dashboard" />}
+      renderHeader={() => <DashboardHeader name="Dashboard" />}
       renderSidebar={props.renderSidebar}
       renderMain={props.children ? () => props.children : props.renderMain ?? (() => null)}
     />

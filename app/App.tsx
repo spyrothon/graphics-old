@@ -6,6 +6,7 @@ import useSafeDispatch from "@admin/hooks/useDispatch";
 import BlankPage from "@common/router/BlankPage";
 import { history } from "@common/router/RouterUtils";
 import { Routes } from "./Constants";
+import Newsletter from "./modules/newsletters/Newsletter";
 import Newsletters from "./modules/newsletters/Newsletters";
 import CurrentScheduleContext from "./modules/schedules/CurrentScheduleContext";
 import { fetchSchedule } from "./modules/schedules/ScheduleActions";
@@ -28,7 +29,11 @@ export default function App() {
     <CurrentScheduleContext.Provider value={{ scheduleId: schedule?.id ?? "-1", schedule }}>
       <Router history={history}>
         <Switch>
-          <Route path={Routes.NEWSLETTERS} component={Newsletters} />
+          <Route path={Routes.NEWSLETTERS} exact component={Newsletters} />
+          <Route
+            path={Routes.NEWSLETTER(":id")}
+            render={({ match }) => <Newsletter newsletterId={match.params.id} />}
+          />
           <Route path={Routes.SCHEDULE} component={Schedule} />
           <Route exact path={Routes.BASE_PATH} component={Schedule} />
           <Route>

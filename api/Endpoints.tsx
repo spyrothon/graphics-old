@@ -33,6 +33,8 @@ const Endpoints = {
   // Publishing
   NEWSLETTERS: `/newsletters`,
   NEWSLETTER: (id: string) => `/newsletters/${id}`,
+  ARTICLES: `/articles`,
+  ARTICLE: (id: string) => `/articles/${id}`,
 };
 
 export default Endpoints;
