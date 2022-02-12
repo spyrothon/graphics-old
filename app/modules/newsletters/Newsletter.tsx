@@ -18,7 +18,14 @@ function Article(props: ArticleProps) {
 
   return (
     <section className={styles.article}>
-      <Header id={article.id}>{article.title}</Header>
+      <Header marginless id={article.id} size={Header.Sizes.H2}>
+        {article.title}
+      </Header>
+      {article.authorName != null ? (
+        <Text marginless size={Text.Sizes.SIZE_16} color={Text.Colors.MUTED}>
+          by {article.authorName}
+        </Text>
+      ) : null}
       <Remark>{article.content}</Remark>
     </section>
   );
@@ -83,6 +90,9 @@ export default function Newsletter(props: NewsletterProps) {
             </li>
             <li>
               <a href="discord.gg/fCvfnfk">Discord</a>
+            </li>
+            <li>
+              <a href="https://youtube.com/channel/UCq-pkx-6-BB1Ns7ETmzY6-g">YouTube</a>
             </li>
           </ul>
 
