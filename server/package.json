@@ -3,6 +3,7 @@
   "license": "MIT",
   "scripts": {
     "start:admin": "node index.js admin",
+    "start:app": "node index.js app",
     "start:graphics": "node index.js graphics"
   },
   "dependencies": {
