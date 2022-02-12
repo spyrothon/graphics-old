@@ -4,6 +4,7 @@ import { Remark } from "react-remark";
 import APIClient from "@api/APIClient";
 import { Article as ArticleType, Newsletter as NewsletterType } from "@api/APITypes";
 import FixedWidthLayout from "../layouts/FixedWidthLayout";
+import Anchor from "@uikit/Anchor";
 import Header from "@uikit/Header";
 import Text from "@uikit/Text";
 
@@ -83,16 +84,16 @@ export default function Newsletter(props: NewsletterProps) {
           <p>If you have ideas for things we should write about next, let us know!</p>
           <ul>
             <li>
-              Twitter: <a href="https://twitter.com/spyrothon">@spyrothon</a>
+              Twitter: <Anchor href="https://twitter.com/spyrothon">@spyrothon</Anchor>
             </li>
             <li>
-              Twitch: <a href="https://twitch.tv/spyrothon">Spyrothon</a>
+              Twitch: <Anchor href="https://twitch.tv/spyrothon">Spyrothon</Anchor>
             </li>
             <li>
-              <a href="discord.gg/fCvfnfk">Discord</a>
+              <Anchor href="https://discord.gg/fCvfnfk">Discord</Anchor>
             </li>
             <li>
-              <a href="https://youtube.com/channel/UCq-pkx-6-BB1Ns7ETmzY6-g">YouTube</a>
+              <Anchor href="https://youtube.com/channel/UCq-pkx-6-BB1Ns7ETmzY6-g">YouTube</Anchor>
             </li>
           </ul>
 
@@ -101,10 +102,12 @@ export default function Newsletter(props: NewsletterProps) {
           </Header>
           <ul>
             <li>
-              <a href="https://speedrun.com/spyro">Speedrun Leaderboards</a>
+              <Anchor href="https://speedrun.com/spyro">Speedrun Leaderboards</Anchor>
             </li>
             <li>
-              <a href="https://discord.gg/spyrospeedrunning">Spyro Speedrunning Discord</a>
+              <Anchor href="https://discord.gg/spyrospeedrunning">
+                Spyro Speedrunning Discord
+              </Anchor>
             </li>
           </ul>
         </aside>
