@@ -18,7 +18,7 @@ function Article(props: ArticleProps) {
 
   return (
     <section className={styles.article}>
-      <Header>{article.title}</Header>
+      <Header id={article.id}>{article.title}</Header>
       <Remark>{article.content}</Remark>
     </section>
   );
@@ -64,13 +64,39 @@ export default function Newsletter(props: NewsletterProps) {
           </Header>
           <ul>
             {newsletter.articles.map((article) => (
-              <li key={article.id}>{article.title}</li>
+              <li key={article.id}>
+                <a href={`#${article.id}`}>{article.title}</a>
+              </li>
             ))}
           </ul>
 
           <Header size={Header.Sizes.H4} className={styles.sidebarHeader}>
-            Upcoming
+            Contact
           </Header>
+          <p>If you have ideas for things we should write about next, let us know!</p>
+          <ul>
+            <li>
+              Twitter: <a href="https://twitter.com/spyrothon">@spyrothon</a>
+            </li>
+            <li>
+              Twitch: <a href="https://twitch.tv/spyrothon">Spyrothon</a>
+            </li>
+            <li>
+              <a href="discord.gg/fCvfnfk">Discord</a>
+            </li>
+          </ul>
+
+          <Header size={Header.Sizes.H4} className={styles.sidebarHeader}>
+            Other Links
+          </Header>
+          <ul>
+            <li>
+              <a href="https://speedrun.com/spyro">Speedrun Leaderboards</a>
+            </li>
+            <li>
+              <a href="https://discord.gg/spyrospeedrunning">Spyro Speedrunning Discord</a>
+            </li>
+          </ul>
         </aside>
       </div>
     </FixedWidthLayout>

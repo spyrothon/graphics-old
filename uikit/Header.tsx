@@ -19,6 +19,7 @@ const HeaderColors = {
 };
 
 type HeaderProps = {
+  id?: string;
   size?: typeof HeaderSizes[keyof typeof HeaderSizes];
   color?: typeof HeaderColors[keyof typeof HeaderColors];
   marginless?: boolean;
@@ -29,6 +30,7 @@ type HeaderProps = {
 
 const Header = (props: HeaderProps) => {
   const {
+    id,
     size = HeaderSizes.H2,
     color = HeaderColors.NORMAL,
     marginless = false,
@@ -39,6 +41,7 @@ const Header = (props: HeaderProps) => {
 
   return (
     <h1
+      id={id}
       className={classNames(styles.header, color, size, className, {
         [styles.oneline]: oneline,
         [styles.marginless]: marginless,

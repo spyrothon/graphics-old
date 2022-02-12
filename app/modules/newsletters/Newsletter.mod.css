@@ -2,8 +2,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+}
 
-  line-height: 1.8rem;
+a {
+  color: var(--text-link);
+
+  &:hover {
+    color: var(--text-normal);
+    text-decoration-thickness: 1.5px;
+  }
 }
 
 .sidebar {
@@ -21,6 +28,14 @@
       margin-bottom: 8px;
     }
   }
+
+  a {
+    color: var(--text-link);
+
+    &:hover {
+      text-decoration-thickness: 1.5px;
+    }
+  }
 }
 
 .sidebarHeader:not(:first-child) {
@@ -30,10 +45,24 @@
 .newsletterContent {
   flex: 1 0 100%;
   margin: 16px 0;
+
+  line-height: 1.8rem;
 }
 
 .article {
   margin-top: 2rem;
+
+  & img {
+    display: block;
+    width: 85%;
+    min-width: 320px;
+    margin: 32px auto;
+  }
+
+  & hr {
+    border: var(--border-secondary);
+    border-radius: 4px;
+  }
 }
 
 @media only screen and (min-width: 720px) {
