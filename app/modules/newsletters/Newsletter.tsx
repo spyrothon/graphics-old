@@ -49,6 +49,10 @@ export default function Newsletter(props: NewsletterProps) {
 
   if (newsletter == null) return null;
 
+  const articles = newsletter.publications
+    .sort((a, b) => a.priority - b.priority)
+    .map((pub) => newsletter.articles.find((article) => article.id === pub.articleId)!);
+
   return (
     <FixedWidthLayout>
       <div className={styles.container}>
@@ -62,7 +66,7 @@ export default function Newsletter(props: NewsletterProps) {
 
           <Remark>{newsletter.introduction}</Remark>
 
-          {newsletter.articles.map((article) => (
+          {articles.map((article) => (
             <Article key={article.id} article={article} />
           ))}
         </main>
@@ -71,7 +75,7 @@ export default function Newsletter(props: NewsletterProps) {
             Articles
           </Header>
           <ul>
-            {newsletter.articles.map((article) => (
+            {articles.map((article) => (
               <li key={article.id}>
                 <a href={`#${article.id}`}>{article.title}</a>
               </li>
