@@ -59,17 +59,29 @@ export default function Omnibar(props: OmnibarProps) {
       ),
     },
     {
-      id: "dates",
+      id: "current-event",
       content: () => (
         <OmnibarPlainText
           text={
             <>
-              <span className={styles.textEmphasis}>Spyrothon 7</span> is September 25-26th, 2021
+              You're watching the{" "}<span className={styles.textEmphasis}>Spyrothon Any% Showcase!</span>
             </>
           }
         />
       ),
     },
+    {
+      id: "youtube",
+      content: () => (
+        <OmnibarPlainText
+          text={
+            <>
+              You can find previous events on the <span className={styles.textEmphasis}>Spyrothon</span> YouTube channel!
+            </>
+          }
+        />
+      )
+    }
   ];
 
   const [currentIndex, setCurrentIndex] = React.useState(0);
