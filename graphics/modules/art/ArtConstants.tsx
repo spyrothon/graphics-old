@@ -492,8 +492,8 @@ export const ART_ENTRIES = [
   {
     character: "Elora Lo-Fi",
     source: "https://spyrothon-assets.sfo2.cdn.digitaloceanspaces.com/Elora_Lofi_Spyro.jpg",
-    artistName: "Lordino",
-    artistTwitter: "AlmiraLord",
+    artistName: "GingeSwagTia",
+    artistTwitter: "GingeSwagTia",
   },
   {
     character: "Math Textbook Spyro",
