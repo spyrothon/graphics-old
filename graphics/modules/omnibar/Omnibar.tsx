@@ -26,7 +26,7 @@ export default function Omnibar(props: OmnibarProps) {
           text={
             <>
               Check out the full schedule at{" "}
-              <span className={styles.textEmphasis}>spyrothon.org</span>
+              <span className={styles.textEmphasis}>spyrothon.org</span>.
             </>
           }
         />
@@ -38,8 +38,8 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              Join the Spyrothon Discord{" "}
-              <span className={styles.textEmphasis}>discord.gg/fCvfnfk</span>
+              Join the Spyrothon Discord at{" "}
+              <span className={styles.textEmphasis}>discord.gg/fCvfnfk</span>{" (!discord)"}.
             </>
           }
         />
@@ -51,8 +51,7 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              Keep up with Spyrothon on Twitter{" "}
-              <span className={styles.textEmphasis}>@spyrothon</span>
+              Follow us on Twitter at <span className={styles.textEmphasis}>@spyrothon</span>{" (!twitter)"}.
             </>
           }
         />
@@ -64,7 +63,7 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              You're watching the{" "}<span className={styles.textEmphasis}>Spyrothon Any% Showcase!</span>
+              You're watching{" "}<span className={styles.textEmphasis}>Spyrothon 8!</span>, running August 20-21, 2022.
             </>
           }
         />
@@ -76,7 +75,7 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              You can find previous events on the <span className={styles.textEmphasis}>Spyrothon</span> YouTube channel!
+              Subscribe to the{" "}<span className={styles.textEmphasis}>Spyrothon</span>{" "}YouTube channel to find previous events and miscellaneous videos{"(!youtube)"}.
             </>
           }
         />
@@ -86,7 +85,7 @@ export default function Omnibar(props: OmnibarProps) {
 
   const [currentIndex, setCurrentIndex] = React.useState(0);
   React.useEffect(() => {
-    setInterval(() => setCurrentIndex((currentIndex) => currentIndex + 1), 25000);
+    setInterval(() => setCurrentIndex((currentIndex) => currentIndex + 1), 20000);
   }, []);
   const currentSection = sections[currentIndex % sections.length];
 
