@@ -12,11 +12,26 @@ import LiveSidebar from "./LiveSidebar";
 import LiveTransitionSection from "./LiveTransitionSection";
 
 import styles from "./LiveDashboard.mod.css";
+import useSafeDispatch from "@graphics/hooks/useDispatch";
+import { transitionToSecheduleEntry } from "../schedules/ScheduleActions";
 
 export default function LiveDashboard() {
-  const { currentEntry } = useSafeSelector((state) => ({
+  const dispatch = useSafeDispatch();
+
+  const { currentEntry, schedule } = useSafeSelector((state) => ({
     currentEntry: ScheduleStore.getCurrentEntryWithDependants(state),
+    schedule: ScheduleStore.getSchedule(state),
   }));
+
+  React.useEffect(() => {
+    const hasCurrentEntry = currentEntry != null;
+    if (hasCurrentEntry) return;
+    // Can't do anything if there's no data
+    const hasEntries = schedule?.scheduleEntries != null;
+    if (schedule == null || !hasEntries) return;
+
+    dispatch(transitionToSecheduleEntry(schedule.id, schedule.scheduleEntries[0].id));
+  }, [schedule]);
 
   function renderContentSections() {
     if (currentEntry?.run != null) {
