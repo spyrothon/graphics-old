@@ -18,6 +18,9 @@ export default function Nameplate(props: NameplateProps) {
     <div className={classNames(styles.container, className)}>
       <div className={styles.name}>
         {participant.displayName}
+        {participant.pronouns != null ? (
+          <span className={styles.pronouns}> {participant.pronouns} </span>
+        ) : null}
         {participant.actualSeconds ? (
           <span className={styles.time}>
             {" "}

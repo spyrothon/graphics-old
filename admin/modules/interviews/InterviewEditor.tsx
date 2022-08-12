@@ -81,19 +81,19 @@ export default function InterviewEditor(props: InterviewEditorProps) {
           <TextInput
             marginless
             className={styles.participantInput}
-            label={index === 0 ? "Twitch" : undefined}
-            value={editor.getParticipantField(type, index, "twitchName")}
+            label={index === 0 ? "Pronouns" : undefined}
+            value={editor.getParticipantField(type, index, "pronouns")}
             onChange={(event) =>
-              editor.updateParticipantField(type, index, "twitchName", event.target.value)
+              editor.updateParticipantField(type, index, "pronouns", event.target.value)
             }
           />
           <TextInput
             marginless
             className={styles.participantInput}
-            label={index === 0 ? "Twitter" : undefined}
-            value={editor.getParticipantField(type, index, "twitterName")}
+            label={index === 0 ? "Twitch" : undefined}
+            value={editor.getParticipantField(type, index, "twitchName")}
             onChange={(event) =>
-              editor.updateParticipantField(type, index, "twitterName", event.target.value)
+              editor.updateParticipantField(type, index, "twitchName", event.target.value)
             }
           />
         </div>

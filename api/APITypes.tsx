@@ -168,6 +168,7 @@ export interface RunParticipant {
   displayName: string;
   twitchName?: string;
   twitterName?: string;
+  pronouns?: string;
   hasWebcam: boolean;
   visible: boolean;
   // Run fields
