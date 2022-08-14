@@ -36,4 +36,7 @@ export const Routes = {
   // Interviews
   INTERVIEW: "/interview",
   QUIZ_CORNER: "/quiz-corner",
+
+  // Omnibar Only
+  OMNIBAR: "/omnibar",
 };

@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import styles from "./Layout.mod.css";
 
-import backgroundVideo from "../res/BT1.mp4";
+import backgroundVideo from "@graphics/res/BT1.mp4";
 
 type LayoutProps = {
   className?: string;

@@ -1,6 +1,7 @@
-import APIClient from "../../../api/APIClient";
-import { Interview } from "../../../api/APITypes";
-import { SafeDispatch } from "../../hooks/useDispatch";
+import APIClient from "@api/APIClient";
+import { Interview } from "@api/APITypes";
+
+import { SafeDispatch } from "@graphics/hooks/useDispatch";
 import { InterviewAction, InterviewActionType } from "./InterviewTypes";
 
 export function updateInterview(interview: Interview): InterviewAction {

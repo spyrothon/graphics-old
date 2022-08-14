@@ -1,4 +1,4 @@
-import type { Run } from "../../../api/APITypes";
+import type { Run } from "@api/APITypes";
 
 export default function getElapsedRunSeconds(run: Run, runnerId?: string, asOf: Date = new Date()) {
   const { actualSeconds, startedAt, pausedAt, pauseSeconds = 0, runners } = run;

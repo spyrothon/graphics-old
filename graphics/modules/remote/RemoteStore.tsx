@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { StoreState } from "../../Store";
+import { StoreState } from "@graphics/Store";
 
 const getRemoteState = (globalState: StoreState) => globalState.remote;
 

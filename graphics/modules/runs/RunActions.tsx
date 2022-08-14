@@ -1,6 +1,7 @@
-import APIClient from "../../../api/APIClient";
-import { Run } from "../../../api/APITypes";
-import { SafeDispatch } from "../../hooks/useDispatch";
+import APIClient from "@api/APIClient";
+import { Run } from "@api/APITypes";
+
+import { SafeDispatch } from "@graphics/hooks/useDispatch";
 import { RunAction, RunActionType } from "./RunsTypes";
 
 export function updateRun(run: Run): RunAction {

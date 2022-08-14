@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { ThunkDispatch, ThunkAction } from "redux-thunk";
-import { Action } from "../Actions";
-import { StoreState } from "../Store";
+
+import { Action } from "@graphics/Actions";
+import { StoreState } from "@graphics/Store";
 
 const useSafeDispatch = () => useDispatch<ThunkDispatch<StoreState, never, Action>>();
 

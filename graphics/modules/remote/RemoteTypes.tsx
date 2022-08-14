@@ -1,4 +1,4 @@
-import { StoreState } from "../../Store";
+import { StoreState } from "@graphics/Store";
 
 export enum RemoteActionType {
   REMOTE_CONNECTED = "REMOTE_CONNECTED",

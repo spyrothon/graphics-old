@@ -1,6 +1,7 @@
-import SyncSocket from "../../../api/socket/SyncSocket";
-import { SyncSocketMessage } from "../../../api/socket/SyncSocketTypes";
-import { store } from "../../Store";
+import SyncSocket from "@api/socket/SyncSocket";
+import { SyncSocketMessage } from "@api/socket/SyncSocketTypes";
+
+import { store } from "@graphics/Store";
 import { loadInterview } from "../interviews/InterviewActions";
 import { loadRun } from "../runs/RunActions";
 import { loadSchedule } from "../schedules/ScheduleActions";

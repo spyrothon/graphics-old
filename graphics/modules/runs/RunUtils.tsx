@@ -1,4 +1,4 @@
-import { RunParticipant, Run } from "../../../api/APITypes";
+import { RunParticipant, Run } from "@api/APITypes";
 
 function getVisibleParticipants(participants: RunParticipant[]) {
   return participants.filter((participant) => participant.visible);

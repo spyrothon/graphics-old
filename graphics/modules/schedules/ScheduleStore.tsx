@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { createSelector } from "reselect";
 
-import { StoreState } from "../../Store";
+import { StoreState } from "@graphics/Store";
 import InterviewStore from "../interviews/InterviewStore";
 import RunStore from "../runs/RunStore";
 import type { ScheduleEntryWithTimes } from "./ScheduleTypes";

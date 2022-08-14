@@ -1,4 +1,4 @@
-import { Interview } from "../../../api/APITypes";
+import { Interview } from "@api/APITypes";
 
 export enum InterviewActionType {
   INTERVIEWS_UPDATE_INTERVIEW = "INTERVIEWS_UPDATE_INTERVIEW",

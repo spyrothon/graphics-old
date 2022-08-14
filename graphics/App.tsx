@@ -2,11 +2,13 @@ import * as React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 
 import APIClient from "@api/APIClient";
+
 import { Routes } from "./Constants";
 import useSafeDispatch from "./hooks/useDispatch";
 import DS1 from "./layouts/DS1";
 import FiveFour1 from "./layouts/FiveFour1";
 import GBA1 from "./layouts/GBA1";
+import OmnibarOnly from "./layouts/OmnibarOnly";
 import BingoStandard1v1 from "./layouts/bingo/BingoStandard1v1";
 import BingoStandard2v2 from "./layouts/bingo/BingoStandard2v2";
 import BreakCountdown from "./layouts/breaks/BreakCountdown";
@@ -68,6 +70,8 @@ export default function App() {
 
         <Route path={Routes.INTERVIEW} component={InterviewOpen} />
         <Route path={Routes.QUIZ_CORNER} component={QuizCorner} />
+
+        <Route path={Routes.OMNIBAR} component={OmnibarOnly} />
       </Switch>
     </Router>
   );

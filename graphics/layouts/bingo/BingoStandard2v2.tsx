@@ -1,17 +1,17 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { useSafeSelector } from "../../Store";
-import BingoBoard from "../../modules/bingo/BingoBoard";
-import Omnibar from "../../modules/omnibar/Omnibar";
-import GameInfo from "../../modules/game-info/GameInfo";
-import RunStore from "../../modules/runs/RunStore";
-import RunUtils from "../../modules/runs/RunUtils";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import RunTimer from "../../modules/time/RunTimer";
-import FeedArea from "../../uikit/FeedArea";
-import Layout from "../../uikit/Layout";
-import Nameplate from "../../uikit/Nameplate";
+import { useSafeSelector } from "@graphics/Store";
+import BingoBoard from "@graphics/modules/bingo/BingoBoard";
+import Omnibar from "@graphics/modules/omnibar/Omnibar";
+import GameInfo from "@graphics/modules/game-info/GameInfo";
+import RunStore from "@graphics/modules/runs/RunStore";
+import RunUtils from "@graphics/modules/runs/RunUtils";
+import ScheduleStore from "@graphics/modules/schedules/ScheduleStore";
+import RunTimer from "@graphics/modules/time/RunTimer";
+import FeedArea from "@graphics/uikit/FeedArea";
+import Layout from "@graphics/uikit/Layout";
+import Nameplate from "@graphics/uikit/Nameplate";
 
 import styles from "./BingoStandard2v2.mod.css";
 

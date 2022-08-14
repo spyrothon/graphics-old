@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import { animated, config, useTransition } from "react-spring";
 
-import { useSafeSelector } from "../../Store";
+import { useSafeSelector } from "@graphics/Store";
 import ScheduleStore from "../schedules/ScheduleStore";
 import OmnibarPlainText from "./OmnibarPlainText";
 import OmnibarUpNext from "./OmnibarUpNext";
@@ -39,7 +39,8 @@ export default function Omnibar(props: OmnibarProps) {
           text={
             <>
               Join the Spyrothon Discord at{" "}
-              <span className={styles.textEmphasis}>discord.gg/fCvfnfk</span>{" (!discord)"}.
+              <span className={styles.textEmphasis}>discord.gg/fCvfnfk</span>
+              {" (!discord)"}.
             </>
           }
         />
@@ -51,7 +52,8 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              Follow us on Twitter at <span className={styles.textEmphasis}>@spyrothon</span>{" (!twitter)"}.
+              Follow us on Twitter at <span className={styles.textEmphasis}>@spyrothon</span>
+              {" (!twitter)"}.
             </>
           }
         />
@@ -63,7 +65,8 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              You're watching{" "}<span className={styles.textEmphasis}>Spyrothon 8!</span>, running August 20-21, 2022.
+              You're watching <span className={styles.textEmphasis}>Spyrothon 8!</span>, running
+              August 20-21, 2022.
             </>
           }
         />
@@ -75,12 +78,13 @@ export default function Omnibar(props: OmnibarProps) {
         <OmnibarPlainText
           text={
             <>
-              Subscribe to the{" "}<span className={styles.textEmphasis}>Spyrothon</span>{" "}YouTube channel to find previous events and miscellaneous videos{"(!youtube)"}.
+              Subscribe to the <span className={styles.textEmphasis}>Spyrothon</span> YouTube
+              channel to find previous events and miscellaneous videos{"(!youtube)"}.
             </>
           }
         />
-      )
-    }
+      ),
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = React.useState(0);

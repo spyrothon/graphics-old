@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { useSafeSelector } from "../../Store";
-import ArtRotation from "../../modules/art/ArtRotation";
-import Omnibar from "../../modules/omnibar/Omnibar";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import Layout from "../../uikit/Layout";
+import { useSafeSelector } from "@graphics/Store";
+import ArtRotation from "@graphics/modules/art/ArtRotation";
+import Omnibar from "@graphics/modules/omnibar/Omnibar";
+import ScheduleStore from "@graphics/modules/schedules/ScheduleStore";
+import Layout from "@graphics/uikit/Layout";
 import BreakUpNext from "./BreakUpNext";
 
 import styles from "./Break.mod.css";

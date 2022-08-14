@@ -1,9 +1,11 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Run } from "../../../api/APITypes";
-import Category from "../../uikit/Category";
-import GameName from "../../uikit/GameName";
+import { Run } from "@api/APITypes";
+
+import Category from "@graphics/uikit/Category";
+import GameName from "@graphics/uikit/GameName";
+
 import * as DurationUtils from "../time/DurationUtils";
 
 import styles from "./GameInfo.mod.css";

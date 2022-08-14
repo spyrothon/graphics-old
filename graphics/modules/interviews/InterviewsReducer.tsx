@@ -1,5 +1,6 @@
-import { Interview } from "../../../api/APITypes";
-import { ActionFor, Action } from "../../Actions";
+import { Interview } from "@api/APITypes";
+
+import { ActionFor, Action } from "@graphics/Actions";
 import { InterviewActionType } from "./InterviewTypes";
 
 type InterviewMap = { [id: string]: Interview };

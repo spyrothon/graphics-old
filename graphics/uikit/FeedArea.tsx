@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { useSafeSelector } from "../Store";
+import { useSafeSelector } from "@graphics/Store";
 
 import styles from "./FeedArea.mod.css";
 import ScheduleStore from "../modules/schedules/ScheduleStore";

@@ -1,4 +1,5 @@
-import { store } from "../../Store";
+import { store } from "@graphics/Store";
+
 import {
   REMOTE_WEBSOCKET_PROTOCOL,
   REMOTE_SYNC_HOST,

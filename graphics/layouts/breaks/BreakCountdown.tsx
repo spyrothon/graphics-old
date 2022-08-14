@@ -2,10 +2,10 @@ import * as React from "react";
 
 import { Schedule } from "@api/APITypes";
 import useAnimationFrame from "@common/hooks/useAnimationFrame";
-import { useSafeSelector } from "../../Store";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import DurationUtils from "../../modules/time/DurationUtils";
-import Layout from "../../uikit/Layout";
+import { useSafeSelector } from "@graphics/Store";
+import ScheduleStore from "@graphics/modules/schedules/ScheduleStore";
+import DurationUtils from "@graphics/modules/time/DurationUtils";
+import Layout from "@graphics/uikit/Layout";
 
 import styles from "./Break.mod.css";
 

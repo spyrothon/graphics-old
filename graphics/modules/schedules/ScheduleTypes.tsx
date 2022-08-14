@@ -1,5 +1,6 @@
-import { Schedule, ScheduleEntry } from "../../../api/APITypes";
 import type { DateTime } from "luxon";
+
+import { Schedule, ScheduleEntry } from "@api/APITypes";
 
 export enum ScheduleActionType {
   SCHEDULES_ENTRY_SELECTED = "SCHEDULES_ENTRY_SELECTED",

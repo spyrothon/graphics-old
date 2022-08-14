@@ -1,5 +1,5 @@
-import { Run } from "../../../api/APITypes";
-import { ActionFor, Action } from "../../Actions";
+import { Run } from "@api/APITypes";
+import { ActionFor, Action } from "@graphics/Actions";
 import { RunActionType } from "./RunsTypes";
 
 type RunMap = { [id: string]: Run };

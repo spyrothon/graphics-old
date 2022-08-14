@@ -1,5 +1,5 @@
-import { Schedule } from "../../../api/APITypes";
-import { ActionFor, Action } from "../../Actions";
+import { Schedule } from "@api/APITypes";
+import { ActionFor, Action } from "@graphics/Actions";
 import { ScheduleActionType } from "./ScheduleTypes";
 
 type ScheduleReducerState = {

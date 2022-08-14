@@ -4,11 +4,11 @@ import { DateTime } from "luxon";
 
 import { RunParticipant } from "@api/APITypes";
 
-import { useSafeSelector } from "../../Store";
-import InterviewStore from "../../modules/interviews/InterviewStore";
-import RunStore from "../../modules/runs/RunStore";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import DurationUtils from "../../modules/time/DurationUtils";
+import { useSafeSelector } from "@graphics/Store";
+import InterviewStore from "@graphics/modules/interviews/InterviewStore";
+import RunStore from "@graphics/modules/runs/RunStore";
+import ScheduleStore from "@graphics/modules/schedules/ScheduleStore";
+import DurationUtils from "@graphics/modules/time/DurationUtils";
 
 import styles from "./BreakUpNext.mod.css";
 

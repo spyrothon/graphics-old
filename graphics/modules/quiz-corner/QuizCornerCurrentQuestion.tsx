@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { Interview } from "../../../api/APITypes";
+import { Interview } from "@api/APITypes";
 
 import styles from "./QuizCornerCurrentQuestion.mod.css";
 

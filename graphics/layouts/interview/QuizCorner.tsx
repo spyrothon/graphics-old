@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { useSafeSelector } from "../../Store";
-import InterviewStore from "../../modules/interviews/InterviewStore";
-import Omnibar from "../../modules/omnibar/Omnibar";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import QuizCornerCurrentQuestion from "../../modules/quiz-corner/QuizCornerCurrentQuestion";
-import QuizCornerScores from "../../modules/quiz-corner/QuizCornerScores";
-import Layout from "../../uikit/Layout";
+import { useSafeSelector } from "@graphics/Store";
+import InterviewStore from "@graphics/modules/interviews/InterviewStore";
+import Omnibar from "@graphics/modules/omnibar/Omnibar";
+import ScheduleStore from "@graphics/modules/schedules/ScheduleStore";
+import QuizCornerCurrentQuestion from "@graphics/modules/quiz-corner/QuizCornerCurrentQuestion";
+import QuizCornerScores from "@graphics/modules/quiz-corner/QuizCornerScores";
+import Layout from "@graphics/uikit/Layout";
 
 import styles from "./QuizCorner.mod.css";
 

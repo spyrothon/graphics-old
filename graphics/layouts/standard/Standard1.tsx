@@ -1,16 +1,16 @@
 import * as React from "react";
 
-import { useSafeSelector } from "../../Store";
-import ArtRotation from "../../modules/art/ArtRotation";
-import GameInfo from "../../modules/game-info/GameInfo";
-import Omnibar from "../../modules/omnibar/Omnibar";
-import RunStore from "../../modules/runs/RunStore";
-import RunUtils from "../../modules/runs/RunUtils";
-import ScheduleStore from "../../modules/schedules/ScheduleStore";
-import RunTimer from "../../modules/time/RunTimer";
-import FeedArea from "../../uikit/FeedArea";
-import Layout from "../../uikit/Layout";
-import NameplateGroup from "../../uikit/NameplateGroup";
+import { useSafeSelector } from "@graphics/Store";
+import ArtRotation from "@graphics/modules/art/ArtRotation";
+import GameInfo from "@graphics/modules/game-info/GameInfo";
+import Omnibar from "@graphics/modules/omnibar/Omnibar";
+import RunStore from "@graphics/modules/runs/RunStore";
+import RunUtils from "@graphics/modules/runs/RunUtils";
+import ScheduleStore from "@graphics/modules/schedules/ScheduleStore";
+import RunTimer from "@graphics/modules/time/RunTimer";
+import FeedArea from "@graphics/uikit/FeedArea";
+import Layout from "@graphics/uikit/Layout";
+import NameplateGroup from "@graphics/uikit/NameplateGroup";
 
 import styles from "./Standard1.mod.css";
 

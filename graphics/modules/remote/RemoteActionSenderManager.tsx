@@ -1,5 +1,5 @@
-import { Action } from "../../Actions";
-import { store } from "../../Store";
+import { Action } from "@graphics/Actions";
+import { store } from "@graphics/Store";
 import { REMOTE_WEBSOCKET_PROTOCOL, REMOTE_SYNC_HOST } from "./RemoteConstants";
 import ActionSender from "./ActionSender";
 

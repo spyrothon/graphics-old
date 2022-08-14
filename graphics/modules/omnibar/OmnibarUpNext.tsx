@@ -1,9 +1,10 @@
 import * as React from "react";
 import classNames from "classnames";
 
-import { RunParticipant } from "../../../api/APITypes";
+import { RunParticipant } from "@api/APITypes";
 
-import { useSafeSelector } from "../../Store";
+import { useSafeSelector } from "@graphics/Store";
+
 import InterviewStore from "../interviews/InterviewStore";
 import RunStore from "../runs/RunStore";
 import ScheduleStore from "../schedules/ScheduleStore";

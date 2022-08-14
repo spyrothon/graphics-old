@@ -1,9 +1,10 @@
-import APIClient from "../../../api/APIClient";
-import { Schedule, ScheduleEntry } from "../../../api/APITypes";
-import { SafeDispatch } from "../../hooks/useDispatch";
+import APIClient from "@api/APIClient";
+import { Schedule, ScheduleEntry } from "@api/APITypes";
+
+import { SafeDispatch } from "@graphics/hooks/useDispatch";
+import { fetchInterviewsSuccess } from "../interviews/InterviewActions";
 import { fetchRunsSuccess } from "../runs/RunActions";
 import { ScheduleActionType, ScheduleAction } from "./ScheduleTypes";
-import { fetchInterviewsSuccess } from "../interviews/InterviewActions";
 
 export function selectScheduleEntry(entryId?: string): ScheduleAction {
   return {

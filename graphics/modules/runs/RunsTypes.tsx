@@ -1,4 +1,4 @@
-import { Run } from "../../../api/APITypes";
+import { Run } from "@api/APITypes";
 
 export enum RunActionType {
   RUNS_UPDATE_RUN = "RUNS_UPDATE_RUN",
