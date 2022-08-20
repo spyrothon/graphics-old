@@ -67,6 +67,8 @@ function LiveEntryRunnerSlots(props: { runId: string }) {
           <Text>
             <strong>{runner.displayName}:</strong>
             <br />
+            {runner.gameplayIngestUrl}
+            <br />
             {JSON.stringify(runner.gameplayCropTransform, undefined, 1)}
           </Text>
         </div>
