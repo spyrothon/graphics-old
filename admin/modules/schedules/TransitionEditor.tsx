@@ -47,7 +47,9 @@ export default function TransitionEditor(props: TransitionEditorProps) {
               note={null}
               className={styles.transitionName}
               selectedTransitionName={obsTransitionInName}
-              onChange={(entry) => onChange({ ...transition, obsTransitionInName: entry?.name })}
+              onChange={(entry) =>
+                onChange({ ...transition, obsTransitionInName: entry?.transitionName })
+              }
               marginless
             />
 
@@ -68,7 +70,7 @@ export default function TransitionEditor(props: TransitionEditorProps) {
               note={null}
               className={styles.transitionScene}
               selectedSceneName={obsSceneName}
-              onChange={(scene) => onChange({ ...transition, obsSceneName: scene?.name })}
+              onChange={(scene) => onChange({ ...transition, obsSceneName: scene?.sceneName })}
               marginless
             />
             {manualDuration ? (
@@ -85,7 +87,7 @@ export default function TransitionEditor(props: TransitionEditorProps) {
                 selectedMediaName={obsMediaSourceName}
                 note="If given, this source will play fully before the transition continues."
                 onChange={(source) =>
-                  onChange({ ...transition, obsMediaSourceName: source?.sourceName ?? "" })
+                  onChange({ ...transition, obsMediaSourceName: source?.inputName ?? "" })
                 }
               />
             )}

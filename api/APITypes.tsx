@@ -1,5 +1,3 @@
-import { DateTime } from "luxon";
-
 export interface InitPayload {
   scheduleId: string;
   currentUser?: User;
@@ -52,6 +50,13 @@ export interface Schedule {
 
   currentEntryId?: string;
   debug: boolean;
+
+  breakLeftTitle?: string;
+  breakLeftSubtitle?: string;
+  breakRightTitle?: string;
+  breakRightSubtitle?: string;
+  outroTitle?: string;
+  outroSubtitle?: string;
 }
 
 export interface ScheduleResponse extends Schedule {
@@ -163,6 +168,13 @@ export interface InitialRun {
   commentators?: RunParticipant[];
 }
 
+export interface CropTransform {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
 export interface RunParticipant {
   id: string;
   displayName: string;
@@ -176,6 +188,10 @@ export interface RunParticipant {
   actualSeconds?: number;
   // Interview fields
   score?: number;
+  gameplayIngestUrl?: string;
+  gameplayCropTransform?: CropTransform;
+  webcamIngestUrl?: string;
+  webcamCropTransform?: CropTransform;
 }
 
 export interface OBSWebsocketConfig {

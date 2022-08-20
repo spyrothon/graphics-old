@@ -1,11 +1,39 @@
 export interface OBSTransition {
-  name: string;
+  transitionConfigurable: boolean;
+  transitionFixed: boolean;
+  transitionKind: string;
+  transitionName: string;
 }
 
-export interface OBSMediaSource {
+export interface OBSScene {
+  sceneIndex: number;
+  sceneName: string;
+}
+
+export interface OBSInput {
+  inputKind: string;
+  inputName: string;
+  unversionedInputKind: string;
+}
+
+export interface OBSInputState {
+  inputVolumeMul?: number;
+  inputVolumeDb?: number;
+  inputMuted?: boolean;
+  videoActive?: boolean;
+  videoShowing?: boolean;
+  inputAudioSyncOffset?: number;
+  playbackInProgress?: boolean;
+  inputSettings?: Record<string, any>;
+}
+
+export interface OBSSceneItem {
+  sceneItemId: number;
+  sceneName: string;
   sourceName: string;
-  sourceKind: string;
-  mediaState: string;
+  sceneItemIndex: number;
+  sceneItemLocked: boolean;
+  sceneItemEnabled: boolean;
 }
 
 export enum OBSCustomEventTypes {
@@ -14,7 +42,7 @@ export enum OBSCustomEventTypes {
 }
 
 export interface OBSCustomEvent {
-  type: string;
+  type: OBSCustomEventTypes;
   originator?: string;
 }
 

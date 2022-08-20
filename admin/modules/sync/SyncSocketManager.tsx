@@ -1,5 +1,6 @@
-import SyncSocket from "@api/socket/SyncSocket";
+import SyncSocket, { ConnectionChangeHandler } from "@api/socket/SyncSocket";
 import { SyncSocketMessage } from "@api/socket/SyncSocketTypes";
+
 import { store } from "../../Store";
 import { loadInterview } from "../interviews/InterviewActions";
 import { loadRun } from "../runs/RunActions";
@@ -7,14 +8,24 @@ import { loadSchedule } from "../schedules/ScheduleActions";
 
 class SyncSocketManager {
   private socket?: SyncSocket;
+  private subscribers: Array<ConnectionChangeHandler> = [];
+
+  public isConnected = false;
 
   init() {
-    this.socket = new SyncSocket(this.handleMessage);
+    this.socket = new SyncSocket(this.handleMessage, this.handleConnectionChange);
     this.socket.connect();
   }
 
   stop() {
     this.socket?.disconnect();
+  }
+
+  addConnectionListener(subscription: ConnectionChangeHandler) {
+    this.subscribers.push(subscription);
+    return () => {
+      this.subscribers.filter((sub) => sub !== subscription);
+    };
   }
 
   handleMessage = (message: SyncSocketMessage) => {
@@ -28,6 +39,13 @@ class SyncSocketManager {
         return;
       case "load_interview":
         store.dispatch(loadInterview(message.interview));
+    }
+  };
+
+  handleConnectionChange = (connected: boolean) => {
+    this.isConnected = connected;
+    for (const subscriber of this.subscribers) {
+      subscriber(this.isConnected);
     }
   };
 

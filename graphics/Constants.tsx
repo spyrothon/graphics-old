@@ -32,6 +32,7 @@ export const Routes = {
   BREAK_LEFT: "/break-left",
   BREAK_RIGHT: "/break-right",
   BREAK_COUNTDOWN: "/break-countdown",
+  BREAK_OUTRO: "/break-outro",
 
   // Interviews
   INTERVIEW: "/interview",

@@ -5,7 +5,6 @@ import thunk from "redux-thunk";
 import authReducer from "./modules/auth/AuthReducer";
 import interviewsReducer from "./modules/interviews/InterviewsReducer";
 import publishingReducer from "./modules/publishing/PublishingReducer";
-import remoteReducer from "./modules/remote/RemoteReducer";
 import runsReducer from "./modules/runs/RunsReducer";
 import schedulesReducer from "./modules/schedules/SchedulesReducer";
 
@@ -13,7 +12,6 @@ export const combinedReducer = combineReducers({
   auth: authReducer,
   interviews: interviewsReducer,
   publishing: publishingReducer,
-  remote: remoteReducer,
   runs: runsReducer,
   schedules: schedulesReducer,
 });

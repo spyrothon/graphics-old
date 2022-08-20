@@ -11,8 +11,8 @@ export default function AuthLogout() {
 
   React.useEffect(() => {
     dispatch(logout());
-    RouterUtils.navigateTo(Routes.BASE_PATH);
+    RouterUtils.navigateTo(Routes.ADMIN_BASE_PATH);
   }, []);
 
-  return <Anchor onClick={() => RouterUtils.navigateTo(Routes.BASE_PATH)}>Go Home</Anchor>;
+  return <Anchor onClick={() => RouterUtils.navigateTo(Routes.ADMIN_BASE_PATH)}>Go Home</Anchor>;
 }

@@ -8,6 +8,7 @@ import Layout from "@graphics/uikit/Layout";
 import BreakUpNext from "./BreakUpNext";
 
 import styles from "./Break.mod.css";
+import { BreakMessages } from "./BreakConstants";
 
 export default function BreakRight() {
   const schedule = useSafeSelector(ScheduleStore.getSchedule);
@@ -20,8 +21,12 @@ export default function BreakRight() {
         <img className={styles.logo} src={schedule.logoUrl} />
         <BreakUpNext className={styles.upcoming} reverse />
         <div className={styles.backSoon}>
-          <div className={styles.backHeader}>Stay fired up, Bob</div>
-          <div className={styles.backSub}>We'll be right back</div>
+          <div className={styles.backHeader}>
+            {schedule.breakRightTitle ?? BreakMessages.BREAK_TITLE}
+          </div>
+          <div className={styles.backSub}>
+            {schedule.breakRightSubtitle ?? BreakMessages.BREAK_SUBTITLE}
+          </div>
         </div>
       </div>
       <ArtRotation className={styles.artRotationRight} />

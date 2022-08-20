@@ -1,18 +1,29 @@
 import create from "zustand";
 
-import type { Scene } from "obs-websocket-js";
-import type { OBSTransition, OBSMediaSource } from "./OBSTypes";
+import type { OBSTransition, OBSScene, OBSInput, OBSInputState, OBSSceneItem } from "./OBSTypes";
 
 interface OBSStoreState {
   connected: boolean;
   failed: boolean;
-  sceneList: Scene[];
+  sceneList: OBSScene[];
   transitionList: OBSTransition[];
-  mediaSourceList: OBSMediaSource[];
+  inputList: OBSInput[];
   busy: {
     busy: boolean;
     originator?: string;
   };
+  data: {
+    sceneList: OBSScene[];
+    transitionList: OBSTransition[];
+    inputList: OBSInput[];
+    sceneItems: Record<OBSSceneItem["sceneItemId"], OBSSceneItem>;
+    inputStates: Record<OBSInput["inputName"], Partial<OBSInputState>>;
+    currentProgramSceneName?: string;
+    currentPreviewSceneName?: string;
+    transitionInProgress: boolean;
+    streaming: boolean;
+  };
+  meters: {};
 }
 
 export const useOBSStore = create<OBSStoreState>((_set) => ({
@@ -21,7 +32,19 @@ export const useOBSStore = create<OBSStoreState>((_set) => ({
   busy: { busy: false },
   sceneList: [],
   transitionList: [],
-  mediaSourceList: [],
+  inputList: [],
+  data: {
+    sceneList: [],
+    transitionList: [],
+    inputList: [],
+    sceneItems: {},
+    inputStates: {},
+    currentProgramSceneName: undefined,
+    currentPreviewSceneName: undefined,
+    transitionInProgress: false,
+    streaming: false,
+  },
+  meters: {},
 }));
 
 export function setOBSConnected(connected: boolean) {
@@ -44,12 +67,22 @@ export function useOBSBusy() {
   return useOBSStore((state) => state.busy);
 }
 
-export function setSceneList(sceneList: Scene[]) {
+export function setOBSData(
+  data:
+    | Partial<OBSStoreState["data"]>
+    | ((data: OBSStoreState["data"]) => Partial<OBSStoreState["data"]>),
+) {
+  return useOBSStore.setState((state) => ({
+    data: { ...state.data, ...(typeof data === "function" ? data(state.data) : data) },
+  }));
+}
+
+export function setSceneList(sceneList: OBSScene[]) {
   useOBSStore.setState({ sceneList });
 }
 
-export function setMediaSourceList(mediaSourceList: OBSMediaSource[]) {
-  useOBSStore.setState({ mediaSourceList });
+export function setInputList(inputList: OBSInput[]) {
+  useOBSStore.setState({ inputList });
 }
 
 export function setTransitionList(transitionList: OBSTransition[]) {

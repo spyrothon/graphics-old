@@ -2,7 +2,7 @@ import * as React from "react";
 
 import SelectInput from "@uikit/SelectInput";
 import { useOBSStore } from "./OBSStore";
-import type { OBSMediaSource } from "./OBSTypes";
+import type { OBSInput } from "./OBSTypes";
 
 type OBSMediaSelectorProps = {
   label?: React.ReactNode;
@@ -10,7 +10,7 @@ type OBSMediaSelectorProps = {
   selectedMediaName?: string;
   marginless?: boolean;
   className?: string;
-  onChange: (entry?: OBSMediaSource) => unknown;
+  onChange: (entry?: OBSInput) => unknown;
 };
 
 export default function OBSMediaSelector(props: OBSMediaSelectorProps) {
@@ -22,10 +22,10 @@ export default function OBSMediaSelector(props: OBSMediaSelectorProps) {
     className,
     onChange,
   } = props;
-  const sources = useOBSStore((state) => state.mediaSourceList);
+  const sources = useOBSStore((state) => state.data.inputList);
 
   const selected = React.useMemo(
-    () => sources.find((entry) => entry.sourceName === selectedMediaName),
+    () => sources.find((entry) => entry.inputName === selectedMediaName),
     [selectedMediaName, sources],
   );
 
@@ -35,7 +35,7 @@ export default function OBSMediaSelector(props: OBSMediaSelectorProps) {
       note={note}
       className={className}
       items={sources}
-      itemToString={(entry) => entry?.sourceName ?? "(unnamed)"}
+      itemToString={(entry) => entry?.inputName ?? "(unnamed)"}
       value={selected}
       marginless={marginless}
       allowEmpty

@@ -74,6 +74,58 @@ export default function SettingsGeneral() {
         onChange={(event) => setEditedSchedule({ ...editedSchedule, rtmpHost: event.target.value })}
       />
 
+      <hr style={{ margin: "48px 0" }} />
+      <Header size={Header.Sizes.H3}>Break Screen Taglines</Header>
+      <TextInput
+        label="Break Left Title"
+        value={editedSchedule.breakLeftTitle}
+        placeholder="Stay fired up, Bob"
+        onChange={(event) =>
+          setEditedSchedule({ ...editedSchedule, breakLeftTitle: event.target.value })
+        }
+      />
+      <TextInput
+        label="Break Left Subtitle"
+        value={editedSchedule.breakLeftSubtitle}
+        placeholder="We'll be right back"
+        onChange={(event) =>
+          setEditedSchedule({ ...editedSchedule, breakLeftSubtitle: event.target.value })
+        }
+      />
+
+      <TextInput
+        label="Break Right Title"
+        value={editedSchedule.breakRightTitle}
+        placeholder="Stay fired up, Bob"
+        onChange={(event) =>
+          setEditedSchedule({ ...editedSchedule, breakRightTitle: event.target.value })
+        }
+      />
+      <TextInput
+        label="Break Right Subtitle"
+        value={editedSchedule.breakRightSubtitle}
+        placeholder="We'll be right back"
+        onChange={(event) =>
+          setEditedSchedule({ ...editedSchedule, breakRightSubtitle: event.target.value })
+        }
+      />
+
+      <TextInput
+        label="Outro Title"
+        value={editedSchedule.outroTitle}
+        placeholder="See you again next time"
+        onChange={(event) =>
+          setEditedSchedule({ ...editedSchedule, outroTitle: event.target.value })
+        }
+      />
+      <TextInput
+        label="Outro Subtitle"
+        value={editedSchedule.outroSubtitle}
+        onChange={(event) =>
+          setEditedSchedule({ ...editedSchedule, outroSubtitle: event.target.value })
+        }
+      />
+
       <Button onClick={handleSave}>{getSaveText()}</Button>
     </div>
   );

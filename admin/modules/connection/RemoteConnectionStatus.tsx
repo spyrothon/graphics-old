@@ -2,16 +2,20 @@ import * as React from "react";
 
 import StatusDot from "@uikit/StatusDot";
 import Header from "@uikit/Header";
-import { useSafeSelector } from "../../Store";
-import * as RemoteStore from "../../modules/remote/RemoteStore";
 
 import styles from "./RemoteConnectionStatus.mod.css";
 import { useOBSConnected, useOBSBusy } from "../obs/OBSStore";
+import SyncSocketManager from "../sync/SyncSocketManager";
 
 export default function RemoteConnectionStatus() {
-  const isConnected = useSafeSelector(RemoteStore.isRemoteConnected);
   const [obsConnected] = useOBSConnected();
   const { busy: obsBusy } = useOBSBusy();
+
+  const [isConnected, setConnected] = React.useState(() => SyncSocketManager.isConnected);
+  React.useEffect(() => {
+    const unsubscribe = SyncSocketManager.addConnectionListener(setConnected);
+    return unsubscribe;
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -21,7 +25,7 @@ export default function RemoteConnectionStatus() {
       <div className={styles.items}>
         <div className={styles.item}>
           <StatusDot boolean={isConnected} />
-          <span className={styles.itemName}>Graphics</span>
+          <span className={styles.itemName}>API Sync</span>
         </div>
         <div className={styles.item}>
           <StatusDot boolean={obsConnected} busy={obsBusy} />

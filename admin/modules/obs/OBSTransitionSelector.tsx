@@ -23,10 +23,10 @@ export default function OBSTransitionSelector(props: OBSTransitionSelectorProps)
     className,
     onChange,
   } = props;
-  const transitions = useOBSStore((state) => state.transitionList);
+  const transitions = useOBSStore((state) => state.data.transitionList);
 
   const selected = React.useMemo(
-    () => transitions.find((entry) => entry.name === selectedTransitionName),
+    () => transitions.find((entry) => entry.transitionName === selectedTransitionName),
     [selectedTransitionName, transitions],
   );
 
@@ -36,7 +36,7 @@ export default function OBSTransitionSelector(props: OBSTransitionSelectorProps)
       note={note}
       className={className}
       items={transitions}
-      itemToString={(entry) => entry?.name ?? "(unnamed)"}
+      itemToString={(entry) => entry?.transitionName ?? "(unnamed)"}
       value={selected}
       marginless={marginless}
       allowEmpty

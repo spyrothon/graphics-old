@@ -4,10 +4,10 @@ import classNames from "classnames";
 import useSafeDispatch from "@admin/hooks/useDispatch";
 import Button from "@uikit/Button";
 import { useSafeSelector } from "../../Store";
-import RTMPStreams from "../rtmp/RTMPStreams";
 import * as ScheduleStore from "../schedules/ScheduleStore";
 import { updateSchedule, transitionToSecheduleEntry } from "../schedules/ScheduleActions";
 import LiveEntryDisplay from "./LiveEntryDisplay";
+import LiveOBSStatus from "./LiveOBSStatus";
 
 import styles from "./LiveSidebar.mod.css";
 
@@ -58,9 +58,7 @@ export default function LiveSidebar(props: LiveSidebarProps) {
         </Button>
       </div>
       {nextEntry != null ? <LiveEntryDisplay scheduleEntry={nextEntry} label="Up Next" /> : null}
-      {schedule?.id != null ? (
-        <RTMPStreams className={styles.rtmp} scheduleId={schedule.id} />
-      ) : null}
+      <LiveOBSStatus />
       <div className={styles.bottom}>
         <Button color={Button.Colors.DEFAULT} fullwidth onClick={handleToggleDebug}>
           {!schedule?.debug ? "Enable Debug Mode" : "Disable Debug Mode"}

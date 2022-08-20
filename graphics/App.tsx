@@ -14,6 +14,7 @@ import BingoStandard2v2 from "./layouts/bingo/BingoStandard2v2";
 import BreakCountdown from "./layouts/breaks/BreakCountdown";
 import BreakLeft from "./layouts/breaks/BreakLeft";
 import BreakRight from "./layouts/breaks/BreakRight";
+import BreakOutro from "./layouts/breaks/BreakOutro";
 import HD1 from "./layouts/hd/HD1";
 import HD2 from "./layouts/hd/HD2";
 import InterviewOpen from "./layouts/interview/InterviewOpen";
@@ -67,6 +68,7 @@ export default function App() {
         <Route path={Routes.BREAK_LEFT} component={BreakLeft} />
         <Route path={Routes.BREAK_RIGHT} component={BreakRight} />
         <Route path={Routes.BREAK_COUNTDOWN} component={BreakCountdown} />
+        <Route path={Routes.BREAK_OUTRO} component={BreakOutro} />
 
         <Route path={Routes.INTERVIEW} component={InterviewOpen} />
         <Route path={Routes.QUIZ_CORNER} component={QuizCorner} />

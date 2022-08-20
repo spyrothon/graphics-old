@@ -3,7 +3,7 @@ import * as React from "react";
 import SelectInput from "@uikit/SelectInput";
 import { useOBSStore } from "./OBSStore";
 
-import type { Scene } from "obs-websocket-js";
+import type { OBSScene } from "./OBSTypes";
 
 type OBSSceneSelectorProps = {
   label?: React.ReactNode;
@@ -11,7 +11,7 @@ type OBSSceneSelectorProps = {
   selectedSceneName?: string;
   marginless?: boolean;
   className?: string;
-  onChange: (entry?: Scene) => unknown;
+  onChange: (entry?: OBSScene) => unknown;
 };
 
 export default function OBSSceneSelector(props: OBSSceneSelectorProps) {
@@ -23,12 +23,12 @@ export default function OBSSceneSelector(props: OBSSceneSelectorProps) {
     className,
     onChange,
   } = props;
-  const scenes = useOBSStore((state) => state.sceneList);
+  const scenes = useOBSStore((state) => state.data.sceneList);
 
-  const selected = React.useMemo(() => scenes.find((entry) => entry.name === selectedSceneName), [
-    selectedSceneName,
-    scenes,
-  ]);
+  const selected = React.useMemo(
+    () => scenes.find((entry) => entry.sceneName === selectedSceneName),
+    [selectedSceneName, scenes],
+  );
 
   return (
     <SelectInput
@@ -36,7 +36,7 @@ export default function OBSSceneSelector(props: OBSSceneSelectorProps) {
       note={note}
       className={className}
       items={scenes}
-      itemToString={(entry) => entry?.name ?? "(unnamed)"}
+      itemToString={(entry) => entry?.sceneName ?? "(unnamed)"}
       value={selected}
       marginless={marginless}
       allowEmpty

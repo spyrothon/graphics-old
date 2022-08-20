@@ -13,14 +13,34 @@ import Header from "@uikit/Header";
 import TextInput from "@uikit/TextInput";
 import { persistRun } from "./RunActions";
 import * as RunStore from "./RunStore";
-import useRunEditorState from "./useRunEditorState";
+import useRunEditorState, { RunEditorStateValue } from "./useRunEditorState";
 
 import styles from "./RunEditor.mod.css";
+import NumberInput from "@uikit/NumberInput";
 
 type RunEditorProps = {
   scheduleEntry: ScheduleEntry;
   className?: string;
 };
+
+function onTransformChange(
+  editor: RunEditorStateValue,
+  type: "runners" | "commentators",
+  index: number,
+  transform: "gameplayCropTransform" | "webcamCropTransform",
+  position: "top" | "right" | "bottom" | "left",
+) {
+  return (event: React.ChangeEvent<HTMLInputElement>) => {
+    editor.updateParticipantField(type, index, transform, {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      ...editor.getParticipantField(type, index, transform),
+      [position]: parseInt(event.target.value),
+    });
+  };
+}
 
 export default function RunEditor(props: RunEditorProps) {
   const { scheduleEntry, className } = props;
@@ -71,7 +91,7 @@ export default function RunEditor(props: RunEditorProps) {
           <TextInput
             marginless
             className={styles.participantInput}
-            label={index === 0 ? "Display Name" : undefined}
+            label="Display Name"
             value={editor.getParticipantField(type, index, "displayName")}
             onChange={(event) =>
               editor.updateParticipantField(type, index, "displayName", event.target.value)
@@ -80,7 +100,7 @@ export default function RunEditor(props: RunEditorProps) {
           <TextInput
             marginless
             className={styles.participantInput}
-            label={index === 0 ? "Pronouns" : undefined}
+            label="Pronouns"
             value={editor.getParticipantField(type, index, "pronouns")}
             onChange={(event) =>
               editor.updateParticipantField(type, index, "pronouns", event.target.value)
@@ -89,11 +109,50 @@ export default function RunEditor(props: RunEditorProps) {
           <TextInput
             marginless
             className={styles.participantInput}
-            label={index === 0 ? "Twitch" : undefined}
+            label="Twitch"
             value={editor.getParticipantField(type, index, "twitchName")}
             onChange={(event) =>
               editor.updateParticipantField(type, index, "twitchName", event.target.value)
             }
+          />
+        </div>
+        <div className={styles.inputRow}>
+          <TextInput
+            marginless
+            className={classNames(styles.participantInput, styles.urlInput)}
+            label="Gameplay Ingest URL"
+            value={editor.getParticipantField(type, index, "gameplayIngestUrl")}
+            onChange={(event) =>
+              editor.updateParticipantField(type, index, "gameplayIngestUrl", event.target.value)
+            }
+          />
+          <NumberInput
+            marginless
+            className={classNames(styles.participantInput, styles.numberInput)}
+            label="Top"
+            value={editor.getParticipantField(type, index, "gameplayCropTransform")?.top}
+            onChange={onTransformChange(editor, type, index, "gameplayCropTransform", "top")}
+          />
+          <NumberInput
+            marginless
+            className={classNames(styles.participantInput, styles.numberInput)}
+            label="Right"
+            value={editor.getParticipantField(type, index, "gameplayCropTransform")?.right}
+            onChange={onTransformChange(editor, type, index, "gameplayCropTransform", "right")}
+          />
+          <NumberInput
+            marginless
+            className={classNames(styles.participantInput, styles.numberInput)}
+            label="Bottom"
+            value={editor.getParticipantField(type, index, "gameplayCropTransform")?.bottom}
+            onChange={onTransformChange(editor, type, index, "gameplayCropTransform", "bottom")}
+          />
+          <NumberInput
+            marginless
+            className={classNames(styles.participantInput, styles.numberInput)}
+            label="Left"
+            value={editor.getParticipantField(type, index, "gameplayCropTransform")?.left}
+            onChange={onTransformChange(editor, type, index, "gameplayCropTransform", "left")}
           />
         </div>
       </div>
