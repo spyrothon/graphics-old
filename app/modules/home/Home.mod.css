@@ -1,0 +1,55 @@
+.body {
+  margin: 0;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.page {
+  background: transparent;
+}
+
+.background {
+  position: fixed;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: 30% 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.main {
+  width: 1280px;
+  max-width: 100%;
+  margin: auto;
+  overscroll-behavior: contain;
+}
+
+.content {
+  padding: 64px 16px;
+  text-shadow: 2px 4px 12px #000;
+}
+
+.section {
+  padding: 32px 0;
+}
+
+.logo {
+  width: 100%;
+  margin: 0;
+  filter: drop-shadow(4px 8px 12px #000);
+}
+
+.properties {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .logo {
+    width: 60%;
+    margin-left: -16px;
+  }
+}

@@ -9,7 +9,7 @@ export default function PublicHelmet(props: PublicHelmetProps) {
   const { className } = props;
   return (
     <Helmet>
-      <title>Spyrothon</title>
+      <title>Spyrothon | The Spyro speedrunning community marathon</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <body className={className} />
     </Helmet>

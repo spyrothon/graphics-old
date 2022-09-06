@@ -75,7 +75,7 @@ module.exports = {
             },
           },
           {
-            test: /(\.mod)?\.css$/,
+            test: /(\.mod)\.css$/,
             use: [
               MiniCssExtractPlugin.loader,
               {
@@ -84,6 +84,20 @@ module.exports = {
                   modules: {
                     localIdentName: "[name]__[local]--[hash:base64:5]",
                   },
+                },
+              },
+              "postcss-loader",
+            ],
+          },
+          {
+            test: /\.css$/,
+            exclude: /\.mod\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: "css-loader",
+                options: {
+                  modules: false,
                 },
               },
               "postcss-loader",

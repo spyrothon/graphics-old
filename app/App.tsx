@@ -5,7 +5,8 @@ import APIClient from "@api/APIClient";
 import useSafeDispatch from "@admin/hooks/useDispatch";
 import BlankPage from "@common/router/BlankPage";
 import { history } from "@common/router/RouterUtils";
-import { Routes } from "./Constants";
+
+import Home from "./modules/home/Home";
 import Newsletter from "./modules/newsletters/Newsletter";
 import Newsletters from "./modules/newsletters/Newsletters";
 import CurrentScheduleContext from "./modules/schedules/CurrentScheduleContext";
@@ -13,6 +14,8 @@ import { fetchSchedule } from "./modules/schedules/ScheduleActions";
 import * as ScheduleStore from "./modules/schedules/ScheduleStore";
 import Schedule from "./modules/schedules/Schedule";
 import { useSafeSelector } from "./Store";
+
+import { Routes } from "./Constants";
 
 export default function App() {
   const schedule = useSafeSelector(ScheduleStore.getSchedule);
@@ -35,7 +38,7 @@ export default function App() {
             render={({ match }) => <Newsletter newsletterId={match.params.id} />}
           />
           <Route path={Routes.SCHEDULE} component={Schedule} />
-          <Route exact path={Routes.BASE_PATH} component={Schedule} />
+          <Route exact path={Routes.BASE_PATH} component={Home} />
           <Route>
             <BlankPage />
           </Route>

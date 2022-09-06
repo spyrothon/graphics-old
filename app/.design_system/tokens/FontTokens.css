@@ -1,0 +1,9 @@
+/** Generated Font Tokens. Do not edit manually **/
+
+:root {
+  --font-normal: "Nunito", -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  --font-accent: "Merriweather", Barlow, -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  --font-weight-medium: 400;
+  --font-weight-semibold: 700;
+  --font-weight-bold: 900;
+}
