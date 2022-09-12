@@ -5,7 +5,7 @@ declare module "*.svg";
 declare module "*.mp4";
 declare module "*.webm";
 
-declare module "*.mod.css" {
+declare module "*.module.css" {
   const styles: { [className: string]: string };
   export default styles;
 }
