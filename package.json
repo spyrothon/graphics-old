@@ -1,15 +1,14 @@
 {
-  "name": "graphics2",
+  "name": "graphics",
   "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Graphics and management system for Spyrothon",
+  "homepage": "https://spyrothon.org",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Jon",
-  "license": "ISC",
+  "author": "Jon Egeland <jonegeland@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.7.16",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
